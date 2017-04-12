@@ -1,14 +1,16 @@
 <template>
-  <div id="eee">{{msg}}</div>
+  <div id="aaa">
+    <h1>{{msg}}</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
+  name: 'doctor',
   data () {
-    return {
-      msg: 'bbbbbbbbbbbbb'
-    }
+      return {
+          msg: 'aaaa'
+      }
   }
 }
 </script>

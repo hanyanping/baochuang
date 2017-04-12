@@ -1,7 +1,11 @@
+/**
+ * Created by zheha on 2017/4/12.
+ */
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '../components/Hello'
-import doctorMain from '../views/doctor/doctorMain'
+import patientMain from '../views/patient/patientMain'
+
 Vue.use(Router)
 
 export default new Router({
@@ -12,9 +16,9 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/doctor',
-      name: 'doctorMain',
-      component: doctorMain
+      path: '/patient',
+      name: 'patientMain',
+      component: patientMain
     }
   ]
 })

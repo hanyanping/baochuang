@@ -2,16 +2,15 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import routerPatient from './router/patient_index'
-// import routerDoctor from './router/doctor_index'
+// import doctorRouter from './router/doctor-index'
+import patientRouter from './router/patient-index'
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router: routerPatient,
-  // router: routerDoctor,
+  router: patientRouter,
   template: '<App/>',
   components: { App }
 })
