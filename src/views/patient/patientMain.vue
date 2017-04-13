@@ -1,7 +1,7 @@
 <template>
   <div>
     bbbbbb
-    <!--<h1>{{msg}}</h1>-->
+    <h1>{{msg}}</h1>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
     name: 'patient',
     data () {
       return {
-        msg: 'bbbb'
+        msg: 'Patient'
       }
     }
   }

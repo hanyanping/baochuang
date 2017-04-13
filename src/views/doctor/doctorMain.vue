@@ -9,7 +9,7 @@ export default {
   name: 'doctor',
   data () {
       return {
-          msg: 'aaaa'
+          msg: 'Doctor'
       }
   }
 }
