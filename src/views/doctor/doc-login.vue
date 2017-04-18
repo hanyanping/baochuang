@@ -15,8 +15,9 @@
         <div class="iconFonts docCodeFont">
           <i class="icon iconfont  icon-anquan"></i>
           <input type="tel"  maxlength="6" class="codeInput" v-model="requestJson.code" placeholder="请输入验证码"/>
+          <a class="codeClose iconfont icon-close" @click="closeCode"></a>
         </div>
-        <a class="codeClose iconfont icon-close" @click="closeCode"></a>
+
         <div class="getCode" :class="{active: isCode}" @click="getCodes($event)">{{getCode}}</div>
       </div>
     </div>
@@ -179,10 +180,10 @@
   }
   .docCode{
     display:flex;
-    justify-content: space-between;
-
+    flex:1;
   }
   .getCode{
+    padding-left:5px;
     line-height:50px;
     font-size:15px;
     color:#9BD3D0;
@@ -191,11 +192,8 @@
    font-size:24px;
  }
   .icon-close {
-    position: absolute;
     background: #CADCE1;
     border-radius: 50%;
-    top: 10%;
-    left: 50%;
 
   }
   .getCode.active {
