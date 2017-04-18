@@ -1,27 +1,28 @@
 <template>
-  <div id="aaa">
-    <h1>{{msg}}</h1>
+  <div>
+    <div @click="getData" style="width:100px;height:100px;background: red;"></div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'doctor',
-  data () {
+  export default {
+    data () {
       return {
-          msg: 'Doctor'
-      }
-  }
-}
-</script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+      }
+    },
+    methods: {
+      getData : function () {
+        const ajaxUrl='http://testmanage.aiganyisheng.net';
+        this.$http.post(ajaxUrl+'/product/app/getProductList.htm',{sign:'7f187df2e535ba793353ac6b9814a63b'})
+          .then((response) => {
+            // get body data
+            console.log(response.data)
+          })
+          .catch((response) => {
+            // error callback
+          })
+      }
+    }
+  }
+</script>

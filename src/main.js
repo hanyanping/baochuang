@@ -3,9 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import doctorRouter from './router/doctor-index'
-// import patientRouter from './router/patient-index'
+import vueResource from 'vue-resource'
+import 'mint-ui/lib/style.css'
+import MintUI from 'mint-ui'
+// import patientRouter from './router/patient-index'/
 
 Vue.config.productionTip = false
+Vue.use(vueResource)
+Vue.http.options.emulateJSON = true;
+Vue.use(MintUI)
 
 /* eslint-disable no-new */
 new Vue({

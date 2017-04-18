@@ -23,10 +23,14 @@
 <script>
 export default {
   name: 'hello',
-  data () {
+  data() {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  created() {
+    console.log(document.getElementsByTagName('title')[0])
+    document.getElementsByTagName('title')[0].innerHTML = 'a'
   }
 }
 </script>
