@@ -2,7 +2,7 @@
   <div id="loginBox">
     <div class="docPhone inputBox">
       <!--<img :src='phone'/>-->
-      <div class="iconFonts">
+      <div class="fontBox">
         <i class="icon iconfont icon-phone"></i>
       </div>
       <input type="tel"  maxlength="11" v-model="requestJson.phone" @focus="chn" placeholder="请输入手机号"/>
@@ -12,16 +12,14 @@
     </div>
     <div class="codeBox">
       <div class="docCode ">
-        <div class="iconFonts docCodeFont">
+        <div class="fontBox docCodeFont">
           <i class="icon iconfont  icon-anquan"></i>
           <input type="tel"  maxlength="6" class="codeInput" v-model="requestJson.code" placeholder="请输入验证码"/>
-          <a class="codeClose iconfont icon-close" @click="closeCode"></a>
+          <i class="codeClose iconfont icon-tubiao06" @click="closeCode"></i>
         </div>
-
-        <div class="getCode" :class="{active: isCode}" @click="getCodes($event)">{{getCode}}</div>
+        <button class="getCode" :class="{active: isCode}" @click="getCodes($event)">{{getCode}}</button>
       </div>
     </div>
-
     <div class="lineBox">
       <div class="line"></div>
     </div>
@@ -87,32 +85,49 @@
             } else {
                 let _this = this
                 this.$http.post('http://testapi.aiganyisheng.net/public/patient_login',this.requestJson)
-                  .then((result) => {
-                      console.log(result)
-                      Toast('登录成功！')
-                      setTimeout(function () {
-                        _this.$router.push('/doctor')
-                      }, 2000)
-                  }, (err) => {
-                      console.log(err)
-                  })
+                .then((result) => {
+                  console.log(result)
+                  Toast('登录成功！')
+                  setTimeout(function () {
+                    _this.$router.push('/doctor')
+                  }, 2000)
+                }, (err) => {
+                  console.log(err)
+                })
             }
         },
         //  获取验证码
       getCodes(el) {
-            var t = setInterval(() => {
-                if (this.time >= 0) {
-                    this.time--
-                    el.target.innerHTML = this.time + '后刷新'
-                    this.isCode = true
-                }
-                if (this.time === 0) {
-                    clearInterval(t)
-                    this.time = 5
-                    el.target.innerHTML = '重获验证码'
-                    this.isCode = false
-                }
-            }, 1000)
+            console.log(el)
+            console.log(this.requestJson.phone)
+        if(!(/^1[34578]\d{9}$/.test(this.requestJson.phone))){
+          Toast('请输入正确手机号！')
+        }else{
+          var t = setInterval(() => {
+            let _that = this
+            this.$http.post('http://testapi.aiganyisheng.net/public/phone_verification_code',{telphone:_that.requestJson.phone,type:"1"})
+              .then((result) => {
+                console.log(result)
+                setTimeout(function () {
+                }, 2000)
+              }, (err) => {
+                console.log(err)
+              })
+            if (this.time >= 0) {
+              this.time--
+              el.target.innerHTML = this.time + '后刷新'
+              this.isCode = true
+            }
+            if (this.time === 0) {
+              clearInterval(t)
+              this.time = 5
+              el.target.innerHTML = '重获验证码'
+              this.isCode = false
+
+            }
+          }, 2000)
+        }
+
       },
       //  删除验证码
       closeCode() {
@@ -139,11 +154,16 @@
 }
   .lineBox{
     height:1px;
-    width:90%;
-    background:#fff;
-    margin:0 auto;
+    width:100%;
+    background:#529D98;
   }
-  #loginBox .iconFonts{
+  .lineBox .line{
+    height:1px;
+    width:90%;
+    margin:0 auto;
+    background:#86B8B8;
+  }
+  #loginBox .fontBox{
     line-height:50px;
     color:#9BD3D0;
     background:#529D98;
@@ -156,6 +176,9 @@
     padding-left:10px;
     background:#529D98;
   }
+  input::-webkit-input-placeholder{
+    color:#9BD3D0;
+  }
   .codeBox{
     width:100%;
     padding:0 16px;
@@ -165,53 +188,63 @@
     height:50px;
    line-height:50px;
   }
-  input::-webkit-input-placeholder{
-    color:#9BD3D0;
-  }
-  .inputBox{
+  .docPhone{
     position: relative;
     display:flex;
     flex:1;
-    height:50px;
     width:100%;
-    padding:0 16px;
+    padding:40px 16px 0;
     text-align: center;
     background:#529D98;
   }
   .docCode{
     display:flex;
-    flex:1;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+  .docCodeFont{
+    display:flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    color: #9BD3D0;
+    background: #529D98;
+    max-width:65%;
+    min-width:65%;
   }
   .getCode{
     padding-left:5px;
     line-height:50px;
     font-size:15px;
     color:#9BD3D0;
+    border:none;
+    background:#529D98;
   }
  #loginBox .icon-phone, .icon-anquan{
-   font-size:24px;
+   font-size:22px;
  }
-  .icon-close {
-    background: #CADCE1;
-    border-radius: 50%;
-
+  .codeClose {
+    height:18px;
+    font-size:18px;
+    display:inline-block;
+    margin-left: -69px;
+    color:#CAE1DF;
   }
   .getCode.active {
-    background: #000;
+    background:#529D98;
   }
   .toInfo{
     display: block;
     width: 90%;
     height:45px;
     margin: auto;
-    background:#529D98;
+    background:#000;
     color: #ffffff;
-    border:1px solid #64AAA8;
+    border:1px solid #86B8B8;
     border-radius:22px;
     margin-top:25px;
   }
   .toInfo.isButton {
-    background:#555555;
+    background:#529D98;
   }
 
 </style>
