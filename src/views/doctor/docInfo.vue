@@ -1,5 +1,5 @@
 <template>
-  <div class="docInfo">
+  <div class="doc-info-box" >
     <div class="infoHeader">
       <div class="headerBox">
         <div class="headerLeft">
@@ -12,6 +12,41 @@
         <div class="headerRight iconfont icon-jiantou"></div>
       </div>
     </div>
+    <div class="info-container">
+      <div class="info-box">
+        <div class="info-set">
+          <div class="consult-set">
+            咨询设置
+          </div>
+          <div class="consult-right">
+            <span style="font-size:15px;">未开启</span>
+            <i class="iconfont icon-jiantou"></i>
+          </div>
+        </div>
+        <div class="info-set">
+          <div class="consult-set">
+            预约设置
+          </div>
+          <div class="consult-right">
+            <span style="font-size:15px;">未开启</span>
+            <i class="iconfont icon-jiantou"></i>
+          </div>
+        </div>
+        <div class="phone-set">
+          <div class="info-set">
+            <div>电话咨询</div>
+            <mt-switch v-model="value"></mt-switch>
+          </div>
+          <div class="phone-wenan">
+            开启后，您管理的患者可以主动你电话咨询您
+          </div>
+        </div>
+
+      </div>
+      <b></b>
+      <b></b>
+      <!--<i class="docInfoI"></i>-->
+    </div>
   </div>
 </template>
 <script>
@@ -20,7 +55,8 @@
     name: 'docInfo',
     data () {
       return {
-        selected:'1'
+        selected:'1',
+        value:'23'
       }
     },
     created() {
@@ -31,8 +67,9 @@
 </script>
 
 <style lang="scss">
-  .docInfo{
+  .doc-info-box{
     height:100vh;
+    background: #f4f4f4;
     .infoHeader{
       height:30vh;
       width:100%;
@@ -64,7 +101,7 @@
               .docHosipital{
                 color:#C5EFED;
                 font-size:14px;
-                padding-top:8px;
+                padding-top:10px;
               }
           }
         }
@@ -75,6 +112,94 @@
         }
       }
     }
+  .info-container{
+    position: relative;
+    margin:-65px 16px;
+    background:#fff;
+    box-shadow: 0 12px 5px -2px #EBEFF0; /*底边阴影*/
+    border-radius:5px;
+    .info-box{
+      .info-set{
+        display:flex;
+        justify-content: space-between;
+        padding:15px 16px;
+        border-bottom:1px dashed #f4f4f4;
+        .consult-set{
+          font-size:16px;
+          color:#232323;
+        }
+        .consult-right{
+          color:#bbb;
+          .icon-jiantou{
+            font-size:14px;
+          }
+        }
+
+        .mint-switch-core{
+          height:22px;
+          width:40px;
+        }
+        .mint-switch-core::after {
+          width: 22px;
+          height: 22px;
+          top:-1.5px;
+          background-color: #fff;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+        }
+        .mint-switch-core::before {
+          width: 22px;
+          height: 22px;
+          background-color: #f4f4f4;
+        }
+        .mint-switch-input:checked + .mint-switch-core {
+          border-color: #66B2AA;
+          background-color: #66B2AA;
+        }
+      }
+      .phone-set{
+        .info-set{
+          border:none;
+          padding-bottom:5px;
+        }
+        .phone-wenan{
+          color:#bbb;
+          font-size:14px;
+          padding:10px 16px 15px;
+        }
+      }
+    }
+    b:nth-of-type(1){
+      left: -1px;
+      border-radius: 0 14px 14px 0;
+    }
+    b:nth-of-type(2){
+      right: -1px;
+      border-radius: 14px 0 0 14px;
+    }
+    b{
+      position: absolute;
+      width: 7px;
+      height: 14px;
+      top: 40px;
+      border: 1px solid #66B2AA;
+      z-index: 33;
+      background:#66B2AA;
+      FILTER: alpha(opacity=0); /*androd*/
+      appearance:none;  /*下拉框去掉右侧图标*/
+      -moz-appearance:none;
+      -webkit-appearance:none;
+
+    }
+  .docInfoI{
+      position: absolute;
+      top: 37px;
+      border-bottom: 1px dashed #dfdfdf;
+      width: 90%;
+      left: 5%;
+    }
+
+
+  }
   }
 
 </style>
