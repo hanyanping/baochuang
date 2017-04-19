@@ -80,6 +80,7 @@
       background:#ffffff;
 
     }
+
   }
   .perfectInfoDepartmentBox {
     line-height: 50px;
