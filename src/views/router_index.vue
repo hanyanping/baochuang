@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <router-link to="/baochuan_p/patientMenu"> 患者 </router-link>
-    <router-link to="/baochuan_d/doctorMenu"> 医生 </router-link>
+    <router-link class="btn-index" to="/baochuan_p/patientMenu"> 患者 </router-link>
+    <router-link class="btn-index" to="/baochuan_d/doctorMenu"> 医生 </router-link>
   </div>
 </template>
 
@@ -9,3 +9,16 @@
   export default {
   }
 </script>
+
+<style scoped>
+  .btn-index{
+    display:inline-block;
+    width:80%;
+    padding:20px 40px;
+    margin-top:50px;
+    background:#42b983;
+    text-align:center;
+    color:#fff;
+    font-size:18px;
+  }
+</style>

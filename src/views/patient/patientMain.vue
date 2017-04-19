@@ -6,11 +6,7 @@
   </loadmore>
 </template>
 
-<script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
-<script type="text/javascript" src='http://cdnjsnet.b0.upaiyun.com/vue-resource/0.1.9/vue-resource.min.js'></script>
 <script>
-  import vueResource from 'vue-resource'
-  import util from 'util'
   import Loadmore from '../../components/loadmore';
   import {Indicator} from 'mint-ui';
 

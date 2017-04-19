@@ -6,8 +6,6 @@ import vueResource from 'vue-resource'
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
 import { Loadmore } from 'mint-ui';
-// import doctorRouter from './router/doctor-index'
-// import patientRouter from './router/patient-index'
 import rootRouter from './router/router-index'
 
 Vue.config.productionTip = false
