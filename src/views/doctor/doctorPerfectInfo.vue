@@ -78,6 +78,7 @@
       width:50%;
       margin:0 35% 0;
       background:#ffffff;
+
     }
   }
   .perfectInfoDepartmentBox {
