@@ -2,21 +2,24 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import doctorRouter from './router/doctor-index'
 import vueResource from 'vue-resource'
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
-// import patientRouter from './router/patient-index'/
+import { Loadmore } from 'mint-ui';
+// import doctorRouter from './router/doctor-index'
+// import patientRouter from './router/patient-index'
+import rootRouter from './router/router-index'
 
 Vue.config.productionTip = false
 Vue.use(vueResource)
 Vue.http.options.emulateJSON = true;
 Vue.use(MintUI)
+Vue.component(Loadmore.name, Loadmore);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router: doctorRouter,
+  router: rootRouter,
   template: '<App/>',
   components: { App }
 })

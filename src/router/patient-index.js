@@ -20,5 +20,6 @@ export default new Router({
       name: 'patientMain',
       component: patientMain
     }
+
   ]
 })
