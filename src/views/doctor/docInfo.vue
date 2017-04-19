@@ -64,7 +64,7 @@
               .docHosipital{
                 color:#C5EFED;
                 font-size:14px;
-                padding-top:5px;
+                padding-top:8px;
               }
           }
         }

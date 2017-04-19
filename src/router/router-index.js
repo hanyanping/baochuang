@@ -16,11 +16,13 @@ import Hello from '../components/Hello'
 import patientMenu from '../views/patient/patientMenu'
 //医生端页面
 import doctorMain from '../views/doctor/doctorMain'
-import docLogin from '../views/doctor/doc-login'
+import docLogin from '../views/doctor/docLogin'
 import docMoney from '../views/doctor/docMoney'
 import myPatient from '../views/doctor/myPatient'
 import docConsult from '../views/doctor/docConsult'
 import doctorPerfectInfo from '../views/doctor/doctorPerfectInfo'
+import doctorMenu from '../views/doctor/doctorMenu'
+import docInfo from '../views/doctor/docInfo'
 
 
 Vue.use(Router)
