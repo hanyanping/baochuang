@@ -3,10 +3,11 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '../components/Hello'
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/doc-login'
-import docPerfectInfo from '../views/doctor/doctorPerfectInfo.vue'
+import docMoney from '../views/doctor/docMoney'
+import myPatient from '../views/doctor/myPatient'
+import docConsult from '../views/doctor/docConsult'
 
 Vue.use(Router)
 
@@ -23,14 +24,21 @@ export default new Router({
       component: doctorMain
     },
     {
-      path: '/docPerfectInfo',
-      name: 'docPerfectInfo',
-      component: docPerfectInfo
+      path: '/docMoney',
+      name: 'docMoney',
+      component: docMoney
     },
     {
-      path: '/Hello',
-      name: 'Hello',
-      component: Hello
+      path: '/myPatient',
+      name: 'myPatient',
+      component: myPatient
+    },
+
+    {
+      path: '/docConsult',
+      name: 'docConsult',
+      component: docConsult
     }
+
   ]
 })

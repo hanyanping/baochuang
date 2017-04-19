@@ -3,7 +3,7 @@
     <div class="docPhone inputBox">
       <!--<img :src='phone'/>-->
       <div class="fontBox">
-        <i class="icon iconfont icon-phone"></i>
+        <i class="icon iconfont icon-shouji"></i>
       </div>
       <input type="tel"  maxlength="11" v-model="requestJson.phone" @focus="chn" placeholder="请输入手机号"/>
     </div >
@@ -15,7 +15,7 @@
         <div class="fontBox docCodeFont">
           <i class="icon iconfont  icon-anquan"></i>
           <input type="tel"  maxlength="6" class="codeInput" v-model="requestJson.code" placeholder="请输入验证码"/>
-          <i class="codeClose iconfont icon-tubiao06" @click="closeCode"></i>
+          <i class="codeClose iconfont icon-close2" @click="closeCode"></i>
         </div>
         <button class="getCode" :class="{active: isCode}" @click="getCodes($event)">{{getCode}}</button>
       </div>
@@ -43,17 +43,19 @@
     name: 'docLogin',
     data () {
       return {
-        phone:'../../assets/img/phone.png',
-        code:'../../assets/img/phone.png',
         getCode:"获取验证码",
         time: 5,
         isCode: false,
         active: true,
+        code: '',
         requestJson: {
             phone: '',
             code: ''
         }
       }
+    },
+    created() {
+      document.getElementsByTagName('title')[0].innerHTML = '验证手机'
     },
     watch: {
         'requestJson.phone' () {
@@ -80,8 +82,9 @@
         },
         //  登陸
         login() {
-            if (this.requestJson.phone && this.requestJson.code) {
+            if (this.requestJson.code != this.code) {
               Toast('必填字段不能为空！')
+              return false
             } else {
                 let _this = this
                 this.$http.post('http://testapi.aiganyisheng.net/public/patient_login',this.requestJson)
@@ -89,7 +92,7 @@
                   console.log(result)
                   Toast('登录成功！')
                   setTimeout(function () {
-                    _this.$router.push('/doctor')
+                    _this.$router.push('/docMoney')
                   }, 2000)
                 }, (err) => {
                   console.log(err)
@@ -98,34 +101,36 @@
         },
         //  获取验证码
       getCodes(el) {
-            console.log(el)
-            console.log(this.requestJson.phone)
         if(!(/^1[34578]\d{9}$/.test(this.requestJson.phone))){
           Toast('请输入正确手机号！')
+          return false
         }else{
-          var t = setInterval(() => {
             let _that = this
-            this.$http.post('http://testapi.aiganyisheng.net/public/phone_verification_code',{telphone:_that.requestJson.phone,type:"1"})
-              .then((result) => {
-                console.log(result)
-                setTimeout(function () {
-                }, 2000)
-              }, (err) => {
-                console.log(err)
-              })
-            if (this.time >= 0) {
-              this.time--
-              el.target.innerHTML = this.time + '后刷新'
+            if (this.time >= 0 && this.isCode) {
+                return false
+            } else {
               this.isCode = true
+              this.$http.post('http://testapi.aiganyisheng.net/public/phone_verification_code',{telphone:_that.requestJson.phone,type:"1"})
+                .then((result) => {
+                  this.code = result.code
+                  console.log(result)
+                }, (err) => {
+                  console.log(err)
+                })
+              clearInterval(t);       //停止计时器
+              var t = setInterval(function () {
+                if (_that.time >= 0) {
+                  _that.time--
+                  el.target.innerHTML = _that.time + '后刷新'
+                }
+                if (_that.time === 0) {
+                  _that.time = 5;
+                  _that.isCode = false;
+                  clearInterval(t);       //停止计时器
+                  el.target.innerHTML = '重获验证码'
+                }
+              }, 1000)
             }
-            if (this.time === 0) {
-              clearInterval(t)
-              this.time = 5
-              el.target.innerHTML = '重获验证码'
-              this.isCode = false
-
-            }
-          }, 2000)
         }
 
       },
@@ -175,6 +180,7 @@
     -webkit-appearance:none;
     padding-left:10px;
     background:#529D98;
+
   }
   input::-webkit-input-placeholder{
     color:#9BD3D0;
@@ -218,13 +224,14 @@
     color:#9BD3D0;
     border:none;
     background:#529D98;
+    outline: none;
   }
- #loginBox .icon-phone, .icon-anquan{
+ #loginBox .icon-shouji, .icon-anquan{
    font-size:22px;
  }
   .codeClose {
     height:18px;
-    font-size:18px;
+    font-size:16px;
     display:inline-block;
     margin-left: -69px;
     color:#CAE1DF;
