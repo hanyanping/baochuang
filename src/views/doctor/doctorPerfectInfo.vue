@@ -47,7 +47,7 @@
   .perfectInfoContainer {
     height: 100vh;
     width: 100%;
-    background-image: url('../../assets/img/bginfo.png');
+    background-image: url('../../assets/img/bgPerfectInfo.png');
     background-size: 100% 100%;
 
     .perfectInfoNameBox {
@@ -82,6 +82,7 @@
     }
 
   }
+
   .perfectInfoDepartmentBox {
     line-height: 50px;
     color: #ffffff;
