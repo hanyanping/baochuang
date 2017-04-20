@@ -10,10 +10,13 @@ import baochuan_d_rootRouter from '../components/doctorIndex'
 import baochuan_p_rootRouter from '../components/patientIndex'
 
 // 具体页面
+// 公共页面
+import Hello from '../components/Hello'
 //患者端页面
 import patientMain from '../views/patient/patientMain'
-import Hello from '../components/Hello'
 import patientMenu from '../views/patient/patientMenu'
+import userSignDeal from '../views/patient/userSignDeal'
+import myDoctorList from '../views/patient/myDoctorList'
 //医生端页面
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/docLogin'
@@ -23,7 +26,6 @@ import docConsult from '../views/doctor/docConsult'
 import doctorPerfectInfo from '../views/doctor/doctorPerfectInfo'
 import doctorMenu from '../views/doctor/doctorMenu'
 import docInfo from '../views/doctor/docInfo'
-
 
 Vue.use(Router)
 
@@ -40,6 +42,8 @@ export default new Router({
       children: [
         {path: 'patientMain', component: patientMain},
         {path: 'patientMenu', component: patientMenu},
+        {path: 'userSignDeal', component: userSignDeal},
+        {path: 'myDoctorList', component: myDoctorList},
         {path: 'hello', component: Hello}
       ],
     },
@@ -49,7 +53,7 @@ export default new Router({
       children: [
         {path: 'doctorMain', component: doctorMain},
         {path: 'doctorMenu', component: doctorMenu},
-        {path: 'docLogin',  component: docLogin},
+        {path: 'docLogin', component: docLogin},
         {
           path: 'doctor',
           name: 'doctorMain',

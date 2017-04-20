@@ -1,30 +1,54 @@
 <template>
-  <loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="top">
-    <ul class="example-list">
-      <li v-for="item in msgList" class="example-listitem">{{ item }}</li>
-    </ul>
-  </loadmore>
+  <div class="my-doctor-list-box">
+    <div>
+      <img src="../../assets/img/code.png"><span>什么是主管医生</span>
+      <div>
+        <loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded"
+                  ref="top">
+          <div class="my-doctor-list-box">
+            <div class="my-doctor-list-item-box">
+
+              <div class="my-doctor-list-item-top">
+
+              </div>
+              <div class="my-doctor-list-item-bottom"></div>
+
+
+              <div v-for="item in myDoctorList" class="my-doc-list-item-icon">{{ item.icon }}</div>
+            </div>
+          </div>
+        </loadmore>
+      </div>
+    </div>
+  </div>
+
 </template>
 
+<script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+<script type="text/javascript" src='http://cdnjsnet.b0.upaiyun.com/vue-resource/0.1.9/vue-resource.min.js'></script>
 <script>
+  import vueResource from 'vue-resource'
   import Loadmore from '../../components/loadmore';
   import {Indicator} from 'mint-ui';
-
 
   export default {
     components: {
       'loadmore': Loadmore
     },
+
     data () {
       return {
-        msgList: [],
+        myDoctorList: [],
         allLoaded: false
+
       }
     },
+
     mounted (){
       Indicator.open('Loading...');
       this.load()
     },
+
     methods: {
       load () {
         var url = 'https://testmanage.aiganyisheng.com/product/app/getExchangeRecord.htm'
@@ -39,7 +63,7 @@
           console.log(response.data);
           Indicator.close();
           if (response.data.data.rows.length > 0) {
-            response.data.data.rows.forEach((item) => this.msgList.push(item))
+            response.data.data.rows.forEach((item) => this.myDoctorList.push(item))
           }
         }, response => {
 //           error callback
@@ -62,12 +86,22 @@
   }
 </script>
 
-<style>
+<style lang="scss">
 
+  .my-doctor-list-box.my-doctor-list-box {
+    height: 100vh;
+    width: 100%;
 
-  .btn {
-    width: 100px;
-    height: 100px;
-    background: deepskyblue;
+    .my-doctor-list-box {
+      width: 100%;
+
+      .my-doctor-list-item-top {
+         flex
+      }
+
+    }
+
   }
+
+
 </style>
