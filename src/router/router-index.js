@@ -16,6 +16,7 @@ import Hello from '../components/Hello'
 import patientMenu from '../views/patient/patientMenu'
 import userSignDeal from '../views/patient/userSignDeal'
 import myDoctorList from '../views/patient/myDoctorList'
+import testReportIdentityCard from '../views/patient/testReportIdentityCard'
 import settingVisitTime from '../views/patient/settingVisitTime';
 import reserveList from  '../views/patient/reserveList';
 
@@ -44,10 +45,12 @@ export default new Router({
       path: '/baochuan_p',
       component: baochuan_p_rootRouter,
       children: [
+        // {path: 'patientMain', component: patientMain},
         {path: 'patientMenu', component: patientMenu},
         {path: 'userSignDeal', component: userSignDeal},
         {path: 'myDoctorList', component: myDoctorList},
         {path: 'settingVisitTime', component: settingVisitTime},
+        {path: 'testReportIdentityCard', component: testReportIdentityCard},
         {path: 'hello', component: Hello},
         {path: 'reserveList', component: reserveList}
       ],

@@ -7,7 +7,7 @@ import rootRouter from './router/router-index';
 //引入插件与第三方库
 import 'mint-ui/lib/style.css';
 import MintUI from 'mint-ui';
-import util from 'components/util';
+import util from './components/util';
 
 
 //实例化方法
