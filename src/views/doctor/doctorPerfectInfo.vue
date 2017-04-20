@@ -1,3 +1,4 @@
+<!-- 完善信息 -->
 <template>
   <div class="perfectInfoContainer">
     <div class="perfectInfoNameBox">
@@ -14,6 +15,7 @@
         <option>主任</option>
         <option>副主任</option>
       </select>
+      <span class="perfectInfoIcon iconfont  icon-jiantou"></span>
     </div>
     <div class="perfectInfoLine">
       <div class="perfectInfoLineThis"></div>
@@ -25,12 +27,13 @@
         <option>主任</option>
         <option>副主任</option>
       </select>
+      <span class="perfectInfoIcon iconfont  icon-jiantou"></span>
     </div>
     <div class="perfectInfoLine">
       <div class="perfectInfoLineThis"></div>
     </div>
     <div>
-      <button class="toInfo">
+      <button class="perfectInfoButton">
         <label class="mint-button-text">确认</label>
       </button>
     </div>
@@ -78,9 +81,7 @@
       width:50%;
       margin:0 35% 0;
       background:#ffffff;
-
     }
-
   }
 
   .perfectInfoDepartmentBox {
@@ -93,6 +94,20 @@
       color: #ffffff;
       margin-left: 85px;
     }
+    .perfectInfoIcon {
+      font-size: 18px;
+    }
+  }
+  .perfectInfoButton {
+    display: block;
+    width: 90%;
+    height:45px;
+    margin: auto;
+    background:#529D98;
+    color: #ffffff;
+    border:1px solid #86B8B8;
+    border-radius:22px;
+    margin-top:160px;
   }
   }
 </style>
