@@ -13,11 +13,13 @@ import baochuan_p_rootRouter from '../components/patientIndex'
 // 公共页面
 import Hello from '../components/Hello'
 //患者端页面
-import patientMain from '../views/patient/patientMain'
 import patientMenu from '../views/patient/patientMenu'
 import userSignDeal from '../views/patient/userSignDeal'
 import myDoctorList from '../views/patient/myDoctorList'
-import settingVisitTime from '../views/patient/settingVisitTime'
+import settingVisitTime from '../views/patient/settingVisitTime';
+import reserveList from  '../views/patient/reserveList';
+
+
 //医生端页面
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/docLogin'
@@ -29,7 +31,7 @@ import doctorMenu from '../views/doctor/doctorMenu'
 import docInfo from '../views/doctor/docInfo'
 import docReservation from '../views/doctor/docReservation'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -42,12 +44,12 @@ export default new Router({
       path: '/baochuan_p',
       component: baochuan_p_rootRouter,
       children: [
-        {path: 'patientMain', component: patientMain},
         {path: 'patientMenu', component: patientMenu},
         {path: 'userSignDeal', component: userSignDeal},
         {path: 'myDoctorList', component: myDoctorList},
         {path: 'settingVisitTime', component: settingVisitTime},
-        {path: 'hello', component: Hello}
+        {path: 'hello', component: Hello},
+        {path: 'reserveList', component: reserveList}
       ],
     },
     {
