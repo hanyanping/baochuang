@@ -25,6 +25,7 @@
 
 <script>
   export default {
+    name : '患者端菜单'
   }
 </script>
 

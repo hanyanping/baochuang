@@ -17,6 +17,7 @@
 
 <script>
   export default {
+    name : '设置复诊时间',
     data () {
       return {
         msg: 'settingVisitTime'

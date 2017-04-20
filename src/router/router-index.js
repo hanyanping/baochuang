@@ -12,6 +12,7 @@ import baochuan_p_rootRouter from '../components/patientIndex'
 // 具体页面
 // 公共页面
 import Hello from '../components/Hello'
+
 //患者端页面
 import patientMenu from '../views/patient/patientMenu'
 import userSignDeal from '../views/patient/userSignDeal'

@@ -32,6 +32,7 @@
   import {Indicator} from 'mint-ui';
 
   export default {
+    name: '我的医生列表',
     components: {
       'loadmore': Loadmore
     },
