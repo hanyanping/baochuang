@@ -17,6 +17,7 @@ import patientMain from '../views/patient/patientMain'
 import patientMenu from '../views/patient/patientMenu'
 import userSignDeal from '../views/patient/userSignDeal'
 import myDoctorList from '../views/patient/myDoctorList'
+import settingVisitTime from '../views/patient/settingVisitTime'
 //医生端页面
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/docLogin'
@@ -44,6 +45,7 @@ export default new Router({
         {path: 'patientMenu', component: patientMenu},
         {path: 'userSignDeal', component: userSignDeal},
         {path: 'myDoctorList', component: myDoctorList},
+        {path: 'settingVisitTime', component: settingVisitTime},
         {path: 'hello', component: Hello}
       ],
     },

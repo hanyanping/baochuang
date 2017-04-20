@@ -96,7 +96,7 @@
       width: 100%;
 
       .my-doctor-list-item-top {
-         flex
+
       }
 
     }

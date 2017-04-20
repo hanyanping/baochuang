@@ -22,6 +22,7 @@
       }
     },
     mounted (){
+      console.log('ttttttttttttttt');
       Indicator.open('Loading...');
       this.load()
     },
@@ -64,10 +65,4 @@
 
 <style>
 
-
-  .btn {
-    width: 100px;
-    height: 100px;
-    background: deepskyblue;
-  }
 </style>
