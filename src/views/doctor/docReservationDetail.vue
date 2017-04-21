@@ -34,7 +34,7 @@
     <div class="doc-rev-detail-mid-box">
       <div class="doc-rev-detail-mid-title">
         <span class="iconfont icon-laba"></span>
-        <span>就诊前一天22点失效,无法确认</span>
+        <span>就诊前一天22点失效，无法确认</span>
       </div>
     </div>
 
