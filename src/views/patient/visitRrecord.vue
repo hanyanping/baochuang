@@ -75,6 +75,9 @@
       margin: 10px;
       background: #fff;
       border-radius: 5px;
+      -webkit-box-shadow:0 0 50px #dbe5e4;
+      -moz-box-shadow:0 0 50px #dbe5e4;
+      box-shadow:0 0 50px #dbe5e4;
 
       .visitRrecord-listheader-box{
          padding : 20px;
