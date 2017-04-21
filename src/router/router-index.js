@@ -34,6 +34,8 @@ import doctorMenu from '../views/doctor/doctorMenu'
 import docInfo from '../views/doctor/docInfo'
 import docReservation from '../views/doctor/docReservation'
 import docToBeiZhu from '../views/doctor/docToBeiZhu'
+import docMyInfo from '../views/doctor/docMyInfo'
+import docReservationDetail from '../views/doctor/docReservationDetail'
 
 Vue.use(Router);
 
@@ -100,6 +102,16 @@ export default new Router({
           path: 'docReservation',
           name: 'docReservation',
           component: docReservation
+        },
+        {
+          path: 'docMyInfo',
+          name: 'docMyInfo',
+          component: docMyInfo
+        },
+        {
+          path: 'docReservationDetail',
+          name: 'docReservationDetail',
+          component: docReservationDetail
         },
         {
           path: 'docToBeiZhu',

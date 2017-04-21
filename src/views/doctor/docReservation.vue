@@ -8,7 +8,7 @@
             <span class="doc-reservation-list-content-top-span doc-reservation-list-content-top-name">张飞</span>
             <span class="doc-reservation-list-content-top-span">男</span>
             <span class="doc-reservation-list-content-top-span">28</span>
-            <span class="doc-reservation-list-content-top-span">丙肝</span>
+            <span class="doc-reservation-list-content-top-span-style">脂肪肝</span>
           </div>
           <div class="doc-reservation-list-content-top-right">
             <span class="doc-reservation-list-content-top-span-status">待确认</span>
@@ -67,6 +67,17 @@
 
             .doc-reservation-list-content-top-span {
               padding-left: 15px;
+
+            }
+            .doc-reservation-list-content-top-span-style {
+              color:#fff;
+              /*border:1px solid #60A39B;*/
+              border-radius:10px;
+              padding:1px 6px;
+              margin-left:4px;
+              font-size:12px;
+              vertical-align:middle ;
+              background-color: #cfcfcf;
             }
 
             .doc-reservation-list-content-top-name {
