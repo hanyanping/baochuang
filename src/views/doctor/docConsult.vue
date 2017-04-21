@@ -5,7 +5,6 @@
       <mt-tab-item id="talk">患者聊天</mt-tab-item>
       <mt-tab-item id="report">检查报告</mt-tab-item>
     </mt-navbar>
-
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="personal">
@@ -60,29 +59,103 @@
               <div>就诊记录</div>
               <div class="iconfont icon-jiantou"></div>
             </a>
-            <div class="visit-box">
-              <div class="visit-detail">
-                <div class="visit-core">
-                  <div style="padding-left:16px;">23333</div>
+            <div class="visit-box-info">
+              <div class="visit-box">
+                <div class="visit-detail">
+                  <div class="visit-core">
+                  </div>
+                </div>
+                <div class="visit-xixin">
+                  <div>
+                    03-15 门诊
+                  </div>
+                  <div>
+                    <span class="visit-jiancha">检查</span>
+                    <span class="visit-jiancha">处方</span>
+                    <span class="visit-jiancha">检验</span>
+                  </div>
                 </div>
               </div>
-              <div class="visit-detail">
-                <div class="visit-core">
-                  <div style="padding-left:16px;">23333</div>
+              <div class="visit-box">
+                <div class="visit-detail">
+                  <div class="visit-core">
+                  </div>
+                </div>
+                <div class="visit-xixin">
+                  <div>
+                    03-15 门诊
+                  </div>
+                  <div>
+                    <span class="visit-jiancha">检查</span>
+                    <span class="visit-jiancha">处方</span>
+                    <span class="visit-jiancha">检验</span>
+                  </div>
+                </div>
+              </div>
+              <div class="visit-box">
+                <div class="visit-detail">
+                  <div class="visit-core">
+                  </div>
+                </div>
+                <div class="visit-xixin">
+                  <div>
+                    03-15 门诊
+                  </div>
+                  <div>
+                    <span class="visit-jiancha">检查</span>
+                    <span class="visit-jiancha">处方</span>
+                    <span class="visit-jiancha">检验</span>
+                  </div>
                 </div>
               </div>
             </div>
 
+            <b></b>
+            <b></b>
           </div>
-            <b></b>
-            <b></b>
+
           </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="talk">
         <mt-cell v-for="n in 4" :title="'测试 ' + n" />
       </mt-tab-container-item>
       <mt-tab-container-item id="report">
-        <mt-cell v-for="n in 6" :title="'选项 ' + n" />
+        <div class="report-box">
+          <div class="info-container">
+            <div class="info-box">
+              <div class="info-set">
+                <div class="consult-set">
+                  电解质检查
+                </div>
+                <div class="consult-right">
+                  <span style="font-size:15px;">2017-03-23</span>
+                  <i class="iconfont icon-jiantou"></i>
+                </div>
+              </div>
+              <div class="info-set">
+                <div class="consult-set">
+                  尿常规
+                </div>
+                <div class="consult-right">
+                  <span style="font-size:15px;">2017-04-30</span>
+                  <i class="iconfont icon-jiantou"></i>
+                </div>
+              </div>
+              <div class="info-set">
+                <div class="consult-set">
+                  尿常规
+                </div>
+                <div class="consult-right">
+                  <span style="font-size:15px;">2017-04-30</span>
+                  <i class="iconfont icon-jiantou"></i>
+                </div>
+              </div>
+            </div>
+            <b></b>
+            <b></b>
+            <!--<i class="docInfoI"></i>-->
+          </div>
+        </div>
       </mt-tab-container-item>
     </mt-tab-container>
 
@@ -127,6 +200,55 @@
         color:#232323;
       }
     }
+    .report-box{
+      .info-container{
+        position: relative;
+        margin:15px 16px;
+        background:#fff;
+        -webkit-box-shadow:0 0 19px #E5EBED;
+        -moz-box-shadow:0 0 19px #E5EBED;
+        box-shadow:0 0 25px #E5EBED;
+        border-radius:5px;
+       .info-box{
+        .info-set:nth-last-child(1){
+          border-bottom:none;
+        }
+        .info-set{
+          display:flex;
+          justify-content: space-between;
+          padding:15px 16px;
+          border-bottom:1px dashed #f4f4f4;
+          .consult-set{
+            font-size:16px;
+            color:#232323;
+          }
+          .consult-right{
+            color:#bbb;
+            .icon-jiantou{
+              font-size:14px;
+            }
+          }
+        }
+      }
+      b:nth-of-type(1){
+        left: -1px;
+        border-radius: 0 14px 14px 0;
+      }
+      b:nth-of-type(2){
+        right: -1px;
+        border-radius: 14px 0 0 14px;
+      }
+      b{
+        position: absolute;
+        width: 7px;
+        height: 14px;
+        top: 40px;
+        border: 1px solid #f4f4f4;
+        z-index: 33;
+        background:#f4f4f4;
+      }
+      }
+    }
     .personal-box{
       margin:22px 16px;
       .personal-info, .remark-info, .futher-info, .visit-info{
@@ -137,28 +259,50 @@
         -webkit-box-shadow:0 0 19px #E5EBED;
         -moz-box-shadow:0 0 19px #E5EBED;
         box-shadow:0 0 25px #E5EBED;
-        /*box-shadow: 10px 10px 5px #EBEFF0; !*底边阴影*!*/
-        .visit-box{
-          margin-top:10px;
-          .visit-detail{
-            position:relative;
-            height:60px;
-            width:3px;
-            background:#42b983;
-            margin:0 16px;
-          .visit-core{
-            position:absolute;
-            height:8px;
-            width:8px;
-            border-radius:50%;
-            background:#42b983;
-            left:-5px;
-            top:24px;
-            border:2px solid #fff;
-          }
-  }
-        }
 
+        /*box-shadow: 10px 10px 5px #EBEFF0; !*底边阴影*!*/
+        .visit-box:nth-of-type(1){
+          margin-top:10px;
+        }
+        .visit-box-info{
+          padding-bottom:15px;
+          .visit-box{
+            height:60px;
+            .visit-xixin{
+              position:relative;
+              display:flex;
+              justify-content: space-between;
+              padding:0 16px 0 30px;
+              top:-38px;
+              .visit-jiancha{
+                color:#60A39B;
+                border:1px solid #60A39B;
+                border-radius:10px;
+                padding:1px 3px;
+                margin-left:4px;
+                font-size:14px;
+                vertical-align:middle ;
+              }
+            }
+            .visit-detail{
+              position:relative;
+              height:60px;
+              width:2px;
+              background:#60A39B;
+              margin:0 16px;
+              .visit-core{
+                position:absolute;
+                height:8px;
+                width:8px;
+                border-radius:50%;
+                background:#60A39B;
+                left:-5px;
+                top:24px;
+                border:2px solid #fff;
+              }
+            }
+          }
+        }
         b:nth-of-type(1){
           left: -1px;
           border-radius: 0 14px 14px 0;
@@ -200,17 +344,7 @@
           font-size:15px;
           color:#bbb;
           line-height:20px;
-
         }
-      }
-      .remark-info{
-
-      }
-      .futher-info{
-
-      }
-      .visit-info{
-
       }
     }
   }

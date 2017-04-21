@@ -174,6 +174,7 @@
     background:#529D98;
   }
   #loginBox input{
+    outline: none;
     border:none;
     font-size:16px;
     color:#9BD3D0;
@@ -243,15 +244,18 @@
     display: block;
     width: 90%;
     height:45px;
-    margin: auto;
-    background:#000;
+    margin:25px auto;
+    background:#529D98;
+
     color: #ffffff;
     border:1px solid #86B8B8;
     border-radius:22px;
-    margin-top:25px;
+    outline:none;
+    font-size:18px;
   }
   .toInfo.isButton {
-    background:#529D98;
+    /*background:rgba(82,157,152, 0.9);*/
+    background:#7e8c8d;
   }
 
 </style>

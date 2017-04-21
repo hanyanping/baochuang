@@ -2,30 +2,29 @@
   <div class="docBox">
     <div class="myPatientBox">
       <mt-search>
-
       </mt-search>
     </div>
     <div class="myPatientContent">
       <div class="qianyueBox">
-        <div class="qianyue" @click="qianyue">签约患者 （34）<span ref="qianyueSpan" class="iconfont" :class="{'icon-zhankai': active, 'icon-shouqi': unActive}"></span></div>
+        <div class="qianyue float-box" @click="qianyue">签约患者 （34）<span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai': active, 'icon-shouqi': unActive}"></span></div>
         <div class="">
-
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-  import { Toast,Search } from 'mint-ui'
   export default {
     name: 'myPatient',
     data () {
       return {
         active: false,
-        unActive: true
+        unActive: true,
+        value:"1"
       }
     },
     created() {
+      document.getElementsByTagName('title')[0].innerHTML = '我的患者'
     },
     methods: {
       qianyue() {
@@ -41,50 +40,49 @@
   }
 </script>
 
-<style>
+<style lang="scss">
 
   .docBox{
     background:#fff;
+    .myPatientContent{
+      width:100%;
+      height: auto;
+      .qianyue {
+        height: 44px;
+        line-height: 44px;
+        padding-left: 16px;
+        background: #f4f4f4;
+        .iconfont{
+          font-size:16px;
+          padding-right:16px;
+        }
+      }
+    }
+    .myPatientBox {
+      height: 60px;
+      .mint-searchbar{
+        background:#fff !important;
+        .mint-searchbar-inner{
+          background:#ECECEC !important;
+          .mintui-search{
+            text-align: center;
+          }
+          .mint-searchbar-cancel{
+            color:#bbb!important;
+          }
+          .mint-searchbar-core{
+            background:#ECECEC;
+          }
+          input::-webkit-input-placeholder{
+            color:#D2D2D2;
+            text-align: center;
+          }
+          input{
+            color:#232323;
+          }
+        }
+      }
+    }
   }
-  .myPatientBox {
-    height: 60px;
-  }
-  .myPatientContent{
-    width:100%;
-    height: auto;
-  }
-  .docBox .mint-search{
-  }
-  .docBox input::-webkit-input-placeholder{
-    color:#D2D2D2;
-    text-align: center;
-  }
-  .docBox input{
-    color:#232323;
-  }
-  .docBox .mint-searchbar-cancel{
-    color:#bbb!important;
-  }
-  .docBox .mint-searchbar-core{
-    background:#ECECEC;
-  }
-  .docBox .mint-searchbar{
-    background:#fff !important;
-  }
-  .docBox .mint-searchbar-inner{
-    background:#ECECEC !important;
-  }
-  .docBox .mint-searchbar-inner .mintui-search{
-    padding-top:5px;
-    padding-right:5px;
-  }
-  .qianyue {
-    height: 44px;
-    line-height: 44px;
-    padding-left: 16px;
-    background: #f4f4f4;
-  }
-  .myPatientContent .icon-zhankai-copy{
-    font-size:16px;
-  }
+
 </style>
