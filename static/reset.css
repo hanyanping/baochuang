@@ -69,6 +69,9 @@ a {
 li {
   list-style: none;
 }
+em,i{
+  font-style:normal;
+}
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -99,5 +102,6 @@ html, body {
 body {
   -webkit-text-size-adjust: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-family: '微软雅黑'
+  font-family: '微软雅黑';
+  font-size:18px;
 }

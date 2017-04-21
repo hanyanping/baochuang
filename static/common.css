@@ -1,0 +1,28 @@
+.fl{float:left}
+.fr{float:right;}
+
+.pos-absolute{position:absolute;}
+.pos-relate{position:relative;}
+
+.fs14{font-size:14px;}
+.fs16{font-size:16px;}
+.fs18{font-size:18px;}
+.fs20{font-size:20px;}
+.fs22{font-size:22px;}
+
+
+.bg-grey{background:#f4f4f4;}
+.bg-white{background:#fff;}
+
+
+.color-warn{color:#d80200}
+.color-disable{color:#676767}
+.color-primary{color:#06b80a;}
+
+
+
+.device-height{height:100vh;}
+
+
+.border-bot{border-bottom:1px solid #dedede;}
+.border-top{border-top:1px solid #dedede;}

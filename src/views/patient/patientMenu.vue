@@ -8,10 +8,10 @@
         <router-link class="btn-menu" to="patientMain"> 咨询 </router-link>
       </li>
       <li>
-        <router-link class="btn-menu" to="patientMain"> 我的 </router-link>
+        <router-link class="btn-menu" to="reserveList"> 预约订单 </router-link>
       </li>
       <li>
-        <router-link class="btn-menu" to="patientMain"> 账户 </router-link>
+        <router-link class="btn-menu" to="patientMain"> 咨询订单 </router-link>
       </li>
       <li>
         <router-link class="btn-menu" to="patientMain"> 登录 </router-link>
