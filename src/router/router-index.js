@@ -39,6 +39,7 @@ import docToBeiZhu from '../views/doctor/docToBeiZhu'
 import docMyInfo from '../views/doctor/docMyInfo'
 import docReservationDetail from '../views/doctor/docReservationDetail'
 import docCancelReason from '../views/doctor/docCancelReason'
+import docApplyForCash from '../views/doctor/docApplyForCash'
 
 
 Vue.use(Router);
@@ -127,6 +128,11 @@ export default new Router({
           path: 'docCancelReason',
           name: 'docCancelReason',
           component: docCancelReason
+        },
+        {
+          path: 'docApplyForCash',
+          name: 'docApplyForCash',
+          component: docApplyForCash
         }
       ],
     },
