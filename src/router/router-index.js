@@ -22,6 +22,7 @@ import settingVisitTime from '../views/patient/settingVisitTime';
 import reserveList from  '../views/patient/reserveList';
 
 
+
 //医生端页面
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/docLogin'
@@ -32,6 +33,7 @@ import doctorPerfectInfo from '../views/doctor/doctorPerfectInfo'
 import doctorMenu from '../views/doctor/doctorMenu'
 import docInfo from '../views/doctor/docInfo'
 import docReservation from '../views/doctor/docReservation'
+import docToBeiZhu from '../views/doctor/docToBeiZhu'
 
 Vue.use(Router);
 
@@ -98,8 +100,12 @@ export default new Router({
           path: 'docReservation',
           name: 'docReservation',
           component: docReservation
+        },
+        {
+          path: 'docToBeiZhu',
+          name: 'docToBeiZhu',
+          component: docToBeiZhu
         }
-
       ],
     },
   ]
