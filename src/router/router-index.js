@@ -20,6 +20,8 @@ import myDoctorList from '../views/patient/myDoctorList'
 import testReportIdentityCard from '../views/patient/testReportIdentityCard'
 import settingVisitTime from '../views/patient/settingVisitTime';
 import reserveList from  '../views/patient/reserveList';
+import completeInfo from '../views/patient/completeInfo';
+import visitRrecord from '../views/patient/visitRrecord';
 
 
 
@@ -37,6 +39,7 @@ import docToBeiZhu from '../views/doctor/docToBeiZhu'
 import docMyInfo from '../views/doctor/docMyInfo'
 import docReservationDetail from '../views/doctor/docReservationDetail'
 
+
 Vue.use(Router);
 
 export default new Router({
@@ -50,14 +53,15 @@ export default new Router({
       path: '/baochuan_p',
       component: baochuan_p_rootRouter,
       children: [
-        // {path: 'patientMain', component: patientMain},
         {path: 'patientMenu', component: patientMenu},
         {path: 'userSignDeal', component: userSignDeal},
         {path: 'myDoctorList', component: myDoctorList},
         {path: 'settingVisitTime', component: settingVisitTime},
         {path: 'testReportIdentityCard', component: testReportIdentityCard},
         {path: 'hello', component: Hello},
-        {path: 'reserveList', component: reserveList}
+        {path: 'reserveList', component: reserveList},
+        {path: 'completeInfo', component: completeInfo},
+        {path: 'visitRrecord', component: visitRrecord}
       ],
     },
     {

@@ -30,5 +30,6 @@
 .border-top-dash{border-top:1px dashed #dedede;}
 
 
-.half-circle{width: 7px;height: 14px; top:40px; border-radius: 0 14px 14px 0;}
+.half-circle-left{width: 7px;height: 14px;  border-radius: 0 14px 14px 0;}
+.half-circle-right{width: 7px;height: 14px;  border-radius: 14px 0 0 14px;}
 

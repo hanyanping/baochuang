@@ -1,3 +1,4 @@
+<!--我的医生列表-->
 <template>
   <div class="my-doctor-list-box">
     <div>
@@ -32,7 +33,6 @@
   import {Indicator} from 'mint-ui';
 
   export default {
-    name: '我的医生列表',
     components: {
       'loadmore': Loadmore
     },

@@ -1,3 +1,4 @@
+<!--设置复诊时间-->
 <template>
   <div class="settingVisitTime">
     <h2 class="setting-visit-time-head-box">设置下一次复诊时间</h2>
@@ -17,7 +18,6 @@
 
 <script>
   export default {
-    name : '设置复诊时间',
     data () {
       return {
         msg: 'settingVisitTime'

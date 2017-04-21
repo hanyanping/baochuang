@@ -1,3 +1,4 @@
+<!--用户签约协议-->
 <template>
   <div id="app">
     <div class="">慢病管理签约式服务申请须知</div>
@@ -22,6 +23,5 @@
 
 <script>
   export default {
-    name : '用户签约协议'
   }
 </script>

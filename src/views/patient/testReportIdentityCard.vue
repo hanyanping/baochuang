@@ -1,3 +1,4 @@
+<!--检查报告-输入身份证页-->
 <template>
   <div class="test-report-identity-card">
     <div class="testreportidentitycard-box">
@@ -16,7 +17,6 @@
 
 <script>
   export default {
-    name:'检查报告-输入身份证页',
   }
 </script>
 
