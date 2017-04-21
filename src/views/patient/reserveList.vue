@@ -1,3 +1,4 @@
+<!--预约订单列表-->
 <template>
   <div class="bg-grey device-height">
     <mt-loadmore  :top-method="loadTop" :top-status.sync="topStatus">
@@ -28,16 +29,19 @@
 <script>
   import util from '../../components/util';
     export default{
-//        name: '预约订单列表',
       data() {
           return {
 
           }
       },
       mounted () {
-//          this.getReserveList();
+          this.getReserveList();
       },
       methods: {
+        getReserveList(){
+          this.util.formatPara();
+          this.util.request.post('/')
+        },
         loadTop: {
 
         }
@@ -77,6 +81,8 @@
     width: 78%;
     margin:6px 0 0 6px;
     line-height:22px;
+    flex-direction: column;
+
   }
   .doc-info-tip .doc-hospital{
     width:100%;

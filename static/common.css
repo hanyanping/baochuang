@@ -26,3 +26,8 @@
 
 .border-bot{border-bottom:1px solid #dedede;}
 .border-top{border-top:1px solid #dedede;}
+.border-bot-dash{border-bottom:1px dashed #dedede;}
+.border-top-dash{border-top:1px dashed #dedede;}
+
+.half-circle{width: 7px;height: 14px; top:40px; border-radius: 0 14px 14px 0;}
+
