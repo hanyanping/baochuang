@@ -13,7 +13,7 @@ import baochuan_p_rootRouter from '../components/patientIndex'
 // 公共页面
 import Hello from '../components/Hello'
 
-//患者端页面
+// 患者端页面
 import patientMenu from '../views/patient/patientMenu'
 import userSignDeal from '../views/patient/userSignDeal'
 import myDoctorList from '../views/patient/myDoctorList'
@@ -25,7 +25,7 @@ import visitRrecord from '../views/patient/visitRrecord';
 
 
 
-//医生端页面
+// 医生端页面
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/docLogin'
 import docMoney from '../views/doctor/docMoney'
@@ -38,6 +38,7 @@ import docReservation from '../views/doctor/docReservation'
 import docToBeiZhu from '../views/doctor/docToBeiZhu'
 import docMyInfo from '../views/doctor/docMyInfo'
 import docReservationDetail from '../views/doctor/docReservationDetail'
+import docCancelReason from '../views/doctor/docCancelReason'
 
 
 Vue.use(Router);
@@ -121,6 +122,11 @@ export default new Router({
           path: 'docToBeiZhu',
           name: 'docToBeiZhu',
           component: docToBeiZhu
+        },
+        {
+          path: 'docCancelReason',
+          name: 'docCancelReason',
+          component: docCancelReason
         }
       ],
     },
