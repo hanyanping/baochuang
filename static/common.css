@@ -1,6 +1,11 @@
 .fl{float:left}
 .fr{float:right;}
-
+.float-box:after{
+  display:block;
+  content: '';
+  clear:both;
+  height: 0px;
+}
 .pos-absolute{position:absolute;}
 .pos-relate{position:relative;}
 
@@ -32,4 +37,5 @@
 
 .half-circle-left{width: 7px;height: 14px;  border-radius: 0 14px 14px 0;}
 .half-circle-right{width: 7px;height: 14px;  border-radius: 14px 0 0 14px;}
+
 

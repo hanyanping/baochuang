@@ -46,7 +46,7 @@
         getCode:"获取验证码",
         time: 5,
         isCode: false,
-        active: true,
+        active: false,
         code: '',
         requestJson: {
             phone: '',
@@ -60,16 +60,16 @@
     watch: {
         'requestJson.phone' () {
             if (this.requestJson.phone) {
-              this.active = false
-            } else {
               this.active = true
+            } else {
+              this.active = false
             }
         },
         'requestJson.code' () {
           if (this.requestJson.code) {
-            this.active = false
-          } else {
             this.active = true
+          } else {
+            this.active = false
           }
         }
     },
@@ -246,7 +246,6 @@
     height:45px;
     margin:25px auto;
     background:#529D98;
-
     color: #ffffff;
     border:1px solid #86B8B8;
     border-radius:22px;
@@ -254,8 +253,12 @@
     font-size:18px;
   }
   .toInfo.isButton {
-    /*background:rgba(82,157,152, 0.9);*/
-    background:#7e8c8d;
+    background:rgba(82,157,152, 0.1);
+    border:1px solid #86B8B8;
+    /*background:#7e8c8d;*/
+    -webkit-box-shadow:0 0 10px #fff;
+    -moz-box-shadow:0 0 10px #fff;
+    box-shadow:0 0 10px #fff;
   }
 
 </style>
