@@ -17,12 +17,12 @@ function formatPara(info){
   return str;
 }
 
-
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //创建axios请求对象,规定基本参数
-let request =  axios.create({
+const request =  axios.create({
   baseURL: 'http://testmanage.aiganyisheng.net',
   timeout: 5000,
-  header:'application/x-www-form-urlencoded',
+  header:{"content-type":'application/x-www-form-urlencoded'},
 });
 
 

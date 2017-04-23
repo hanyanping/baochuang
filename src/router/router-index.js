@@ -11,7 +11,7 @@ import baochuan_p_rootRouter from '../components/patientIndex'
 
 // 具体页面
 // 公共页面
-import Hello from '../components/Hello'
+// import Hello from '../components/Hello'
 
 // 患者端页面
 import patientMenu from '../views/patient/patientMenu'
@@ -59,7 +59,6 @@ export default new Router({
         {path: 'myDoctorList', component: myDoctorList},
         {path: 'settingVisitTime', component: settingVisitTime},
         {path: 'testReportIdentityCard', component: testReportIdentityCard},
-        {path: 'hello', component: Hello},
         {path: 'reserveList', component: reserveList},
         {path: 'completeInfo', component: completeInfo},
         {path: 'visitRrecord', component: visitRrecord}
