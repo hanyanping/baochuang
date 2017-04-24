@@ -121,7 +121,7 @@
       background:#62a39c;
       border:1px solid #86B8B8;
       border-radius:22px;
-      margin-top:70px;
+      margin-top:50px;
       outline: none;
       font-size: 16px;
       color: #fff;
