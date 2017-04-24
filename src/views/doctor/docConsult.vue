@@ -118,29 +118,16 @@
       <mt-tab-container-item id="talk">
         <div class="talk-box" >
           <div class="chatroom">
-            <div class="box" ref="box" @click="shouqi">
+            <div class="box" :class="{'boxBottom':bottomShow}" ref="box" @click="shouqi">
               <div class="record clearfix" v-for="(item, key) in message">
+                <div class="talkTime" v-if="item.talkTime!==''">{{item.talkTime}}</div>
                 <div class="avatar left" v-if="item.admin_id === null">
-                  <img src="../../assets/img/code.png" alt="" width="38" height="38">
+                  <img src="../../assets/img/code.png" alt="" width="45" height="45">
                   <span>{{item.content}}</span>
                 </div>
                 <div class="avatar right" v-else>
-                  <img  src="../../assets/img/second.png" alt="" width="38" height="38">
+                  <img  src="../../assets/img/second.png" alt="" width="45" height="45"/>
                   <span >{{item.content}}</span>
-                </div>
-                <!--<div class="message" v-if="item.admin_id === null">-->
-                  <!--<p class="date">{{item.gmt_create|dateFormat('Y-M-D h-m-s')}}</p>-->
-                  <!--<div class="content">-->
-                    <!--<span>{{item.content}}</span>-->
-                    <!--<a :href="item.uploadName" v-if="item.uploadName != '#'">{{item.file_name}}</a>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <div class="message right" v-else>
-                  <p class="date">{{item.gmt_create|dateFormat('Y-M-D h-m-s')}}</p>
-                  <div class="content">
-                    <span>{{item.content}}</span>
-                    <a :href="item.uploadName" v-if="item.uploadName != '#'">{{item.file_name}}</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -148,21 +135,25 @@
               <div class="input-box">
                 <input type="text" v-model="form.content" @focus="shouqi"/>
                 <span v-if="fasong" @click="messages($event)" >发送</span>
-                <span v-else @click="tangchu($event)" ref="messageSpan">+</span>
+                <span v-else @click="tangchu($event)" ref="messageSpan" class="iconfont icon-jiahao"></span>
               </div>
               <div class="foot-box">
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
-                <img src="../../assets/img/code.png"/>
+                <div>
+                  <img src="../../assets/img/fuzhen.png"/>
+                  <p class="text">复诊提醒</p>
+                </div>
+                <div>
+                  <img src="../../assets/img/visit-time.png"/>
+                  <p class="text">就诊时间</p>
+                </div>
+                <div>
+                  <img src="../../assets/img/phone.png"/>
+                  <p class="text">电话随访</p>
+                </div>
+                <div>
+                  <img src="../../assets/img/paizhao.png"/>
+                  <p class="text">照片</p>
+                </div>
               </div>
             </div>
 
@@ -217,6 +208,7 @@
     data () {
       return {
         selected:'talk',
+        bottomShow:false,
         message:[],
         form: {
           file_name: '',
@@ -239,23 +231,33 @@
       document.getElementsByTagName('title')[0].innerHTML = '王倩'
       this.message = [
         {
+          talkTime:"2017-03-23",
           avatar_url: '../../assets/img/code.png',
           content: 'chenchenchen',
           admin_id: null
         },
         {
+          talkTime:"2017-03-24",
           avatar_url: '../../assets/img/second.png',
           content: '看快递费看hanhjv剧看风景你看快hanhjv剧看风景你看快递费看 ',
           admin_id: '11'
         },
         {
+          talkTime:"2017-03-25",
           avatar_url: '../../assets/img/second.png',
           content: 'hanhanhan',
           admin_id: '1'
         },
         {
+          talkTime:"2017-03-26",
           avatar_url: '/src/assets/img/code.png',
           content: 'chenchenchen',
+          admin_id: null
+        },
+        {
+          talkTime:"2017-03-27",
+          avatar_url: '/src/assets/img/code.png',
+          content: 'chenchenchen22',
           admin_id: null
         },
       ]
@@ -270,6 +272,7 @@
         this.item.content= this.form.content;
       },
       tangchu() {
+          this.bottomShow = !this.bottomShow;
         if(this.$refs.reply.className === 'reply prop') {
             return false
         } else {
@@ -307,18 +310,26 @@
         display:flex;
         flex-direction:column;
         min-height:90vh;
-        .box {
+        .box{
           flex:1;
           .record {
-            margin-top: 5px;
+            margin-top: 25px;
+            .talkTime{
+              background:#f4f4f4;
+              width:60%;
+              margin:auto;
+            }
             .avatar {
-              margin-top: 10px;
+              margin-top: 25px;
               width: 100%;
               clear: both;
               overflow: hidden;
               &.right{
                 img, span{
                   float: right;
+                }
+                img{
+                  border-radius:50%;
                 }
                 span{
                   background: #7cfc00;
@@ -329,13 +340,15 @@
                   max-width: 64%;
                   border: 1px solid #ccc;
                   box-shadow: 0 0 3px #ccc;
+                  font-size:16px;
+                  color:#232323;
+                  line-height:20px;
                 }
                 span:before{
                   content: '';
                   font-size: 24pt;
                   width: 0;
                   height: 0;
-                  /*background:#ccc;*/
                   border-top:10px solid transparent;
                   border-bottom:10px solid transparent;
                   border-left:10px solid #7cfc00;
@@ -357,8 +370,11 @@
                   float: left;
                   margin: 0px 10px 0 10px;
                   max-width: 64%;
-                  border: 1px solid #ccc;
+                  border: 1px solid #f4f4f4;
                   box-shadow: 0 0 3px #ccc;
+                  font-size:16px;
+                  color:#232323;
+                  line-height:18px;
                 }
                 span:before{
                   content: '';
@@ -368,7 +384,7 @@
                   border-color:#ccc;
                   border-top:10px solid transparent;
                   border-bottom:10px solid transparent;
-                  border-right:10px solid #ccc;
+                  border-right:10px solid #fff;
                   color: #fff;
                   float: left;
                   position: relative;
@@ -411,6 +427,9 @@
             }
           }
         }
+        .box.boxBottom{
+          margin-bottom:120px;
+        }
         .reply {
           width:100%;
           position:fixed;
@@ -421,12 +440,18 @@
           border-top:1px solid #E2E2E4;
           padding:10px 0;
           &.prop {
-             bottom:100px;
+             bottom:120px;
            }
           .input-box{
             padding-bottom:10px;
             padding-left:10px;
             border-bottom:1px solid #E2E2E4;
+            .icon-jiahao{
+              font-size:28px;
+              color:#bbb;
+              text-align: center;
+              vertical-align: middle;
+            }
             input{
               height:35px;
               width:80%;
@@ -435,9 +460,19 @@
             }
           }
           .foot-box{
-            width:100%;
-            background:#f4f4f4;
+            background: #f4f4f4;
             padding:10px;
+            display:flex;
+            justify-content:space-around;
+            img{
+              height:60px;
+              width:60px;
+            }
+            .text{
+              text-align: center;
+              font-size:14px;
+              color:#808080;
+            }
           }
 
           .upload_format {

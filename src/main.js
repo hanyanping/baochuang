@@ -9,7 +9,6 @@ import 'mint-ui/lib/style.css';
 import MintUI from 'mint-ui';
 import util from './components/util';
 
-
 //实例化方法
 Vue.config.productionTip = false;
 Vue.use(MintUI);

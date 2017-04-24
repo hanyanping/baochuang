@@ -114,6 +114,7 @@
           </div>
         </div>
       </div>
+      <div class="fa-tongzhi" @click="fasongTongzhi">发送<br/> 通知</div>
     </div>
   </div>
 </template>
@@ -134,6 +135,9 @@
       document.getElementsByTagName('title')[0].innerHTML = '我的患者'
     },
     methods: {
+      fasongTongzhi() {
+        this.$router.push({ path: '/baochuan_d/docFaTongzhi' });
+      },
       qianyue() {
         this.unShow = !this.unShow;
         if(this.unActive){
@@ -170,6 +174,19 @@
       position:relative;
       width:100%;
       height: auto;
+      .fa-tongzhi{
+        position:fixed;
+        right:15px;
+        bottom:75px;
+        height:46px;
+        width:46px;
+        color:#fff;
+        font-size:16px;
+        border-radius:50%;
+        background:#5da096;
+        text-align: center;
+        padding:10px 5px 0px;
+      }
       .qianyueBox{
         .list-box{
           position: absolute;

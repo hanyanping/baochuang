@@ -22,10 +22,6 @@ import settingVisitTime from '../views/patient/settingVisitTime';
 import reserveList from  '../views/patient/reserveList';
 import completeInfo from '../views/patient/completeInfo';
 import visitRrecord from '../views/patient/visitRrecord';
-import personalCentre from '../views/patient/personalCentre';
-import selectTestReport from '../views/patient/selectTestReport';
-import integralAccount from '../views/patient/integralAccount'
-import subscribeList from '../views/patient/subscribeList'
 
 
 
@@ -43,8 +39,6 @@ import docToBeiZhu from '../views/doctor/docToBeiZhu'
 import docMyInfo from '../views/doctor/docMyInfo'
 import docReservationDetail from '../views/doctor/docReservationDetail'
 import docCancelReason from '../views/doctor/docCancelReason'
-import docApplyForCash from '../views/doctor/docApplyForCash'
-import docAddBankCard from '../views/doctor/docAddBankCard'
 
 
 Vue.use(Router);
@@ -136,6 +130,16 @@ export default new Router({
           path: 'docCancelReason',
           name: 'docCancelReason',
           component: docCancelReason
+        },
+        {
+          path: 'docFaTongzhi',
+          name: 'docFaTongzhi',
+          component: docFaTongzhi
+        },
+        {
+          path: 'docChoosePatient',
+            name: 'docChoosePatient',
+          component: docChoosePatient
         },
         {
           path: 'docApplyForCash',
