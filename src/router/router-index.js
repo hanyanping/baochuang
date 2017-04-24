@@ -23,6 +23,8 @@ import reserveList from  '../views/patient/reserveList';
 import completeInfo from '../views/patient/completeInfo';
 import visitRrecord from '../views/patient/visitRrecord';
 import personalCentre from '../views/patient/personalCentre';
+import selectTestReport from '../views/patient/selectTestReport';
+import integralAccount from '../views/patient/integralAccount'
 
 
 
@@ -41,6 +43,7 @@ import docMyInfo from '../views/doctor/docMyInfo'
 import docReservationDetail from '../views/doctor/docReservationDetail'
 import docCancelReason from '../views/doctor/docCancelReason'
 import docApplyForCash from '../views/doctor/docApplyForCash'
+
 
 
 Vue.use(Router);
@@ -64,7 +67,9 @@ export default new Router({
         {path: 'reserveList', component: reserveList},
         {path: 'completeInfo', component: completeInfo},
         {path: 'visitRrecord', component: visitRrecord},
-        {path: 'personalCentre',component: personalCentre}
+        {path: 'personalCentre',component: personalCentre},
+        {path: 'selectTestReport',component: selectTestReport},
+        {path: 'integralAccount',component: integralAccount}
       ],
     },
     {
