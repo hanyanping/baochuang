@@ -22,6 +22,7 @@ import settingVisitTime from '../views/patient/settingVisitTime';
 import reserveList from  '../views/patient/reserveList';
 import completeInfo from '../views/patient/completeInfo';
 import visitRrecord from '../views/patient/visitRrecord';
+import personalCentre from '../views/patient/personalCentre';
 
 
 
@@ -62,7 +63,8 @@ export default new Router({
         {path: 'testReportIdentityCard', component: testReportIdentityCard},
         {path: 'reserveList', component: reserveList},
         {path: 'completeInfo', component: completeInfo},
-        {path: 'visitRrecord', component: visitRrecord}
+        {path: 'visitRrecord', component: visitRrecord},
+        {path: 'personalCentre',component: personalCentre}
       ],
     },
     {
