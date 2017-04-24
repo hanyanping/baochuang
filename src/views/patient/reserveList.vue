@@ -3,11 +3,10 @@
   <div class="bg-grey device-height">
     <div class="page-loadmore">
       <mt-loadmore
-        @top-status-change="handleTopChange"
         :top-method="loadTop" ref="loadmore"
         :bottom-method="loadBottom"
-        @bottom-status-change="handleBottomChange"
-        :bottom-all-loaded="allLoaded">
+        :bottom-all-loaded="allLoaded"
+        :autoFill="false">
         <dl class="order-reserve-item bg-white fs16" v-for="item in message">
           <dt class="item-header border-bot">
             <span class="fl">就诊时间：{{item.buyTime}}</span>
@@ -24,16 +23,16 @@
             <span class="item-tips border-top">建议您在2017-03-24 17:00~18:00到达医院就诊</span>
           </dd>
         </dl>
-        <div slot="top" class="mint-loadmore-top">
-          <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-          <mt-spinner type="snake"></mt-spinner>
-          <span v-show="topStatus === 'loading'">正在刷新</span>
-        </div>
-        <div slot="bottom" class="mint-loadmore-bottom">
-          <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'pull' }">加载更多</span>
-          <mt-spinner type="snake"></mt-spinner>
-          <span v-show="bottomStatus === 'loading'">正在加载</span>
-        </div>
+        <!--<div slot="top" class="mint-loadmore-top">-->
+          <!--<span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>-->
+          <!--<mt-spinner type="snake"></mt-spinner>-->
+          <!--<span v-show="topStatus === 'loading'">正在刷新</span>-->
+        <!--</div>-->
+        <!--<div slot="bottom" class="mint-loadmore-bottom">-->
+          <!--<span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'pull' }">加载更多</span>-->
+          <!--<mt-spinner type="snake"></mt-spinner>-->
+          <!--<span v-show="bottomStatus === 'loading'">正在加载</span>-->
+        <!--</div>-->
       </mt-loadmore>
     </div>
   </div>
@@ -91,64 +90,57 @@
 <script>
   import util from '../../components/util';
   import _ from 'lodash';
-    export default{
-      data() {
-          return {
-              topStatus:false,
-              bottomStatus:false,
-              allLoaded: false,
-              nowPage: 1,
-              message: [],
-              postData : {
-                sign: 'f9780de6803b8077534534f44fe0535d',
-                patientId: 6647,
-                rows: 2
-              },
-          }
+  export default {
+    data() {
+      return {
+        allLoaded: false,
+        nowPage: 1,
+        message: [],
+        postData: {
+          sign: 'f9780de6803b8077534534f44fe0535d',
+          patientId: 6647,
+          rows: 2
+        },
+      }
+    },
+    mounted() {
+      this.getReserveList();
+    },
+    methods: {
+      getReserveList() {
+        let that = this;
+        that.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + that.util.formatPara(that.postData) + '&page=1').then((resp) => {
+          console.log(resp.data);
+          that.message = resp.data.data.rows;
+          that.$refs.loadmore.onTopLoaded();
+        }).catch((error) => {
+          console.log(error);
+        })
       },
-      mounted () {
-          this.getReserveList();
+      loadTop() {
+        console.log(2);
+        this.getReserveList();
       },
-      methods: {
-        handleTopChange(status){
-            this.topStatus=status;
-        },
-        handleBottomChange(status) {
-          this.bottomStatus = status;
-        },
-        getReserveList(){
-            let that=this;
-            that.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + that.util.formatPara(that.postData) +'&page=' + that.nowPage).then((resp)=>
-            {that.message = resp.data.data.rows;
-            }).catch((error) => {console.log(error);
-            })
-        },
-        loadTop() {
-          console.log(2);
-//          this.getReserveList();
-//          window.location.href;
-          this.$refs.loadmore.onTopLoaded();
-        },
-        loadBottom(){
-            console.log(1);
-          let _this = this;
-          _this.nowPage++;
-          _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) +'&page=' + _this.nowPage)
-            .then((resp)=>{
-                console.log(resp);
-                if(_this.nowPage * _this.postData.size >= resp.data.total){
-                    _this.allLoaded = true;
-                }else{
-                  _this.message = _this.message.concat(resp.data.data.rows);
-                }
+      loadBottom() {
+        console.log(1);
+        let _this = this;
+        _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) + '&page=' + _this.nowPage)
+          .then((resp) => {
+            _this.nowPage++;
+            console.log(resp);
+            if (_this.nowPage * _this.postData.rows >= resp.data.total) {
+              _this.allLoaded = true;
+            } else {
+              _this.message = _this.message.concat(resp.data.data.rows);
+            }
+            this.$refs.loadmore.onBottomLoaded();
           }).catch((error) => {
-            console.log(error);
-          });
-        this.$refs.loadmore.onBottomLoaded();
-        }
-
+          console.log(error);
+        });
       }
 
     }
+
+  }
 </script>
 

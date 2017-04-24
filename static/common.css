@@ -10,32 +10,39 @@
 .pos-relate{position:relative;}
 
 .fs14{font-size:14px;}
+.fs15{font-size:15px;}
 .fs16{font-size:16px;}
 .fs18{font-size:18px;}
 .fs20{font-size:20px;}
 .fs22{font-size:22px;}
+.fs30{font-size:30px;}
 
 
 .bg-grey{background:#f4f4f4;}
 .bg-white{background:#fff;}
-
+.bg-primary{background:#5fa39b;}
+.bg-disable{background:#e0dede}
 
 .color-warn{color:#d80200}
 .color-disable{color:#676767}
 .color-primary{color:#06b80a;}
+.color-base{color:#5fa39b;}
+.color-grey{color:#999;}
 
 
-
-.device-height{height:100vh;}
+.device-height{min-height:100vh;}
 
 
 .border-bot{border-bottom:1px solid #dedede;}
 .border-top{border-top:1px solid #dedede;}
-.border-bot-dash{border-bottom:1px dashed #dedede;}
-.border-top-dash{border-top:1px dashed #dedede;}
+.border-bot-dash{border-bottom:1px dashed #9ec7c2;}
+.border-top-dash{border-top:1px dashed #9ec7c2;}
 
+
+/*圆角类名*/
+.circular-bead{border-radius: 8px;}
 
 .half-circle-left{width: 7px;height: 14px;  border-radius: 0 14px 14px 0;}
 .half-circle-right{width: 7px;height: 14px;  border-radius: 14px 0 0 14px;}
 
-
+.marginB15{margin-bottom:15px;}
