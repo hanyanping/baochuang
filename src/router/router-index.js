@@ -27,6 +27,7 @@ import personalCentre from '../views/patient/personalCentre';
 import selectTestReport from '../views/patient/selectTestReport';
 import integralAccount from '../views/patient/integralAccount'
 import subscribeList from '../views/patient/subscribeList'
+import hospitalInfo from '../views/patient/hospitalInfo'
 
 
 
@@ -72,7 +73,8 @@ export default new Router({
         {path: 'personalCentre',component: personalCentre},
         {path: 'selectTestReport',component: selectTestReport},
         {path: 'integralAccount',component: integralAccount},
-        {path: 'subscribeList',component: subscribeList}
+        {path: 'subscribeList',component: subscribeList},
+        {path: 'hospitalInfo',component: hospitalInfo}
       ],
     },
     {
