@@ -116,7 +116,58 @@
           </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="talk">
-        <mt-cell v-for="n in 4" :title="'测试 ' + n" />
+        <div class="talk-box" >
+          <div class="chatroom">
+            <div class="box" ref="box" @click="shouqi">
+              <div class="record clearfix" v-for="(item, key) in message">
+                <div class="avatar left" v-if="item.admin_id === null">
+                  <img src="../../assets/img/code.png" alt="" width="38" height="38">
+                  <span>{{item.content}}</span>
+                </div>
+                <div class="avatar right" v-else>
+                  <img  src="../../assets/img/second.png" alt="" width="38" height="38">
+                  <span >{{item.content}}</span>
+                </div>
+                <!--<div class="message" v-if="item.admin_id === null">-->
+                  <!--<p class="date">{{item.gmt_create|dateFormat('Y-M-D h-m-s')}}</p>-->
+                  <!--<div class="content">-->
+                    <!--<span>{{item.content}}</span>-->
+                    <!--<a :href="item.uploadName" v-if="item.uploadName != '#'">{{item.file_name}}</a>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <div class="message right" v-else>
+                  <p class="date">{{item.gmt_create|dateFormat('Y-M-D h-m-s')}}</p>
+                  <div class="content">
+                    <span>{{item.content}}</span>
+                    <a :href="item.uploadName" v-if="item.uploadName != '#'">{{item.file_name}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="reply" ref="reply">
+              <div class="input-box">
+                <input type="text" v-model="form.content" @focus="shouqi"/>
+                <span v-if="fasong" @click="messages($event)" >发送</span>
+                <span v-else @click="tangchu($event)" ref="messageSpan">+</span>
+              </div>
+              <div class="foot-box">
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+                <img src="../../assets/img/code.png"/>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="report">
         <div class="report-box">
@@ -161,25 +212,76 @@
   </div>
 </template>
 <script>
-//  import { Navbar, TabItem } from 'mint-ui';
-//  Vue.component(Navbar.name, Navbar);
-//  Vue.component(TabItem.name, TabItem);
-
   export default {
     name: 'docConsult',
     data () {
       return {
-        selected:'personal'
+        selected:'talk',
+        message:[],
+        form: {
+          file_name: '',
+          content: '',
+          usiid: ''
+        },
+        fasong: false
       }
+    },
+    watch: {
+        'form.content' () {
+            if (this.form.content) {
+                this.fasong = true
+            } else {
+              this.fasong = false
+            }
+        }
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '王倩'
+      this.message = [
+        {
+          avatar_url: '../../assets/img/code.png',
+          content: 'chenchenchen',
+          admin_id: null
+        },
+        {
+          avatar_url: '../../assets/img/second.png',
+          content: '看快递费看hanhjv剧看风景你看快hanhjv剧看风景你看快递费看 ',
+          admin_id: '11'
+        },
+        {
+          avatar_url: '../../assets/img/second.png',
+          content: 'hanhanhan',
+          admin_id: '1'
+        },
+        {
+          avatar_url: '/src/assets/img/code.png',
+          content: 'chenchenchen',
+          admin_id: null
+        },
+      ]
+    },
+    methods: {
+      // input,focus收起
+      shouqi() {
+        this.$refs.reply.className = 'reply'
+      },
+      //  回复消息
+      messages() {
+        this.item.content= this.form.content;
+      },
+      tangchu() {
+        if(this.$refs.reply.className === 'reply prop') {
+            return false
+        } else {
+          this.$refs.reply.className += ' prop'
+        }
+      },
     }
   }
 
 </script>
 
-<style  lang="scss">
+<style lang="scss">
   .docConsult{
     .mint-navbar{
       border-bottom: 1px solid #f4f4f4;
@@ -199,6 +301,158 @@
         color:#232323;
       }
     }
+    .talk-box{
+      background:#f8f8f8;
+      .chatroom {
+        display:flex;
+        flex-direction:column;
+        min-height:90vh;
+        .box {
+          flex:1;
+          .record {
+            margin-top: 5px;
+            .avatar {
+              margin-top: 10px;
+              width: 100%;
+              clear: both;
+              overflow: hidden;
+              &.right{
+                img, span{
+                  float: right;
+                }
+                span{
+                  background: #7cfc00;
+                  padding: 10px;
+                  border-radius: 10px;
+                  float: right;
+                  margin: 6px 10px 0 10px;
+                  max-width: 64%;
+                  border: 1px solid #ccc;
+                  box-shadow: 0 0 3px #ccc;
+                }
+                span:before{
+                  content: '';
+                  font-size: 24pt;
+                  width: 0;
+                  height: 0;
+                  /*background:#ccc;*/
+                  border-top:10px solid transparent;
+                  border-bottom:10px solid transparent;
+                  border-left:10px solid #7cfc00;
+                  color: #fff;
+                  float:right;
+                  position: relative;
+                  top: 0px;
+                  right:-20px;
+                }
+               }
+               &.left{
+                 img, span{
+                   float:left;
+                 }
+                span{
+                  background: #fff;
+                  padding: 10px;
+                  border-radius: 10px;
+                  float: left;
+                  margin: 0px 10px 0 10px;
+                  max-width: 64%;
+                  border: 1px solid #ccc;
+                  box-shadow: 0 0 3px #ccc;
+                }
+                span:before{
+                  content: '';
+                  width:0;
+                  height:0;
+                  font-size:0;
+                  border-color:#ccc;
+                  border-top:10px solid transparent;
+                  border-bottom:10px solid transparent;
+                  border-right:10px solid #ccc;
+                  color: #fff;
+                  float: left;
+                  position: relative;
+                  top: 0px;
+                  left:-20px;
+                }
+              }
+              img {
+                border-radius: 50%;
+                display: inline-block;
+              }
+              .name {
+                font-size: 12px;
+                color: #807f8a;
+              }
+            }
+            .message {
+              float: left;
+              margin: 0 10px;
+              .date {
+                font-size: 12px;
+                color: #807f8a;
+              }
+              &.right {
+                 float: right;
+                 text-align: right;
+               }
+              .content {
+                display: inline-block;
+                background-color: #EFEFEF;
+                color: #027EE5;
+                border: 1px solid #cccccc;
+                border-radius: 10px;
+                padding: 10px;
+                a {
+                  color: red;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+        .reply {
+          width:100%;
+          position:fixed;
+          bottom:0;
+          height:40px;
+          line-height:30px;
+          background:#f4f4f4;
+          border-top:1px solid #E2E2E4;
+          padding:10px 0;
+          &.prop {
+             bottom:100px;
+           }
+          .input-box{
+            padding-bottom:10px;
+            padding-left:10px;
+            border-bottom:1px solid #E2E2E4;
+            input{
+              height:35px;
+              width:80%;
+              border:1px solid #E2E2E4;
+              border-radius: 5px;
+            }
+          }
+          .foot-box{
+            width:100%;
+            background:#f4f4f4;
+            padding:10px;
+          }
+
+          .upload_format {
+            width: 200px;
+            text-overflow: ellipsis;
+            white-space:nowrap;
+            overflow: hidden;
+          }
+          textarea {
+            border: none !important;
+          }
+        }
+
+      }
+    }
     .report-box{
       .info-container{
         position: relative;
@@ -206,7 +460,7 @@
         background:#fff;
         -webkit-box-shadow:0 0 19px #E5EBED;
         -moz-box-shadow:0 0 19px #E5EBED;
-        box-shadow:0 0 25px #E5EBED;
+        box-shadow:0 0 19px #E5EBED;
         border-radius:5px;
        .info-box{
         .info-set:nth-last-child(1){

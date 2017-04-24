@@ -4,9 +4,29 @@
       <mt-search>
       </mt-search>
     </div>
+
     <div class="myPatientContent">
       <div class="qianyueBox">
-        <div class="qianyue float-box" @click="qianyue">签约患者 （34）<span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai': active, 'icon-shouqi': unActive}"></span></div>
+        <div class="qianyue float-box"  @click="qianyue">
+          <span ref="qianyuePatient" class="qianyuePatient">签约患者</span>
+          (<span ref="qianyueNum" class="qianyueNum">000</span>)
+          <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': active, 'icon-shouqi': unActive}">
+          </span>
+        </div>
+        <div class="list-box" :class="{yincang:unShow}">
+          <div class="guanzhu float-box" @click="firstLine">
+            <span ref="guanzhuPatient">关注患者</span>
+            <span ref='guanzhuNum' class="fr">111</span>
+          </div>
+          <div class="line-box"></div>
+          <div class="all-patient" @click="secondLine">
+            <span ref="quanbuPatient">全部患者</span>
+            <span ref="quanbuNum" class="fr">222</span>
+          </div>
+        </div>
+        <div class="zhegaiceng" :class="{yincang:unShow}">
+          <div class="list-bottom"></div>
+        </div>
         <div class="patient-box">
           <div class="patient-list">
             <div class="patient-info-box">
@@ -71,12 +91,27 @@
               3月23日咨询过我
             </div>
           </div>
-        </div>
-        <div class="zhegaiceng">
-          <div class="list-box">
-
+          <div class="patient-list">
+            <div class="patient-info-box">
+              <div class="patient-img">
+                <img src="../../assets/img/bgPerfectInfo.png"/>
+              </div>
+              <div class="patient-info">
+                <div class="patient-name-info">
+                  <span class="patient-name">王倩</span>
+                  <span class="patient-age">55岁</span>
+                  <i class="iconfont icon-nan"></i>
+                  <span class="jibing">乙肝</span>
+                </div>
+                <div class="visit-time">
+                  复诊时间：2017-04-12
+                </div>
+              </div>
+            </div>
+            <div class="patient-time">
+              3月23日咨询过我
+            </div>
           </div>
-          <div class="list-bottom"></div>
         </div>
       </div>
     </div>
@@ -87,9 +122,12 @@
     name: 'myPatient',
     data () {
       return {
-        active: false,
-        unActive: true,
-        value:"1"
+        active: true,
+        unActive: false,
+        unShow:true,
+        value:"1",
+        selected:'qianyue-patient',
+        message:[]
       }
     },
     created() {
@@ -97,12 +135,28 @@
     },
     methods: {
       qianyue() {
+        this.unShow = !this.unShow;
         if(this.unActive){
           console.log(1)
         }
 //          this.$refs.qianyueSpan.className = 'iconfont icon-shouqi'
         this.active = !this.active
         this.unActive = !this.unActive
+      },
+      firstLine() {
+         this.$refs.qianyuePatient.innerHTML = this.$refs.guanzhuPatient.innerHTML;
+         this.$refs.qianyueNum.innerHTML = this.$refs.guanzhuNum.innerHTML;
+         this.unShow = !this.unShow;
+         this.active = !this.active
+         this.unActive = !this.unActive
+      },
+      secondLine() {
+        this.$refs.qianyuePatient.innerHTML = this.$refs.quanbuPatient.innerHTML;
+        this.$refs.qianyueNum.innerHTML = this.$refs.quanbuNum.innerHTML;
+        this.unShow = !this.unShow;
+        this.active = !this.active
+        this.unActive = !this.unActive
+
 
       }
     }
@@ -113,21 +167,66 @@
   .docBox{
     background:#fff;
     .myPatientContent{
+      position:relative;
       width:100%;
       height: auto;
       .qianyueBox{
+        .list-box{
+          position: absolute;
+          top: 44px;
+          width:100%;
+          height:100px;
+          background:#fff;
+          opacity:1;
+          filter: alpha(opacity=100);
+          .guanzhu, .all-patient{
+            padding:16px;
+            font-size:16px;
+            color:#232323;
+            .fr{
+              border:1px solid #fff;
+              border-radius:10px;
+              padding:2px 10px;
+              text-align: center;
+              background:#61C6B4;
+              color:#fff;
+              font-size:14px;
+            }
+          }
+          .line-box{
+            height:1px;
+            background:#f4f4f4;
+            margin:auto 16px;
+          }
+        }
+        .zhegaiceng{
+          position:absolute;
+          min-height:100vh;
+          width:100%;
+          top:144px;
+          background:#000;
+          opacity:0.5;
+          filter: alpha(opacity=50);
+        }
+        .yincang{
+          display:none;
+        }
         .qianyue {
           height: 44px;
           line-height: 44px;
           padding-left: 16px;
+          background:#f4f4f4;
           border-top:1px solid #f4f4f4;
           -webkit-box-shadow:0 5px 5px #D2E6E3;
           -moz-box-shadow:0 5px 5px #D2E6E3;
           box-shadow:0 5px 5px #D2E6E3;
           margin-bottom:10px;
+          font-size:16px;
+          color:#232323;
           .iconfont{
             font-size:16px;
             padding-right:16px;
+            color:#bbb;
           }
         }
         .patient-box{
@@ -193,24 +292,6 @@
             }
           }
         }
-          .zhegaiceng{
-            position:relative;
-            min-height:500px;
-            top:-71vh;
-            background:#000;
-            opacity:0.1;
-            filter: alpha(opacity=10);
-            .list-box{
-              height:60px;
-              background:#fff;
-            }
-            .list-bottom{
-              height:440px;
-              background:#000;
-              opacity:0.1;
-              filter: alpha(opacity=10);
-            }
-          }
       }
     }
     .myPatientBox {
