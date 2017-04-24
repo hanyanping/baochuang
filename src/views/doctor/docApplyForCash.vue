@@ -66,7 +66,7 @@
       margin-bottom:15px;
       -webkit-box-shadow:0 0 19px #d4dadc;
       -moz-box-shadow:0 0 19px #d4dadc;
-      box-shadow:0 0 25px #d4dadc;
+      box-shadow:0 0 19px #d4dadc;
 
       .doc-applyforcash-mid-header-box {
         margin: 15px 15px 15px;

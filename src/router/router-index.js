@@ -47,7 +47,7 @@ import docReservationDetail from '../views/doctor/docReservationDetail'
 import docCancelReason from '../views/doctor/docCancelReason'
 import docApplyForCash from '../views/doctor/docApplyForCash'
 import docAddBankCard from '../views/doctor/docAddBankCard'
-
+import docConsultSetting from '../views/doctor/docConsultSetting'
 
 Vue.use(Router);
 
@@ -149,6 +149,11 @@ export default new Router({
           path: 'docAddBankCard',
           name: 'docAddBankCard',
           component: docAddBankCard
+        },
+        {
+          path: 'docConsultSetting',
+          name: 'docConsultSetting',
+          component: docConsultSetting
         }
       ],
     },
