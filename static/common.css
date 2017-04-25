@@ -12,7 +12,9 @@
 .fs14{font-size:14px;}
 .fs15{font-size:15px;}
 .fs16{font-size:16px;}
+.fs17{font-size:17px;}
 .fs18{font-size:18px;}
+.fs19{font-size:19px;}
 .fs20{font-size:20px;}
 .fs22{font-size:22px;}
 .fs30{font-size:30px;}
@@ -22,16 +24,22 @@
 .bg-white{background:#fff;}
 .bg-primary{background:#5fa39b;}
 .bg-disable{background:#e0dede}
+.bg-cure{background:#60a39c;}
+.bg-selected{background:#daf4fa;}
+.bg-button{background:#5fa39b;}
 
 .color-warn{color:#d80200}
 .color-disable{color:#676767}
 .color-primary{color:#06b80a;}
 .color-base{color:#5fa39b;}
 .color-grey{color:#999;}
+.color-white{color:white;}
+.color-shallow{color:#666;}
+.color-selected{color:#5ac4b2;}
 
 
 .device-height{min-height:100vh;}
-
+.item-height{height:50px;}
 
 .border-bot{border-bottom:1px solid #dedede;}
 .border-top{border-top:1px solid #dedede;}
@@ -42,7 +50,19 @@
 /*圆角类名*/
 .circular-bead{border-radius: 8px;}
 
+/*半圆*/
 .half-circle-left{width: 7px;height: 14px;  border-radius: 0 14px 14px 0;}
 .half-circle-right{width: 7px;height: 14px;  border-radius: 14px 0 0 14px;}
 
+
 .marginB15{margin-bottom:15px;}
+.marginL15{margin-left:15px;}
+.marginR15{margin-right:15px;}
+.marginT10{margin-top:10px;}
+
+
+.paddingL10{padding-left:10px;}
+.paddingL15{padding-left:15px;}
+.paddingR15{padding-right:15px;}
+.paddingT15{padding-top:15px;}
+.paddingB15{padding-bottom:15px;}

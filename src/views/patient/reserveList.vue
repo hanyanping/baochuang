@@ -1,43 +1,4 @@
 <!--预约订单列表-->
-<template>
-  <div class="bg-grey device-height">
-    <div class="page-loadmore">
-      <mt-loadmore
-        :top-method="loadTop" ref="loadmore"
-        :bottom-method="loadBottom"
-        :bottom-all-loaded="allLoaded"
-        :autoFill="false">
-        <dl class="order-reserve-item bg-white fs16" v-for="item in message">
-          <dt class="item-header border-bot">
-            <span class="fl">就诊时间：{{item.buyTime}}</span>
-            <span class="fr color-warn">待确认{{item.doctorId}}</span>
-          </dt>
-          <dd class="item-content">
-            <span class="doc-info">
-              <img class="fl" src="../../assets/img/second.png" alt="正在加载">
-              <span class="doc-info-tip fl">
-                <em>王鲲鹏 主任医师</em>
-                <p class="doc-hospital color-disable fs16">保定市传染病医院</p>
-              </span>
-            </span>
-            <span class="item-tips border-top">建议您在2017-03-24 17:00~18:00到达医院就诊</span>
-          </dd>
-        </dl>
-        <!--<div slot="top" class="mint-loadmore-top">-->
-          <!--<span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>-->
-          <!--<mt-spinner type="snake"></mt-spinner>-->
-          <!--<span v-show="topStatus === 'loading'">正在刷新</span>-->
-        <!--</div>-->
-        <!--<div slot="bottom" class="mint-loadmore-bottom">-->
-          <!--<span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'pull' }">加载更多</span>-->
-          <!--<mt-spinner type="snake"></mt-spinner>-->
-          <!--<span v-show="bottomStatus === 'loading'">正在加载</span>-->
-        <!--</div>-->
-      </mt-loadmore>
-    </div>
-  </div>
-</template>
-
 <style scoped>
   .order-reserve-item{
     width:92%;
@@ -85,6 +46,46 @@
   }
 
 </style>
+
+<template>
+  <div class="bg-grey device-height">
+    <div class="page-loadmore">
+      <mt-loadmore
+        :top-method="loadTop" ref="loadmore"
+        :bottom-method="loadBottom"
+        :bottom-all-loaded="allLoaded"
+        :autoFill="false">
+        <dl class="order-reserve-item bg-white fs16" v-for="item in message">
+          <dt class="item-header border-bot">
+            <span class="fl">就诊时间：{{item.buyTime}}</span>
+            <span class="fr color-warn">待确认{{item.doctorId}}</span>
+          </dt>
+          <dd class="item-content">
+            <span class="doc-info">
+              <img class="fl" src="../../assets/img/second.png" alt="正在加载">
+              <span class="doc-info-tip fl">
+                <em>王鲲鹏 主任医师</em>
+                <p class="doc-hospital color-disable fs16">保定市传染病医院</p>
+              </span>
+            </span>
+            <span class="item-tips border-top">建议您在2017-03-24 17:00~18:00到达医院就诊</span>
+          </dd>
+        </dl>
+        <!--<div slot="top" class="mint-loadmore-top">-->
+          <!--<span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>-->
+          <!--<mt-spinner type="snake"></mt-spinner>-->
+          <!--<span v-show="topStatus === 'loading'">正在刷新</span>-->
+        <!--</div>-->
+        <!--<div slot="bottom" class="mint-loadmore-bottom">-->
+          <!--<span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'pull' }">加载更多</span>-->
+          <!--<mt-spinner type="snake"></mt-spinner>-->
+          <!--<span v-show="bottomStatus === 'loading'">正在加载</span>-->
+        <!--</div>-->
+      </mt-loadmore>
+    </div>
+  </div>
+</template>
+
 
 
 <script>
