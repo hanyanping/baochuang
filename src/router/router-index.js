@@ -27,6 +27,7 @@ import selectTestReport from '../views/patient/selectTestReport';
 import integralAccount from '../views/patient/integralAccount'
 import subscribeList from '../views/patient/subscribeList'
 import hospitalInfo from '../views/patient/hospitalInfo'
+import selectTestReportCheck from '../views/patient/selectTestReportCheck'
 
 
 
@@ -49,6 +50,7 @@ import docAddBankCard from '../views/doctor/docAddBankCard'
 import docConsultSetting from '../views/doctor/docConsultSetting'
 import docFaTongzhi from '../views/doctor/docFaTongzhi'
 import docChoosePatient from '../views/doctor/docChoosePatient'
+
 
 Vue.use(Router);
 
@@ -75,7 +77,8 @@ export default new Router({
         {path: 'selectTestReport',component: selectTestReport},
         {path: 'integralAccount',component: integralAccount},
         {path: 'subscribeList',component: subscribeList},
-        {path: 'hospitalInfo',component: hospitalInfo}
+        {path: 'hospitalInfo',component: hospitalInfo},
+        {path: 'selectTestReportCheck',component: selectTestReportCheck}
       ],
     },
     {
