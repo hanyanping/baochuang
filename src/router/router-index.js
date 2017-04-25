@@ -47,6 +47,8 @@ import docCancelReason from '../views/doctor/docCancelReason'
 import docApplyForCash from '../views/doctor/docApplyForCash'
 import docAddBankCard from '../views/doctor/docAddBankCard'
 import docConsultSetting from '../views/doctor/docConsultSetting'
+import docFaTongzhi from '../views/doctor/docFaTongzhi'
+import docChoosePatient from '../views/doctor/docChoosePatient'
 
 Vue.use(Router);
 
