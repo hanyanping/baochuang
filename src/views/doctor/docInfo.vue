@@ -35,9 +35,9 @@
         <div class="phone-set">
           <div class="info-set">
             <div>电话咨询</div>
-            <mt-switch v-model="value"></mt-switch>
+            <mt-switch v-model="value" @click="openPhone"></mt-switch>
           </div>
-          <div class="phone-wenan">
+          <div class="phone-wenan" >
             开启后，您管理的患者可以主动你电话咨询您
           </div>
         </div>
@@ -56,12 +56,17 @@
     data () {
       return {
         selected:'1',
-        value:'23'
+        value:false
       }
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '我的信息'
-    }
+    },
+    methods: {
+      openPhone() {
+         this.value = !this.value;
+      }
+   }
   }
 
 </script>
@@ -163,6 +168,9 @@
             color:#bbb;
             font-size:14px;
             padding:10px 16px 15px;
+          }
+          .showtext{
+            display:none;
           }
         }
       }

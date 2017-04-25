@@ -51,6 +51,7 @@ import docAddBankCard from '../views/doctor/docAddBankCard'
 import docConsultSetting from '../views/doctor/docConsultSetting'
 import docFaTongzhi from '../views/doctor/docFaTongzhi'
 import docChoosePatient from '../views/doctor/docChoosePatient'
+import docReportDetail from '../views/doctor/docReportDetail'
 
 Vue.use(Router);
 
@@ -169,6 +170,11 @@ export default new Router({
           path: 'docConsultSetting',
           name: 'docConsultSetting',
           component: docConsultSetting
+        },
+        {
+          path: 'docReportDetail',
+          name: 'docReportDetail',
+          component: docReportDetail
         }
       ],
     },

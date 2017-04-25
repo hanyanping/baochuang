@@ -24,10 +24,13 @@
             </div>
             <div class="personal-info-flex">
               <div>主疾病</div>
-              <div>脂肪肝</div>
+              <div style="color:#bbb;">脂肪肝</div>
             </div>
             <div class="more">
-              <span>查看更多 <i class="iconfont icon-jiantou"></i></span>
+              <span @click="chakan">查看更多 <i class="iconfont icon-zhankai2"></i></span>
+            </div>
+            <div class="more">
+              <span @click="shouqi">收起 <i class="iconfont icon-zhankai-copy"></i></span>
             </div>
             <b></b>
             <b></b>
@@ -38,7 +41,8 @@
               <div class="iconfont icon-jiantou"></div>
             </a>
             <div class="beizhu-info">
-              <span>重点关注，有高血压，糖尿病伴随疾病，有家族遗传史（母亲有乙肝）</span>
+              <!--<span>重点关注，有高血压，糖尿病伴随疾病，有家族遗传史（母亲有乙肝）</span>-->
+              <a href="" style="color:#82AAA1;">点击添加备注信息 </a>
             </div>
             <b></b>
             <b></b>
@@ -49,7 +53,8 @@
               <div class="iconfont icon-jiantou"></div>
             </a>
             <div class="beizhu-info">
-              <span>下次复诊：2017年5月21日</span>
+              <a href="" style="color:#82AAA1;">点击设置备注信息 </a>
+              <!--<span>下次复诊：2017年5月21日</span>-->
             </div>
             <b></b>
             <b></b>
@@ -60,6 +65,7 @@
               <div class="iconfont icon-jiantou"></div>
             </a>
             <div class="visit-box-info">
+              <div class="no-visit">暂无就诊记录</div>
               <div class="visit-box">
                 <div class="visit-detail">
                   <div class="visit-core">
@@ -243,13 +249,13 @@
           admin_id: '11'
         },
         {
-          talkTime:"2017-03-25",
+          talkTime:"",
           avatar_url: '../../assets/img/second.png',
           content: 'hanhanhan',
           admin_id: '1'
         },
         {
-          talkTime:"2017-03-26",
+          talkTime:"",
           avatar_url: '/src/assets/img/code.png',
           content: 'chenchenchen',
           admin_id: null
@@ -260,6 +266,18 @@
           content: 'chenchenchen22',
           admin_id: null
         },
+        {
+          talkTime:"2017-03-27",
+          avatar_url: '/src/assets/img/code.png',
+          content: 'chenchenchen22',
+          admin_id: null
+        },
+        {
+          talkTime:"2017-03-27",
+          avatar_url: '/src/assets/img/code.png',
+          content: 'chenchenchen221',
+          admin_id: null
+        }
       ]
     },
     methods: {
@@ -279,6 +297,12 @@
           this.$refs.reply.className += ' prop'
         }
       },
+      chakan() {
+
+      },
+      shouqi() {
+
+      }
     }
   }
 
@@ -312,12 +336,17 @@
         min-height:90vh;
         .box{
           flex:1;
+          margin-bottom:100px;
           .record {
             margin-top: 25px;
             .talkTime{
-              background:#f4f4f4;
-              width:60%;
+              background:#E0E0E0;
+              color:#fff;
+              width:50%;
               margin:auto;
+              text-align: center;
+              border-radius: 50px;
+              padding:6px 10px;
             }
             .avatar {
               margin-top: 25px;
@@ -554,6 +583,11 @@
         }
         .visit-box-info{
           padding-bottom:15px;
+          .no-visit{
+            color:#82AAA1;
+            padding:16px;
+            font-size:15px;
+          }
           .visit-box{
             height:60px;
             .visit-xixin{

@@ -23,13 +23,13 @@
     <div class="lineBox">
       <div class="line"></div>
     </div>
-    <button class="toInfo" :class="{isButton: active}" @click="login">
+    <button class="toInfo" :class="{'isButton': active}" @click="login">
       <label class="mint-button-text">登录</label>
     </button>
-    <div class="" style="margin-bottom:10px;">
-      <p class="loginXie" style="text-align:center;">
-        <a href="#" class="loginXiyi" style="color:#009fe9;font-size:13px; padding-left:5px;">
-          <span  style="color:#bbb;">点击登录即表示同意</span>
+    <div class="" style="margin-top:10px;margin-left:5%;">
+      <p class="loginXie" >
+        <a href="#" class="loginXiyi" style="color:#46FDE4;font-size:14px; padding-left:5px;">
+          <span  style="color:#D7E7E2;">点击登录即代表同意</span>
           《用户签约协议》
         </a>
       </p>
@@ -183,12 +183,13 @@
     background:#529D98;
 
   }
-  input::-webkit-input-placeholder{
-    color:#9BD3D0;
+  input::-webkit-input-placeholder {
+    color:#D7E7E2;
+    font-size:16px;
   }
   .codeBox{
     width:100%;
-    padding:0 16px;
+    padding:0 5%;
     background:#529D98;
   }
   .codeInput{
@@ -200,7 +201,7 @@
     display:flex;
     flex:1;
     width:100%;
-    padding:40px 16px 0;
+    padding:40px 5% 0;
     text-align: center;
     background:#529D98;
   }
@@ -213,7 +214,7 @@
     display:flex;
     justify-content: flex-start;
     flex-wrap: nowrap;
-    color: #9BD3D0;
+    color: #D7E7E2;
     background: #529D98;
     max-width:65%;
     min-width:65%;
@@ -222,19 +223,20 @@
     padding-left:5px;
     line-height:50px;
     font-size:15px;
-    color:#9BD3D0;
+    color:#D7E7E2;
     border:none;
     background:#529D98;
     outline: none;
   }
  #loginBox .icon-shouji, .icon-anquan{
    font-size:22px;
+   color:#fff;
  }
   .codeClose {
     height:18px;
     font-size:16px;
     display:inline-block;
-    margin-left: -69px;
+    margin-left: -30%;
     color:#CAE1DF;
   }
   .getCode.active {

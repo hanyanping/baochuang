@@ -1,124 +1,304 @@
 <template>
   <div class="docBox">
     <div class="myPatientBox">
-      <mt-search>
+      <mt-search v-model="authentication">
       </mt-search>
     </div>
-
     <div class="myPatientContent">
-      <div class="qianyueBox">
-        <div class="qianyue float-box"  @click="qianyue">
-          <span ref="qianyuePatient" class="qianyuePatient">签约患者</span>
-          (<span ref="qianyueNum" class="qianyueNum">000</span>)
-          <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': active, 'icon-shouqi': unActive}">
-          </span>
+      <div class="sousuo-patient">
+        <div class="qianyue-patient">
+          <div class="qianyue">签约患者</div>
+          <div class="patient-box">
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/bgPerfectInfo.png"/>
+                </div>
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nan"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
+                </div>
+              </div>
+              <div class="patient-time">
+                3月23日咨询过我
+              </div>
+            </div>
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/second.png"/>
+                </div>
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nv"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
+                </div>
+              </div>
+              <div class="patient-time">
+                3月23日咨询过我
+              </div>
+            </div>
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/second.png"/>
+                </div>
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nv"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
+                </div>
+              </div>
+              <div class="patient-time">
+                3月23日咨询过我
+              </div>
+            </div>
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/bgPerfectInfo.png"/>
+                </div>
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nan"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
+                </div>
+              </div>
+              <div class="patient-time">
+                3月23日咨询过我
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="list-box" :class="{yincang:unShow}">
-          <div class="guanzhu float-box" @click="firstLine">
-            <span ref="guanzhuPatient">关注患者</span>
-            <span ref='guanzhuNum' class="fr">111</span>
-          </div>
-          <div class="line-box"></div>
-          <div class="all-patient" @click="secondLine">
-            <span ref="quanbuPatient">全部患者</span>
-            <span ref="quanbuNum" class="fr">222</span>
-          </div>
-        </div>
-        <div class="zhegaiceng" :class="{yincang:unShow}">
-          <div class="list-bottom"></div>
-        </div>
-        <div class="patient-box">
-          <div class="patient-list">
-            <div class="patient-info-box">
-              <div class="patient-img">
-                <img src="../../assets/img/bgPerfectInfo.png"/>
+        <div class="guanzhu-patient">
+          <div class="qianyue">关注患者</div>
+          <div class="patient-box">
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/bgPerfectInfo.png"/>
+                </div>
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nan"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
+                </div>
               </div>
-              <div class="patient-info">
-                <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nan"></i>
-                  <span class="jibing">乙肝</span>
-                </div>
-                <div class="visit-time">
-                  复诊时间：2017-04-12
-                </div>
+              <div class="patient-time">
+                3月23日咨询过我
               </div>
             </div>
-            <div class="patient-time">
-              3月23日咨询过我
-            </div>
-          </div>
-          <div class="patient-list">
-            <div class="patient-info-box">
-              <div class="patient-img">
-                <img src="../../assets/img/second.png"/>
-              </div>
-              <div class="patient-info">
-                <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nv"></i>
-                  <span class="jibing">乙肝</span>
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/second.png"/>
                 </div>
-                <div class="visit-time">
-                  复诊时间：2017-04-12
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nv"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="patient-time">
-              3月23日咨询过我
-            </div>
-          </div>
-          <div class="patient-list">
-            <div class="patient-info-box">
-              <div class="patient-img">
-                <img src="../../assets/img/second.png"/>
-              </div>
-              <div class="patient-info">
-                <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nv"></i>
-                  <span class="jibing">乙肝</span>
-                </div>
-                <div class="visit-time">
-                  复诊时间：2017-04-12
-                </div>
+              <div class="patient-time">
+                3月23日咨询过我
               </div>
             </div>
-            <div class="patient-time">
-              3月23日咨询过我
-            </div>
-          </div>
-          <div class="patient-list">
-            <div class="patient-info-box">
-              <div class="patient-img">
-                <img src="../../assets/img/bgPerfectInfo.png"/>
-              </div>
-              <div class="patient-info">
-                <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nan"></i>
-                  <span class="jibing">乙肝</span>
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/second.png"/>
                 </div>
-                <div class="visit-time">
-                  复诊时间：2017-04-12
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nv"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
                 </div>
               </div>
+              <div class="patient-time">
+                3月23日咨询过我
+              </div>
             </div>
-            <div class="patient-time">
-              3月23日咨询过我
+            <div class="patient-list">
+              <div class="patient-info-box">
+                <div class="patient-img">
+                  <img src="../../assets/img/bgPerfectInfo.png"/>
+                </div>
+                <div class="patient-info">
+                  <div class="patient-name-info">
+                    <span class="patient-name">王倩</span>
+                    <span class="patient-age">55岁</span>
+                    <i class="iconfont icon-nan"></i>
+                    <span class="jibing">乙肝</span>
+                  </div>
+                  <div class="visit-time">
+                    复诊时间：2017-04-12
+                  </div>
+                </div>
+              </div>
+              <div class="patient-time">
+                3月23日咨询过我
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!--<div class="qianyueBox">-->
+        <!--<div class="qianyue float-box"  @click="qianyue">-->
+          <!--<span ref="qianyuePatient" class="qianyuePatient">签约患者</span>-->
+          <!--(<span ref="qianyueNum" class="qianyueNum">000</span>)-->
+          <!--<span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': active, 'icon-shouqi': unActive}">-->
+          <!--</span>-->
+        <!--</div>-->
+        <!--<div class="list-box" :class="{yincang:unShow}">-->
+          <!--<div class="guanzhu float-box" @click="firstLine">-->
+            <!--<span ref="guanzhuPatient">关注患者</span>-->
+            <!--<span ref='guanzhuNum' class="fr">111</span>-->
+          <!--</div>-->
+          <!--<div class="line-box"></div>-->
+          <!--<div class="all-patient" @click="secondLine">-->
+            <!--<span ref="quanbuPatient">全部患者</span>-->
+            <!--<span ref="quanbuNum" class="fr">222</span>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="zhegaiceng" :class="{yincang:unShow}">-->
+          <!--<div class="list-bottom"></div>-->
+        <!--</div>-->
+        <!--<div class="patient-box">-->
+          <!--<div class="patient-list">-->
+            <!--<div class="patient-info-box">-->
+              <!--<div class="patient-img">-->
+                <!--<img src="../../assets/img/bgPerfectInfo.png"/>-->
+              <!--</div>-->
+              <!--<div class="patient-info">-->
+                <!--<div class="patient-name-info">-->
+                  <!--<span class="patient-name">王倩</span>-->
+                  <!--<span class="patient-age">55岁</span>-->
+                  <!--<i class="iconfont icon-nan"></i>-->
+                  <!--<span class="jibing">乙肝</span>-->
+                <!--</div>-->
+                <!--<div class="visit-time">-->
+                  <!--复诊时间：2017-04-12-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="patient-time">-->
+              <!--3月23日咨询过我-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="patient-list">-->
+            <!--<div class="patient-info-box">-->
+              <!--<div class="patient-img">-->
+                <!--<img src="../../assets/img/second.png"/>-->
+              <!--</div>-->
+              <!--<div class="patient-info">-->
+                <!--<div class="patient-name-info">-->
+                  <!--<span class="patient-name">王倩</span>-->
+                  <!--<span class="patient-age">55岁</span>-->
+                  <!--<i class="iconfont icon-nv"></i>-->
+                  <!--<span class="jibing">乙肝</span>-->
+                <!--</div>-->
+                <!--<div class="visit-time">-->
+                  <!--复诊时间：2017-04-12-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="patient-time">-->
+              <!--3月23日咨询过我-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="patient-list">-->
+            <!--<div class="patient-info-box">-->
+              <!--<div class="patient-img">-->
+                <!--<img src="../../assets/img/second.png"/>-->
+              <!--</div>-->
+              <!--<div class="patient-info">-->
+                <!--<div class="patient-name-info">-->
+                  <!--<span class="patient-name">王倩</span>-->
+                  <!--<span class="patient-age">55岁</span>-->
+                  <!--<i class="iconfont icon-nv"></i>-->
+                  <!--<span class="jibing">乙肝</span>-->
+                <!--</div>-->
+                <!--<div class="visit-time">-->
+                  <!--复诊时间：2017-04-12-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="patient-time">-->
+              <!--3月23日咨询过我-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="patient-list">-->
+            <!--<div class="patient-info-box">-->
+              <!--<div class="patient-img">-->
+                <!--<img src="../../assets/img/bgPerfectInfo.png"/>-->
+              <!--</div>-->
+              <!--<div class="patient-info">-->
+                <!--<div class="patient-name-info">-->
+                  <!--<span class="patient-name">王倩</span>-->
+                  <!--<span class="patient-age">55岁</span>-->
+                  <!--<i class="iconfont icon-nan"></i>-->
+                  <!--<span class="jibing">乙肝</span>-->
+                <!--</div>-->
+                <!--<div class="visit-time">-->
+                  <!--复诊时间：2017-04-12-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="patient-time">-->
+              <!--3月23日咨询过我-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="fa-tongzhi" @click="fasongTongzhi">发送<br/> 通知</div>
     </div>
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
     name: 'myPatient',
     data () {
@@ -128,7 +308,19 @@
         unShow:true,
         value:"1",
         selected:'qianyue-patient',
-        message:[]
+        message:[],
+        authentication: ''
+      }
+    },
+    watch: {
+        'authentication'() {
+          axios.get('/wx/baochuan_d/patientlist',{params: {
+              authentication: this.authentication
+            }
+          }).then((result) => {
+              console.log(result)
+          })
+
       }
     },
     created() {
@@ -141,7 +333,6 @@
       qianyue() {
         this.unShow = !this.unShow;
         if(this.unActive){
-          console.log(1)
         }
 //          this.$refs.qianyueSpan.className = 'iconfont icon-shouqi'
         this.active = !this.active
@@ -174,10 +365,87 @@
       position:relative;
       width:100%;
       height: auto;
+      .sousuo-patient{
+        .qianyue-patient, .guanzhu-patient{
+          .qianyue{
+            padding:16px;
+            background:#f4f4f4;
+            color:#232323;
+            font-size:16px;
+          }
+          .patient-box{
+            .patient-list:nth-last-child(1){
+              -webkit-box-shadow:0 0 25px #fff;
+              -moz-box-shadow:0 0 25px #fff;
+              box-shadow:0 0 25px #fff;
+            }
+            .patient-list{
+              padding:16px;
+              background:#fff;
+              -webkit-box-shadow:0 0 25px #E5EBED;
+              -moz-box-shadow:0 0 25px #E5EBED;
+              box-shadow:0 0 25px #E5EBED;
+              margin-bottom:10px;
+            .patient-info-box{
+              display:flex;
+              justify-content: flex-start;
+              .patient-img{
+                height:60px;
+                width:60px;
+                padding-right:10px;
+                img{
+                  height:60px;
+                  width:60px;
+                  border-radius:50%;
+                }
+              }
+               .patient-info{
+                .patient-name-info{
+                  padding-bottom:10px;
+                  padding-top:5px;
+                  .patient-name, .patient-age{
+                    font-size:16px;
+                    color:#232323;
+                   }
+                  .jibing{
+                    padding:1px 5px;
+                    text-align: center;
+                    border-radius:10px;
+                    background:#bbb;
+                    font-size:14px;
+                    color:#fff;
+                  }
+                  .icon-nv{
+                    color:#F388C2;
+                    font-size:15px;
+                  }
+                  .icon-nan{
+                    color:#49C8F6;
+                    font-size:15px;
+                  }
+                }
+                .visit-time{
+                  font-size:15px;
+                  color:#bbb;
+                }
+              }
+            }
+              .patient-time{
+                margin-left:66px;
+                padding-top:10px;
+                margin-top:5px;
+                border-top:1px solid #bbb;
+                font-size:15px;
+                color:#bbb;
+              }
+            }
+          }
+        }
+      }
       .fa-tongzhi{
         position:fixed;
         right:15px;
-        bottom:75px;
+        bottom:20px;
         height:46px;
         width:46px;
         color:#fff;
@@ -248,6 +516,11 @@
         }
         .patient-box{
         /*background:#f4f4f4;*/
+          .patient-list:nth-last-child(1){
+            -webkit-box-shadow:0 0 25px #fff;
+            -moz-box-shadow:0 0 25px #fff;
+            box-shadow:0 0 25px #fff;
+          }
           .patient-list{
             padding:16px;
             background:#fff;

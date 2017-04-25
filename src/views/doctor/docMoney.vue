@@ -71,17 +71,17 @@
 }
   .docMoneyBox .moneyHeader{
     background:#529D98;
-    height:25vh;
+    height:30vh;
     color:#BDE4DD;
     padding:0 16px;
   }
   .docMoneyBox .moneyHeader .moneyTail{
     display:flex;
     justify-content: space-between;
-    padding-top:10px;
+    padding-top:30px;
   }
   .docMoneyBox .moneyHeader .balance{
-    padding-top:10px;
+    padding-top:15px;
   }
   .docMoneyBox .moneyHeader .moneyTail .moneyNum{
     font-size:24px;
@@ -89,6 +89,7 @@
   }
    .moneyAvailable, .balance{
     font-size:14px;
+     padding-top:15px;
   }
   .goTixian{
     font-size:16px;
@@ -98,29 +99,28 @@
   }
   .docMoneyBox .moneyContainer{
     position: relative;
-    margin:-40px 16px;
+    margin:-58px 16px;
     background:#fff;
     border-radius:5px;
   }
   .docMoneyBox .moneyContainer b:nth-of-type(1){
-    left: 0px;
-    border-left: 1px solid #f1f1f1;
+    left: -1px;
+    border-left: 1px solid #529D98;
     border-radius: 0 14px 14px 0;
   }
   .docMoneyBox .moneyContainer b:nth-of-type(2){
-    right: 0px;
-    border-right: 1px solid #f1f1f1;
+    right: -1px;
+    border-right: 1px solid #529D98;
     border-radius: 14px 0 0 14px;
   }
   .docMoneyBox .moneyContainer b{
     position: absolute;
     width: 7px;
     height: 14px;
-    top: 30px;
+    top: 38px;
     border: 1px solid #f1f1f1;
     z-index: 33;
-    background:linear-gradient(#529D98, #FFF);
-    background: #f1f1f1;
+    background:#529D98;
     FILTER: alpha(opacity=0); /*androd*/
     appearance:none;  /*下拉框去掉右侧图标*/
     -moz-appearance:none;
@@ -129,16 +129,16 @@
   }
   .docMoneyBox .moneyContainer i{
     position: absolute;
-    top: 37px;
+    top: 45px;
     border-bottom: 1px dashed #dfdfdf;
     width: 90%;
     left: 5%;
   }
   .docMoneyBox .moneyContainer .mingxinDetail{
-    padding:5px 16px;
+    padding:0px 16px;
   }
-  .docMoneyBox .moneyContainer .detailList{
-    margin-top:15px;
+  .docMoneyBox .moneyContainer .mingxinDetail .detailName{
+    padding:15px 0;
   }
   .docMoneyBox .moneyContainer .detailList .tixinaMoney{
        display:flex;
@@ -146,7 +146,10 @@
      }
   .docMoneyBox .moneyContainer .detailList .tixianBox{
     border-bottom:1px dashed #dfdfdf;
-    padding:10px 0;
+    padding:15px 0;
+  }
+  .docMoneyBox .moneyContainer .detailList .tixianBox:nth-last-child(1){
+    border:none;
   }
   .docMoneyBox .moneyContainer .detailList .tixianJine{
     color:#f00;

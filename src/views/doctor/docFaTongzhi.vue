@@ -103,10 +103,12 @@
       font-size:15px;
     }
     .button-box{
+      position:fixed;
+      bottom:25px;
       display: block;
-      width: 100%;
+      width: 90%;
       height:45px;
-      margin:45px auto;
+      margin:auto;
       background:#86B8B8;
       color: #ffffff;
       border:1px solid #86B8B8;
