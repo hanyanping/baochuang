@@ -17,7 +17,8 @@ Vue.prototype.util = util;
 rootRouter.beforeEach(function (to, from, next) {
 
   // 从localStorage中获取auth
-  var auth = localStorage.getItem('auth');
+  // var auth = localStorage.getItem('auth');
+  var auth = 'fff'; // 测试使用
   if (auth == null || auth == '' || auth == undefined) {
     // 从URL中获取auth , 对URL进行解析
     var url = location.search; //获取url中"?"符后的字串
