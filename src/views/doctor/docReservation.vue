@@ -1,11 +1,11 @@
 <!-- 预约管理 -->
 <template>
   <div class="doc-reservation-box">
-    <div style="padding:10px 16px;">
+    <div style="padding:10px 15px;">
       <div v-for="item in items" class="doc-reservation-list-box">
         <div class="doc-reservation-list-content-top">
           <div class="doc-reservation-list-content-top-left">
-            <span class="doc-reservation-list-content-top-span doc-reservation-list-content-top-name">张飞</span>
+            <span class="doc-reservation-list-content-top-span doc-reservation-list-content-top-name">诸葛亮</span>
             <span class="doc-reservation-list-content-top-span">男</span>
             <span class="doc-reservation-list-content-top-span">28</span>
             <span class="doc-reservation-list-content-top-span-style">脂肪肝</span>
@@ -36,7 +36,7 @@
     name : 'docReservation',
     data () {
       return {
-        items : [1,2,3,3,3,3,3,3,3]
+        items : [1,2,3]
       }
     }
   }
@@ -59,11 +59,11 @@
           display: flex;
           justify-content: space-between;
           flex-wrap: nowrap;
-          padding-top: 20px;
+          padding-top: 23px;
 
           .doc-reservation-list-content-top-left {
             color: #232323;
-            font-size: 12px;
+            font-size: 14px;
 
             .doc-reservation-list-content-top-span {
               padding-left: 15px;
@@ -75,18 +75,18 @@
               border-radius:10px;
               padding:1px 6px;
               margin-left:4px;
-              font-size:12px;
+              font-size:14px;
               vertical-align:middle ;
               background-color: #cfcfcf;
             }
 
             .doc-reservation-list-content-top-name {
-              font-size: 14px;
+              font-size: 15px;
             }
 
           }
           .doc-reservation-list-content-top-right {
-            font-size: 14px;
+            font-size: 15px;
             padding-right: 15px;
 
             .doc-reservation-list-content-top-span-status {
@@ -95,28 +95,28 @@
           }
         }
         .doc-reservation-list-content-mid {
-          padding-top: 15px;
+          padding-top: 18px;
 
           .doc-reservation-list-content-mid-top {
             padding-left: 15px;
-            font-size: 12px;
+            font-size: 14px;
           }
 
           .doc-reservation-list-content-mid-line {
             height: 1px;
             background: #eeeeee;
-            margin-top: 10px;
+            margin-top: 18px;
             margin-left: 10px;
             margin-right: 10px;
           }
         }
 
         .doc-reservation-list-content-bottom {
-          padding-top: 10px;
+          padding-top: 15px;
           padding-bottom: 12px;
           text-align: right;
           padding-right: 15px;
-          font-size: 12px;
+          font-size: 15px;
           color: #D2D2D2;
         }
     }

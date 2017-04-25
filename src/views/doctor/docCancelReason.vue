@@ -44,7 +44,7 @@
 
     .beizhu-box {
       width:100%;
-      margin:20px auto;
+      margin:25px auto;
 
       .zhengzhuang {
         width: 100%;
@@ -73,7 +73,7 @@
     background:#62a39c;
     border:1px solid #86B8B8;
     border-radius:22px;
-    margin-top:50px;
+    margin-top:44px;
     outline: none;
     font-size: 16px;
     color: #fff;

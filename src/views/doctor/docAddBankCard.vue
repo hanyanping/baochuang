@@ -5,7 +5,6 @@
       <div class="doc-addBankCard-header-left-box">
         <span>选择银行</span>
       </div>
-
       <div class="doc-addBankCard-header-right-box">
         <div class="doc-addBankCard-header-right-smallbox">
           <select class="doc-addBankCard-header-right-select">
@@ -15,11 +14,9 @@
             <option>招商银行</option>
           </select>
         </div>
-
         <div class="iconfont icon-jiantou doc-addBankCard-header-right-jiantou">
         </div>
       </div>
-
     </div>
 
     <div class="doc-addBankCard-header-box">
@@ -77,7 +74,7 @@
     background-size: 100% 100%;
 
     .doc-addBankCard-header-box {
-      margin: 30px 20px 10px;
+      margin: 30px 15px 10px;
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #bad6d3;
@@ -112,16 +109,18 @@
         display: flex;
         .doc-addBankCard-header-right-smallbox {
           padding-right: 5px;
+
+          .doc-addBankCard-header-right-select {
+            direction: rtl;
+            font-size: 16px;
+            -webkit-appearance: none;
+            border: 0;
+            outline: none;
+            background-color:transparent;
+            color: #ffffff;
+          }
         }
-        .doc-addBankCard-header-right-select {
-          direction: rtl;
-          font-size: 16px;
-          -webkit-appearance: none;
-          border: 0;
-          outline: none;
-          background-color:transparent;
-          color: #ffffff;
-        }
+
         .doc-addBankCard-header-right-jiantou {
           font-size: 20px;
           color: #ffffff;

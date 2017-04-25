@@ -49,7 +49,7 @@
     .doc-myinfo-top-box {
       color: #fff;
       font-size: 16px;
-      margin: 0px 10px 0;
+      margin: 10px 15px 0;
 
       .doc-myinfo-top-name-box {
         padding-top: 20px;
@@ -70,7 +70,7 @@
       text-align: center;
       /*margin: 0px auto;*/
       position: absolute;
-      bottom: 30px;
+      bottom: 20px;
       width:100%;
     }
   }

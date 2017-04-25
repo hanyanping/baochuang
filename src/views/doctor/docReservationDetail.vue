@@ -19,6 +19,15 @@
         </div>
       </div>
 
+      <div class="doc-rev-detail-top-patientinfo-box">
+        <div>
+          <span>预约目的</span>
+        </div>
+        <div>
+          <span>开药</span>
+        </div>
+      </div>
+
       <div class="doc-rev-detail-top-revtime-box">
         <div>
           <span>预约时间</span>
@@ -63,13 +72,13 @@
 
     .doc-rev-detail-top-box {
       font-size: 14px;
-      margin: 20px 20px 0;
+      margin: 20px 15px 0;
       background-color: #fff;
       box-shadow:0px 0px 10px #7e8c8d; /* 边框阴影效果 */
       border-radius: 3px;
 
       .doc-rev-detail-top-status-box {
-        padding: 25px 0px;
+        padding: 22px 0px;
         margin: 5px 10px;
         padding-bottom: 20px;
         border-bottom: 1px dashed #06b80a;
@@ -80,7 +89,7 @@
         }
       }
       .doc-rev-detail-top-patientinfo-box {
-        padding: 20px 0px;
+        padding: 22px 0px;
         margin: 5px 10px;
         display: flex;
         justify-content: space-between;
@@ -90,7 +99,7 @@
       }
 
       .doc-rev-detail-top-revtime-box {
-        padding: 20px 0px;
+        padding: 22px 0px;
         margin: 5px 10px;
         display: flex;
         justify-content: space-between;
@@ -99,14 +108,14 @@
     }
     .doc-rev-detail-mid-box {
       font-size: 14px;
-      margin: 20px 20px 0;
+      margin: 12px 15px 0;
       background-color: #fff;
       box-shadow:0px 0px 10px #7e8c8d; /* 边框阴影效果 */
       border-radius: 3px;
 
       .doc-rev-detail-mid-title {
-        padding: 15px 0px;
-        margin: 0px 5px;
+        padding: 18px 0px;
+        margin: 0px 8px;
 
         .icon-laba {
           color: #e1bd2f;
@@ -121,16 +130,16 @@
       background:#62a39c;
       border:1px solid #86B8B8;
       border-radius:22px;
-      margin-top:50px;
+      margin-top:85px;
       outline: none;
       font-size: 16px;
       color: #fff;
     }
     .doc-rev-detail-bottom-nobutton {
       color: #60A39B;
-      padding-top: 30px;
-      padding-right: 30px;
-      font-size: 14px;
+      padding-top: 35px;
+      padding-right: 28px;
+      font-size: 17px;
     }
   }
 </style>

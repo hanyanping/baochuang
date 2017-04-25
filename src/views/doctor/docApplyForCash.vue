@@ -15,11 +15,11 @@
         <span>明细</span>
       </div>
       <div class="doc-applyforcash-mid-mid-box">
-        <p style="color: #a8a8a8">可提现金额</p>
+        <p style="color: #999999">可提现金额</p>
         <p class="doc-applyforcash-mid-money">¥600.00</p>
       </div>
       <div class="doc-applyforcash-bottom-box">
-        <span style="color: #a8a8a8; font-size: 15px">申请提款后会在3个工作日内给您的账户打款，节假日延后。到款日根据不同的银行会有1~3天的差异。</span>
+        <span style="color: #999999; font-size: 15px">申请提款后会在3个工作日内给您的账户打款，节假日延后。到款日根据不同的银行会有1~3天的差异。</span>
       </div>
       <b></b>
       <b></b>
@@ -44,9 +44,9 @@
 <style lang="scss">
   .doc-ApplyForCash-Container-box {
 
-
     .doc-ApplyForCash-Header-Box {
-      margin: 22px 16px 0;
+      font-size: 16px;
+      margin: 22px 15px 0;
       border-radius:5px;
       background:#ffffff;
       position: relative;
@@ -55,11 +55,11 @@
       box-shadow:0 0 25px #d4dadc;
 
       .doc-ApplyForCash-Header-left {
-        padding: 15px 15px 15px;
+        padding: 20px 15px 20px;
       }
   }
     .doc-applyforcash-mid-box {
-      margin: 22px 16px 0;
+      margin: 15px 15px 0;
       border-radius:5px;
       background:#ffffff;
       position: relative;
@@ -69,26 +69,28 @@
       box-shadow:0 0 19px #d4dadc;
 
       .doc-applyforcash-mid-header-box {
+        font-size: 16px;
         margin: 15px 15px 15px;
         border-bottom:1px dashed #62a39c;
-        padding: 15px 0px 15px;
+        padding: 21px 0px 21px;
       }
 
       .doc-applyforcash-mid-mid-box {
+        font-size: 15px;
         margin: 15px 15px 15px;
-        padding: 15px 0px 15px;
+        padding: 15px 0px 20px;
         border-bottom:1px dashed #62a39c;
 
         .doc-applyforcash-mid-money {
           padding: 30px 0 0;
           color: #5da096;
-          font-size: 30px;
+          font-size: 27.5px;
         }
       }
 
       .doc-applyforcash-bottom-box {
         margin: 15px 15px 15px;
-        padding: 5px 0px 20px;
+        padding: 5px 0px 25px;
       }
 
       b:nth-of-type(1){

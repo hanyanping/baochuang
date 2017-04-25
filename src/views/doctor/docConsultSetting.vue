@@ -12,13 +12,39 @@
       </div>
 
       <div class="doc-ConsultSetting-Header-two-box">
-        <div class="doc-ConsultSetting-Header-two-font">
+        <!-- 咨询关闭 显示此标签 -->
+        <div v-show="value === false" class="doc-ConsultSetting-Header-two-font">
           <span>咨询功能关闭后，患者将不能向您发起咨询。</span>
         </div>
+        <!-- 咨询开启 显示此标签 -->
+        <div v-show="value === true">
+          <span>服务费用</span>
+        </div>
+        <div v-show="value === true" class="doc-ConsultSetting-two-select-box">
+          <div class="doc-ConsultSetting-two-select-smallbox">
+            <select class="doc-ConsultSetting-two-select">
+              <option value="0">0元/次</option>
+              <option>5元/次</option>
+              <option>10元/次</option>
+              <option>15元/次</option>
+            </select>
+          </div>
+          <div class="iconfont icon-jiantou doc-ConsultSetting-two-jiantou">
+          </div>
+        </div>
       </div>
+
       <b></b>
       <b></b>
     </div>
+
+    <!-- 咨询开启或关闭 界面显示切换 -->
+    <button class="doc-ConsultSetting-button" :class="{'isClose':!value}">保存</button>
+    <footer class="doc-ConsultSetting-tip" :class="{'isClose':!value}">
+      <p>1、咨询功能开启后，患者将会向您发起咨询，每次咨询费用将按照您的设置进行付费。</p>
+      <p>2、每次咨询有效期为24小时，如您未按时回复，服务费用将自动退回给患者句号</p>
+    </footer>
+
   </div>
 </template>
 
@@ -27,8 +53,14 @@
     name: 'docConsultSetting',
     data () {
       return {
-
+        value: false,
       }
+    },
+    created () {
+      console.log(this.value)
+    },
+    methods: {
+
     }
   }
 </script>
@@ -37,7 +69,7 @@
   .doc-ConsultSetting-Container-box {
 
     .doc-ConsultSetting-Header-box {
-      margin: 22px 16px 0;
+      margin: 25px 15px 0;
       border-radius:5px;
       background:#ffffff;
       position: relative;
@@ -46,9 +78,9 @@
       box-shadow:0 0 19px #d4dadc;
 
       .doc-ConsultSetting-Header-one-box {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        margin: 0px 10px 0;
+        padding-top: 22px;
+        padding-bottom: 16.5px;
+        margin: 0px 15px 0;
         display: flex;
         justify-content: space-between;
         flex-wrap: nowrap;
@@ -60,19 +92,40 @@
         }
       }
       .doc-ConsultSetting-Header-two-box {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        margin: 0px 10px 0;
+        padding-top: 22px;
+        padding-bottom: 16.5px;
+        margin: 0px 15px 0;
         display: flex;
         justify-content: space-between;
         flex-wrap: nowrap;
+        font-size: 16px;
         line-height: 32px;
 
         .doc-ConsultSetting-Header-two-font {
-          font-size: 16px;
           color: #a0a0a0;
         }
+        /* 选择服务费样式 */
+        .doc-ConsultSetting-two-select-box {
+          display: flex;
+           .doc-ConsultSetting-two-select-smallbox {
+             padding-right: 5px;
+             .doc-ConsultSetting-two-select {
+               direction: rtl;
+               font-size: 16px;
+               -webkit-appearance: none;
+               border: 0;
+               outline: none;
+               background-color:transparent;
+               /*color: #ffffff;*/
+             }
+           }
+           .doc-ConsultSetting-two-jiantou {
+             font-size: 20px;
+             color: #cccccc;
+           }
+        }
       }
+
 
       b:nth-of-type(1){
         left: -1px;
@@ -86,7 +139,7 @@
         position: absolute;
         width: 7px;
         height: 14px;
-        top: 55px;
+        top: 63px;
         border: 1px solid #f4f4f4;
         z-index: 33;
         background:#f4f4f4;
@@ -96,5 +149,34 @@
         -webkit-appearance:none;
       }
     }
+
+    .doc-ConsultSetting-button {
+      display: block;
+      width: 90%;
+      height:45px;
+      margin: auto;
+      background:#62a39c;
+      border:1px solid #86B8B8;
+      border-radius:22px;
+      margin-top:50px;
+      outline: none;
+      font-size: 16px;
+      color: #fff;
+    }
+    .doc-ConsultSetting-tip {
+      color: #6b6b6c;
+      font-size: 14px;
+      clear: both;
+      display: block;
+      /*text-align: center;*/
+      margin: 27.5px 20px 0;
+      position: absolute;
+      /*bottom: 30px;*/
+      /*width:100%;*/
+      line-height: 25px;
+    }
+    .isClose {
+       display: none;
+     }
   }
 </style>

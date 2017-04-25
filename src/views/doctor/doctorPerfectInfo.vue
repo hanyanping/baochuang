@@ -33,7 +33,14 @@
 </template>
 
 <script>
+  export default {
+    name: 'doctorPerfectInfo',
+    data () {
+      return {
 
+      }
+    }
+  }
 </script>
 
 <style lang="scss">
