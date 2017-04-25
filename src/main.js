@@ -14,10 +14,53 @@ Vue.config.productionTip = false;
 Vue.use(MintUI);
 Vue.prototype.util = util;
 
+rootRouter.beforeEach(function (to, from, next) {
+
+  // 从localStorage中获取auth
+  var auth = localStorage.getItem('auth');
+  if (auth == null || auth == '' || auth == undefined) {
+    // 从URL中获取auth , 对URL进行解析
+    var url = location.search; //获取url中"?"符后的字串
+    // var theRequest = new Object();
+    console.log('url===' + url);
+    if (url.indexOf("?") != -1) {
+      var str = url.substr(1);
+      var strs = str.split("&");
+      // for (var i = 0; i < strs.length; i++) {
+      //   theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+      // }
+      auth = str.replace('auth=', '');
+      console.log('auth===' + auth);
+    }
+
+    if (auth == null || auth == '' || auth == undefined) {
+      console.log('未登录!');
+      window.location.href = "http://www.baidu.com"
+    } else {
+      console.log('已经登录!');
+      localStorage.setItem('auth', auth);
+      next();
+    }
+  } else {
+    console.log('已经登录!');
+    next();
+  }
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router: rootRouter,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })
+
+
+
+
+
+
+
+
+
+
