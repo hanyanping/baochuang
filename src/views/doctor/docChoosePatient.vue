@@ -5,90 +5,7 @@
       </mt-search>
     </div>
     <!--<div class="sousuo-content">-->
-      <!--<div class="input-box">-->
-        <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow1}" @click="chooseAll"></span>-->
-        <!--<input type="checkbox" value="全部患者" />-->
-        <!--<span class="paddingLeft">全部患者</span>-->
-      <!--</div>-->
-      <!--<div class="input-box float-box">-->
-        <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow2}" @click="chooseQian"></span>-->
-        <!--<input type="checkbox" value="签约患者" />-->
-        <!--<span class="paddingLeft">签约患者</span>-->
-        <!--<div class="iconfont  fr" :class="{'icon-zhankai':activeQian,'icon-zhankai-copy':unactiveQian}" @click="openQianYue"></div>-->
-      <!--</div>-->
-      <!--<div class="patient-list" :class="{'closeQian':closeShow}">-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientAge">34</span>岁-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div>-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}"@click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientSex">55</span>岁-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div>-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientAge">34</span>岁-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div>-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}"@click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientSex">55</span>岁-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div>-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientAge">34</span>岁-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div>-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}"@click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientSex">55</span>岁-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div><div class="patient-box">-->
-        <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan" ></span>-->
-        <!--<img src="../../assets/img/docinfo.png"/>-->
-        <!--<span class="patientName">王倩</span>-->
-        <!--<span class="patientAge">34</span>岁-->
-        <!--<span class="patientJibing">乙肝</span>-->
-      <!--</div>-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}"@click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientSex">55</span>岁-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--&lt;!&ndash;<div class="closeHeight" :class="{'showHeight':closeHeight}"></div>&ndash;&gt;-->
-      <!--<div class="input-box float-box" :class="{'guanzhu-list':closeActive}">-->
-        <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan" ></span>-->
-        <!--<input  type="checkbox" value="关注患者"/>-->
-        <!--<span class="paddingLeft">关注患者</span>-->
-        <!--<div class="iconfont  fr" :class="{'icon-zhankai':activeGuan,'icon-zhankai-copy':unactiveGuan}" @click="openGuanZhu"></div>-->
-      <!--</div>-->
-      <!--<div class="patient-list guanzhu-list" :class="{'closeGuan':closeActive}">-->
-        <!--<div class="patient-box">-->
-          <!--<span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan" ></span>-->
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <!--<span class="patientName">王倩</span>-->
-          <!--<span class="patientSex">女</span>-->
-          <!--<span class="patientJibing">乙肝</span>-->
-        <!--</div>-->
-      <!--</div>-->
+
     <!--</div>-->
     <div class="choose-content">
       <div class="input-box">
@@ -104,32 +21,35 @@
       </div>
       <div class="patient-list" :class="{'closeQian':closeShow}">
         <div class="patient-box" v-for="(item, index) in lists">
-          <span class="iconfont icon-yuan1" @click="chooseGuan($event, index)" :data-id="item.id" ref="patientSpan"></span>
+          <span class="iconfont icon-yuan1" @click="chooseQianItem($event, index)" :data-id="item.id" ref="patientSpan"></span>
           <img src="../../assets/img/docinfo.png"/>
           <span class="patientName">{{item.name}}</span>
           <span class="patientAge">{{item.age}}岁</span>
           <span class="patientJibing">{{item.bing}}</span>
         </div>
       </div>
-      <!--<div class="closeHeight" :class="{'showHeight':closeHeight}"></div>-->
+      <div class="closeHeight" :class="{'showHeight':closeHeight}"></div>
       <div class="input-box float-box" :class="{'guanzhu-list':closeActive}">
-        <span class="iconfont icon-2" @click="chooseGuan"></span>
+        <span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan"></span>
         <input  type="checkbox" value="关注患者"/>
         <span class="paddingLeft">关注患者</span>
         <div class="iconfont  fr" :class="{'icon-zhankai':activeGuan,'icon-zhankai-copy':unactiveGuan}" @click="openGuanZhu"></div>
       </div>
-      <div class="patient-list guanzhu-list" :class="{'closeGuan':closeActive}">
-        <div class="patient-box">
-          <span class="iconfont icon-2" @click="chooseGuan" ></span>
-          <img src="../../assets/img/docinfo.png"/>
-          <span class="patientName">王倩</span>
-          <span class="patientSex">女</span>
-          <span class="patientJibing">乙肝</span>
+      <div class="patient-list guanzhu-list" :class="{'closeGuan':closeActive}" >
+        <div class="patient-box" v-for="(item, index) in list">
+          <span class="iconfont icon-yuan1" @click="chooseGuanItem($event,index)" :data-id="item.id" ref="patientSpanGuan"></span>
+          <!--<img src="../../assets/img/docinfo.png"/>-->
+          <span class="patientName">{{item.name}}</span>
+          <span class="patientSex">{{item.age}}岁</span>
+          <span class="patientJibing">{{item.bing}}</span>
         </div>
       </div>
     </div>
-    <div class="footer">
-      <button class="button-box" :class="{isButton: active}" @click="wancheng">完成</button>
+    <div class="footer" v-if="!active">
+      <button class="button-box" disabled>完成</button>
+    </div>
+    <div class="footer" v-else>
+      <button class="button-box" @click="wancheng">完成</button>
     </div>
   </div>
 </template>
@@ -138,17 +58,48 @@
     name: 'docChoosePatient',
     data () {
       return {
-        active : true,
+//          完成按钮显示状态
+        active : false,
+//        全部患者未选中
         unshow1 : true,
+//        签约患者未选中
         unshow2 : true,
+//        关注患者未选中
+        unshow3 : true,
+//        签约收起
         activeQian: false,
         unactiveQian:true,
+//        关注收起
         activeGuan:false,
         unactiveGuan:true,
         closeShow:true,
+//        关注患者关闭，签约患者较多时
         closeActive:true,
         closeHeight:false,
         content:'',
+        list:[
+          {
+            name: '韩22',
+            id: 12,
+            age: 28,
+            url: '',
+            bing: '乙肝'
+          },
+          {
+            name: '琛2',
+            id: 13,
+            age: 24,
+            url: '',
+            bing: '没毛病'
+          },
+          {
+            name: '韩2',
+            id: 14,
+            age: 30,
+            url: '',
+            bing: '狂犬'
+          }
+        ],
         lists: [
           {
             name: '狗韩',
@@ -181,6 +132,12 @@
     watch: {
       'content'() {
           console.log(this.content)
+      },
+      chooseGuan(){
+          console.log(2)
+        if (!this.unshow3){
+            this.active = true;
+        }
       }
     },
     methods: {
@@ -197,6 +154,20 @@
       chooseAll () {
         this.unshow1 = !this.unshow1;
       },
+      chooseGuan() {
+        this.unshow3 = !this.unshow3
+        var SpanG = this.$refs.patientSpanGuan
+        if (!this.unshow3) {
+          // 全选
+          for (let i in SpanG) {
+            SpanG[i].classList.value = 'iconfont icon-2'
+          }
+        } else {
+          for (let i in SpanG) {
+            SpanG[i].classList.value = 'iconfont icon-yuan1'
+          }
+        }
+      },
       chooseQian () {
         this.unshow2 = !this.unshow2
         var Spans = this.$refs.patientSpan
@@ -211,7 +182,14 @@
           }
         }
       },
-      chooseGuan(ele) {
+      chooseQianItem(ele) {
+        if (ele.target.className.indexOf('icon-yuan1') > 0) {
+          ele.target.className = 'iconfont icon-2'
+        } else {
+          ele.target.className = 'iconfont icon-yuan1'
+        }
+      },
+      chooseGuanItem(ele) {
         if (ele.target.className.indexOf('icon-yuan1') > 0) {
           ele.target.className = 'iconfont icon-2'
         } else {
@@ -219,11 +197,15 @@
         }
       },
       wancheng () {
+          console.log(12)
         this.patientId = []
-        var cheSpans = this.$refs.patientSpan
-        for (let i in cheSpans) {
-            if (cheSpans[i].classList.value.indexOf('icon-2') > 0) {
-              this.patientId.push(cheSpans[i].attributes.getNamedItem('data-id').nodeValue)
+        var cheSpans = this.$refs.patientSpan,
+            cheSpanG = this.$refs.patientSpanGuan,
+            arr =cheSpans.concat(cheSpanG);
+        console.log(arr)
+        for (let i in arr) {
+            if (arr[i].classList.value.indexOf('icon-2') > 0) {
+              this.patientId.push(arr[i].attributes.getNamedItem('data-id').nodeValue)
             }
         }
         console.log(this.patientId.join(','))
@@ -242,7 +224,7 @@
   select option {
     direction: ltr;
   }
-    .choose-content{
+    .choose-content,.sousuo-content {
       .closeHeight{
         height:0;
         width:100%;
@@ -365,13 +347,6 @@
         border-radius:22px;
         outline:none;
         font-size:18px;
-      }
-      .button-box.isButton {
-        background:#529D98;
-        border:1px solid #f4f4f4;
-        -webkit-box-shadow:0 0 10px #f4f4f4;
-        -moz-box-shadow:0 0 10px #f4f4f4;
-        box-shadow:0 0 10px #f4f4f4;
       }
     }
   }

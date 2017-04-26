@@ -78,8 +78,8 @@
     .infoHeader{
       height:30vh;
       width:100%;
+      background-image:url('../../assets/img/docInfo.png');
       background-size:100% 100%;
-      background:url(../../assets/img/docInfo.png);
       .headerBox{
         padding:30px 16px 0;
         display:flex;
