@@ -45,17 +45,19 @@
 
         <!-- 预约开启显示此标签 -->
         <div v-show="value === true" class="doc-appoint-header-three-box">
-          <div>
+          <div class="doc-appoint-three-number">
             <span>每次就诊可约的患者人数</span>
           </div>
-          <div class="doc-appoint-three-input-box">
-            <div class="doc-appoint-three-input-smallbox">
-              <input class="doc-appoint-three-input" placeholder="0" type="number">
-            </div>
-            <div class="doc-appoint-three-jiantou">
-              <span>人</span>
-            </div>
+          <div class="weui-cell__ft">
+            <input class="weui-input" type="tel">
+            <span style="font-size:15px;color:#232323;">人</span>
           </div>
+          <!--<div class="doc-appoint-three-input-box">-->
+            <!--<div class="doc-appoint-three-input-smallbox">-->
+              <!--<input class="doc-appoint-three-input" placeholder="0" type="number">-->
+              <!--<span>人</span>-->
+            <!--</div>-->
+          <!--</div>-->
 
           <b class="header-three-nth header-three-nth-of-type-one"></b>
           <b class="header-three-nth header-three-nth-of-type-two"></b>
@@ -250,7 +252,7 @@
       -moz-box-shadow:0 0 19px #d4dadc;
       box-shadow:0 0 19px #d4dadc;
       .doc-appoint-header-one-box {
-        margin: 0px 15px 0;
+        margin: 0px 10px 0;
         padding:10px 0;
         display: flex;
         justify-content: space-between;
@@ -260,7 +262,7 @@
         font-size: 16px;
       }
       .doc-appoint-header-two-box {
-        margin: 0px 15px 0;
+        margin: 0px 10px 0;
         padding:10px 0;
         display: flex;
         justify-content: space-between;
@@ -293,11 +295,11 @@
         }
 
         .header-two-nth-of-type-one{
-          left: -1px;
+          left: 0px;
           border-radius: 0 14px 14px 0;
         }
         .header-two-nth-of-type-two{
-          right: -1px;
+          right: 0px;
           border-radius: 14px 0 0 14px;
         }
         .header-two-nth{
@@ -316,30 +318,39 @@
       }
       .doc-appoint-header-three-box {
         display: flex;
-        flex:1;
-        line-height: 32px;
+        line-height: 53px;
         font-size: 16px;
         padding:10px 10px;
+        .doc-appoint-three-number{
+          flex:1;
+          width:170px;
+        }
+        .weui-cell__ft{
+          font-size: 15px;
+          text-align: right;
+          color: #999;
+          input{
+            border: 1px solid #ccc;
+            width: 70px;
+            height: 32px;
+            margin-right: 6px;
+            border-radius: 4px;
+            text-align: center;
+            outline: 0;
+            -webkit-appearance: none;
+          }
+        }
         .doc-appoint-three-input-box {
-          display: flex;
+          text-align: right;
           .doc-appoint-three-input-smallbox {
-            padding-right: 10px;
             width: 75px;
-
             .doc-appoint-three-input {
-              float: right;
-              /*direction: rtl;*/
+              border: 1px solid #ccc;
+              width: 75px;
+              height: 32px;
+              margin-right: 6px;
+              border-radius: 4px;
               text-align: center;
-              font-size: 16px;
-              -webkit-appearance: none;
-              border: 0;
-              outline: none;
-              /*background-color:black;*/
-              /*color: #ffffff;*/
-              border: 1px solid #d6d5d5;
-              border-radius: 8px;
-              width: 75%;
-              height: 29px;
             }
           }
           .doc-appoint-three-jiantou {
@@ -348,11 +359,11 @@
           }
         }
         .header-three-nth-of-type-one{
-          left: -1px;
+          left: 0px;
           border-radius: 0 14px 14px 0;
         }
         .header-three-nth-of-type-two{
-          right: -1px;
+          right: 0px;
           border-radius: 14px 0 0 14px;
         }
        .header-three-nth{
