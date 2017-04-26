@@ -37,20 +37,21 @@
 
     .setting-visit-time-head-box{
       color:#ffffff;
-      padding: 30px 40px;
+      font-size: 16px;
+      padding: 30px 20px;
     }
 
     .setting-visit-time-select-box{
-      padding: 0px 40px;
+      padding: 0px 20px;
 
       .setting-visit-time-selectbg-box{
-        height: 30px;
+        height: 40px;
         border: 1px solid #fff;
         border-radius: 5px;
 
         .icon-rili1{
           color: #fff;
-          line-height: 30px;
+          line-height: 40px;
           padding-left: 10px;
         }
 
@@ -66,25 +67,26 @@
     }
 
     .setting-visit-time-bottom-box{
-      line-height: 30px;
+      line-height: 20px;
       width:100%;
+      position: fixed;
+      bottom: 14px;
 
       .setting-visit-time-bottom-txt{
         color: #fff;
-        padding-top: 60px ;
-        padding-left: 40px;
-        padding-right: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size: 12px;
       }
       .toInfo{
         display: block;
         width: 90%;
         height:45px;
-        margin: auto;
         background: rgba(0,0,0,0);
         color: #ffffff;
         border:1px solid #fff;
         border-radius:22px;
-        margin-top:25px;
+        margin-top:15px;
         outline: none;
         font-size: 18px;
       }
