@@ -12,12 +12,11 @@
           </div>
         </div>
 
-        <div class="doc-appoint-header-two-box">
+        <div class="doc-appoint-header-two-box" :class="{'isShowLine':!value}">
           <!-- 预约关闭显示此标签 -->
           <div v-show="value === false" class="doc-appoint-header-two-font">
             <span>预约功能关闭后，患者将不能向您发起预约。</span>
           </div>
-
           <!-- 预约开启显示此标签 -->
           <div v-show="value === true">
             <span>服务费用</span>
@@ -37,35 +36,24 @@
             <div class="iconfont icon-jiantou doc-appoint-two-jiantou">
             </div>
           </div>
-
           <b class="header-two-nth header-two-nth-of-type-one"></b>
           <b class="header-two-nth header-two-nth-of-type-two"></b>
         </div>
-
-
         <!-- 预约开启显示此标签 -->
         <div v-show="value === true" class="doc-appoint-header-three-box">
           <div class="doc-appoint-three-number">
             <span>每次就诊可约的患者人数</span>
           </div>
           <div class="weui-cell__ft">
-            <input class="weui-input" type="tel">
+            <input class="weui-input" type="tel" placeholder="0">
             <span style="font-size:15px;color:#232323;">人</span>
           </div>
-          <!--<div class="doc-appoint-three-input-box">-->
-            <!--<div class="doc-appoint-three-input-smallbox">-->
-              <!--<input class="doc-appoint-three-input" placeholder="0" type="number">-->
-              <!--<span>人</span>-->
-            <!--</div>-->
-          <!--</div>-->
-
           <b class="header-three-nth header-three-nth-of-type-one"></b>
           <b class="header-three-nth header-three-nth-of-type-two"></b>
         </div>
-
-
       </div>
-      <div class="appointment-time">
+      <!-- 预约开启显示此标签 -->
+      <div v-show="value === true" class="appointment-time">
         <div class="appointment-text">
           <i class="iconfont  icon-jilu"></i>
           <span class="text-time">可预约时间</span>
@@ -74,69 +62,64 @@
           <div class="weui-grid">
             <p class="weui-grid__label" style="color:#232323;">星期一</p>
           </div>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
-            <p class="weui-grid__label" >上午</p>
+          <a href="javascript:;" @click="reserveToggleSubTime()" class="weui-grid" :class="{'reserve-selected-grid':isSelect}">
+            <p class="weui-grid__label" :class="{'weui-grid__select-label':isSelect}" >上午</p>
           </a>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid reserve-selected-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime()" class="weui-grid reserve-selected-grid">
             <p class="weui-grid__label">下午</p>
           </a>
-
           <div class="weui-grid">
             <p class="weui-grid__label" style="color:#232323;">星期二</p>
           </div>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">上午</p>
           </a>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid reserve-selected-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid reserve-selected-grid">
             <p class="weui-grid__label">下午</p>
           </a>
-
           <div class="weui-grid">
             <p class="weui-grid__label" style="color:#232323;">星期三</p>
           </div>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">上午</p>
           </a>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">下午</p>
           </a>
-
           <div class="weui-grid">
             <p class="weui-grid__label" style="color:#232323;">星期四</p>
           </div>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">上午</p>
           </a>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">下午</p>
           </a>
           <div class="weui-grid">
             <p class="weui-grid__label" style="color:#232323;">星期五</p>
           </div>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid reserve-selected-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid reserve-selected-grid">
             <p class="weui-grid__label">上午</p>
           </a>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">下午</p>
           </a>
-
           <div class="weui-grid">
             <p class="weui-grid__label" style="color:#232323;">星期六</p>
           </div>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">上午</p>
           </a>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid reserve-selected-grid">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid reserve-selected-grid">
             <p class="weui-grid__label">下午</p>
           </a>
           <div class="weui-grid">
             <p class="weui-grid__label" style="color:#232323;">星期日</p>
           </div>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid visit">
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid visit">
             <p class="weui-grid__label">上午</p>
           </a>
-          <a href="javascript:;" onclick="reserveToggleSubTime(this);" class="weui-grid">
-
+          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
             <p class="weui-grid__label">下午</p>
           </a>
         </div>
@@ -165,11 +148,14 @@
           .weui-grid__label{
             text-align: center;
             display: block;
-            color: #232323;
+            color: #666666;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             font-size: 15px;
+          }
+          .weui-grid__select-label {
+            color: #5ac4b2;
           }
         }
         .weui-grid:before {
@@ -202,7 +188,7 @@
         }
         .reserve-selected-grid{
           padding: 13px 0;
-          background-color: #009FE9;
+          background-color: #daf4fa;
         }
       }
       .weui-grids:before {
@@ -316,11 +302,14 @@
           -webkit-appearance:none;
         }
       }
+      .isShowLine {
+        border-bottom: none;
+      }
       .doc-appoint-header-three-box {
         display: flex;
         line-height: 53px;
         font-size: 16px;
-        padding:10px 10px;
+        padding:0px 10px 0;
         .doc-appoint-three-number{
           flex:1;
           width:170px;
@@ -332,7 +321,7 @@
           input{
             border: 1px solid #ccc;
             width: 70px;
-            height: 32px;
+            height: 29px;
             margin-right: 6px;
             border-radius: 4px;
             text-align: center;
@@ -340,24 +329,7 @@
             -webkit-appearance: none;
           }
         }
-        .doc-appoint-three-input-box {
-          text-align: right;
-          .doc-appoint-three-input-smallbox {
-            width: 75px;
-            .doc-appoint-three-input {
-              border: 1px solid #ccc;
-              width: 75px;
-              height: 32px;
-              margin-right: 6px;
-              border-radius: 4px;
-              text-align: center;
-            }
-          }
-          .doc-appoint-three-jiantou {
-            font-size: 16px;
-            color: #000000;
-          }
-        }
+
         .header-three-nth-of-type-one{
           left: 0px;
           border-radius: 0 14px 14px 0;
@@ -389,7 +361,14 @@
     name: 'docAppointmentSetting',
     data () {
       return {
-        value: true
+        value: true,
+        isSelect: true
+      }
+    },
+    methods: {
+      reserveToggleSubTime () {
+        this.isSelect = !this.isSelect;
+        console.log(this.isSelect)
       }
     }
   }

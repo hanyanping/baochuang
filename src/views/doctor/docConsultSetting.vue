@@ -23,10 +23,10 @@
         <div v-show="value === true" class="doc-ConsultSetting-two-select-box">
           <div class="doc-ConsultSetting-two-select-smallbox">
             <select class="doc-ConsultSetting-two-select">
-              <option value="0">0元/次</option>
-              <option>5元/次</option>
-              <option>10元/次</option>
-              <option>15元/次</option>
+              <option value="0">0元</option>
+              <option>5元</option>
+              <option>10元</option>
+              <option>15元</option>
             </select>
           </div>
           <div class="iconfont icon-jiantou doc-ConsultSetting-two-jiantou">
