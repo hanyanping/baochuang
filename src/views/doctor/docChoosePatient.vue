@@ -45,11 +45,9 @@
         </div>
       </div>
     </div>
-    <div class="footer" v-if="!active">
-      <button class="button-box" disabled>完成</button>
-    </div>
-    <div class="footer" v-else>
-      <button class="button-box" @click="wancheng">完成</button>
+    <div class="footer">
+      <button v-if="active" class="button-box">完成</button>
+      <button v-else class="button-box" @click="wancheng" disabled>完成</button>
     </div>
   </div>
 </template>
@@ -76,6 +74,10 @@
 //        关注患者关闭，签约患者较多时
         closeActive:true,
         closeHeight:false,
+        obj: {
+          z1: false,
+          z2: false
+        },
         content:'',
         list:[
           {
@@ -134,9 +136,22 @@
           console.log(this.content)
       },
       chooseGuan(){
-          console.log(2)
         if (!this.unshow3){
             this.active = true;
+        }
+      },
+      'obj.z1' (a) {
+          if(this.obj.z1 || this.obj.z2){
+            this.active = true
+          }else{
+            this.active = false
+          }
+      },
+      'obj.z2' () {
+        if(this.obj.z1 || this.obj.z2){
+          this.active = true
+        }else{
+          this.active = false
         }
       }
     },
@@ -155,7 +170,12 @@
         this.unshow1 = !this.unshow1;
       },
       chooseGuan() {
-        this.unshow3 = !this.unshow3
+        this.unshow3 = !this.unshow3;
+        if(!this.unshow3){
+          this.obj.z2 = true;
+        }else{
+          this.obj.z2 = false
+        }
         var SpanG = this.$refs.patientSpanGuan
         if (!this.unshow3) {
           // 全选
@@ -170,6 +190,11 @@
       },
       chooseQian () {
         this.unshow2 = !this.unshow2
+        if(!this.unshow2){
+          this.obj.z1 = true;
+        }else{
+          this.obj.z1 = false;
+        }
         var Spans = this.$refs.patientSpan
         if (!this.unshow2) {
             // 全选
@@ -183,26 +208,54 @@
         }
       },
       chooseQianItem(ele) {
+        this.unshow2 = true
         if (ele.target.className.indexOf('icon-yuan1') > 0) {
           ele.target.className = 'iconfont icon-2'
         } else {
           ele.target.className = 'iconfont icon-yuan1'
+        }
+        var aa = this.$refs.patientSpan
+        var num = 0
+        for (let i in aa) {
+          if (aa[i].classList.value.indexOf('icon-2') > 0) {
+            this.obj.z1 = true
+            num++
+          }
+          if (num == 0) {
+            this.obj.z1 = false
+          }
+          if (num == aa.length) {
+            this.unshow2 = false
+          }
         }
       },
       chooseGuanItem(ele) {
+        this.unshow3 = true
         if (ele.target.className.indexOf('icon-yuan1') > 0) {
           ele.target.className = 'iconfont icon-2'
         } else {
           ele.target.className = 'iconfont icon-yuan1'
         }
+        var aa = this.$refs.patientSpanGuan
+        var num = 0
+        for (let i in aa) {
+          if (aa[i].classList.value.indexOf('icon-2') > 0) {
+            this.obj.z2 = true
+            num++
+          }
+          if (num == 0) {
+            this.obj.z2 = false
+          }
+          if (num == aa.length) {
+            this.unshow3 = false
+          }
+        }
       },
       wancheng () {
-          console.log(12)
         this.patientId = []
         var cheSpans = this.$refs.patientSpan,
             cheSpanG = this.$refs.patientSpanGuan,
-            arr =cheSpans.concat(cheSpanG);
-        console.log(arr)
+            arr = cheSpans.concat(cheSpanG);
         for (let i in arr) {
             if (arr[i].classList.value.indexOf('icon-2') > 0) {
               this.patientId.push(arr[i].attributes.getNamedItem('data-id').nodeValue)
