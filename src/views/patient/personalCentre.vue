@@ -3,11 +3,12 @@
   <div class="personalCentre">
     <div class="personalCentre-box">
       <div class="personalCentre-header-box">
-        <div>
-          <span class="personalCentre-header-text">士应该</span>
+        <div style="display:inline-block;height:100%;line-height: 50px;">
+          <img class="personalCentre-header-bg fl" src="../../assets/img/second.png">
+          <span class="personalCentre-header-text fl">士应该</span>
         </div>
-        <div>
-          <span class="personalCentre-header-text">完善信息</span>
+        <div style="display:inline-block">
+          <span class="personalCentre-headerright-text">完善信息</span>
           <i class="iconfont personalCentre-header-icon icon-jiantou"></i>
         </div>
       </div>
@@ -16,7 +17,7 @@
     <div class="personalCentre-menu-box pos-relate">
         <div class="personalCentre-menu-line-box border-bot-dash ">
           <span class="personalCentre-menu-text">复诊记录</span>
-          <i class="iconfont icon-jiantou"></i>
+          <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
         </div>
 
         <span class="bg-grey half-circle-left circleleft pos-absolute"></span>
@@ -24,12 +25,12 @@
 
         <div class="personalCentre-menu-line-box border-bot-dash "  >
           <span class="personalCentre-menu-text">预约记录</span>
-          <i class="iconfont icon-jiantou"></i>
+          <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
         </div>
 
         <div class="personalCentre-menu-line-box border-bot-dash">
           <span class="personalCentre-menu-text">就诊记录</span>
-          <i class="iconfont icon-jiantou"></i>
+          <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
         </div>
     </div>
 
@@ -47,11 +48,11 @@
 <style lang="scss">
 
   .personalCentre{
-    background: #5da096;
+    background: url('../../assets/img/personalCentre_bg.png') no-repeat center/cover;
     height:30vh;
 
     .personalCentre-box{
-      padding-top: 50px;
+      padding-top: 30px;
       padding-left: 20px;
       padding-right: 20px;
 
@@ -59,10 +60,26 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        height:50px;
+        line-height:50px;
+
+        .personalCentre-header-bg{
+          width: 50px;
+          height:50px;
+          border-radius: 50%;
+          display:inline-block;
+        }
 
         .personalCentre-header-text{
           color: white;
           font-size: 16px;
+          margin-left:4px;
+        }
+
+        .personalCentre-headerright-text{
+          color: #e4f0ef;
+          font-size: 16px;
+          margin-left:4px;
         }
 
         .personalCentre-header-icon{
@@ -77,7 +94,7 @@
       background: white;
       margin-left: 20px;
       margin-right: 20px;
-      margin-top: 45px;
+      margin-top: 32px;
       -webkit-box-shadow:0 0 50px #dbe5e4;
       -moz-box-shadow:0 0 50px #dbe5e4;
       box-shadow:0 0 50px #dbe5e4;
@@ -91,8 +108,12 @@
         justify-content: space-between;
 
         .personalCentre-menu-text{
-          color: #000;
-          font-size: 14px;
+          color: #232323;
+          font-size: 16px;
+        }
+
+        .personalCentre-menu-icon{
+          color: #cecece;
         }
       }
 

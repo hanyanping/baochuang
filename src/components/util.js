@@ -17,7 +17,7 @@ function formatPara(info){
   return str;
 }
 
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //创建axios请求对象,规定基本参数
 const request =  axios.create({
   baseURL: 'http://testaiganneo.aiganyisheng.cn/',

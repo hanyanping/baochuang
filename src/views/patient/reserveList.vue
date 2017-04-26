@@ -125,16 +125,16 @@
       loadBottom() {
         console.log(1);
         let _this = this;
+        _this.nowPage++;
         _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) + '&page=' + _this.nowPage)
           .then((resp) => {
-            _this.nowPage++;
             console.log(resp);
             if (_this.nowPage * _this.postData.rows >= resp.data.total) {
               _this.allLoaded = true;
             } else {
               _this.message = _this.message.concat(resp.data.data.rows);
             }
-            this.$refs.loadmore.onBottomLoaded();
+            _this.$refs.loadmore.onBottomLoaded();
           }).catch((error) => {
           console.log(error);
         });
