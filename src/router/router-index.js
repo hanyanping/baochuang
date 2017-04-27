@@ -31,6 +31,7 @@ import doctorInfo from '../views/patient/doctorInfo'
 import selectTestReportCheck from '../views/patient/selectTestReportCheck'
 import checkRecord from '../views/patient/checkRecord'
 import clinicRecord from '../views/patient/clinicRecord'
+import changeMainDoctor from '../views/patient/changeMainDoctor'
 
 
 
@@ -90,6 +91,7 @@ export default new Router({
         {path: 'selectTestReportCheck',component: selectTestReportCheck},
         {path: 'checkRecord',component: checkRecord},
         {path: 'clinicRecord',component: clinicRecord},
+        {path: 'changeMainDoctor',component: changeMainDoctor},
       ],
     },
     {

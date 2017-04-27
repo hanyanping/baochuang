@@ -66,6 +66,9 @@
 /*纵轴圆*/
 .circle-shaft{width:10px;height:10px;border-radius: 50%; display:inline-block; border:2px solid #fff; z-index: 500;}
 
+/*头像logo*/
+.head-logo{width:32%; height:32%; border-radius: 50%; display:inline-block}
+
 
 .marginB15{margin-bottom:15px;}
 .marginL15{margin-left:15px;}
