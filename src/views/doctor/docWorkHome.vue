@@ -90,9 +90,9 @@
     </div>
     <div class="visit-box">
       <div class="visit-patient" v-for="item in lists">
-        <div class="" >
-          <p class="">{{item.question}}</p>
-          <p class="">{{item.time}}</p>
+        <div class="other-box" >
+          <p class="other-question">{{item.question}}</p>
+          <p class="other-time">{{item.time}}</p>
         </div>
         <div class="no-deal">
           {{item.statis}}
@@ -182,6 +182,18 @@
        justify-content: space-between;
        padding:5px 16px;
        border:1px solid #f4f4f4;
+       .other-box{
+         padding-top:10px;
+         font-size:15px;
+         .other-question{
+           color:#232323;
+           padding-top:3px;
+         }
+         .other-time{
+           color:#bbb;
+           padding-top:5px;
+         }
+       }
        .consult-info-box{
          display:flex;
          img{
