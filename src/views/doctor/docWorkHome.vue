@@ -149,7 +149,6 @@
 
     }
   }
-
 </script>
 
 <style lang="scss">
