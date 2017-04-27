@@ -94,12 +94,13 @@
       background: white;
       margin-left: 20px;
       margin-right: 20px;
-      margin-top: 32px;
+      margin-top: 10vh;
       -webkit-box-shadow:0 0 50px #dbe5e4;
       -moz-box-shadow:0 0 50px #dbe5e4;
       box-shadow:0 0 50px #dbe5e4;
 
       .personalCentre-menu-line-box{
+        height: 2vh;
         display: flex;
         flex-direction: row;
         padding: 20px;
@@ -118,13 +119,13 @@
       }
 
       .circleleft{
-        top:50px;
+        top:46px;
         left:0;
         display:block;
       }
 
       .circleright{
-        top:50px;
+        top:46px;
         right:0;
         display:block;
       }

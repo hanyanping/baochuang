@@ -9,30 +9,38 @@
         <span class="visitRrecord-money-text" >{{integral}}</span>
       </div>
 
-      <mt-loadmore
-        :top-method="loadTop" ref="loadmore"
-        :bottom-method="loadBottom"
-        :bottom-all-loaded="allLoaded"
-        :autoFill="false">
-          <div class="integralAccount-list-box pos-relate" v-show="message.length > 0">
-              <div class="integralAccount-listheader-box border-bot-dash">
-                <span class="integralAccount-listtitle-text">积分明细</span>
-              </div>
-              <span class="bg-grey half-circle-left circleleft pos-absolute"></span>
-              <span class="bg-grey half-circle-right circleright pos-absolute"></span>
-
-                <div class="integralAccount-listcontent-box">
-                  <div class="integralAccount-listitem-box border-bot-dash" v-for="item in message">
-                    <div class="fl" style="width:70%;line-height: 22px;">
-                      <span class="integralAccount-listitem-left-text  fs14" style="display:inline-block;">咨询王明医生</span><br>
-                      <span class="integralAccount-listitem-leftbottom-text fs14" style="display:inline-block;">2017-09-12 09:10:00</span>
-                    </div>
-                    <span v-if="isShow" class="integralAccount-listitem-right-text fr fs14" style="margin-top:14px;">+100元</span>
-                    <span v-else="isShow" class="integralAccount-listitem-right-text fr fs14" style="margin-top:14px;">-100元</span>
-                  </div>
-                </div>
+      <div class="integralAccount-list-box pos-relate" v-show="message.length > 0">
+          <div class="integralAccount-listheader-box border-bot-dash">
+            <span class="integralAccount-listtitle-text">积分明细</span>
           </div>
-      </mt-loadmore>
+          <span class="bg-grey half-circle-left circleleft pos-absolute"></span>
+          <span class="bg-grey half-circle-right circleright pos-absolute"></span>
+
+          <div class="integralAccount-listcontent-box">
+            <mt-loadmore
+              :top-method="loadTop" ref="loadmore"
+              :bottom-method="loadBottom"
+              :bottom-all-loaded="allLoaded"
+              :autoFill="false">
+              <div class="integralAccount-listitem-box border-bot-dash" v-for="item in message">
+                <div class="fl" style="width:70%;line-height: 22px;">
+                  <span class="integralAccount-listitem-left-text  fs14" style="display:inline-block;">咨询王明医生</span><br>
+                  <span class="integralAccount-listitem-leftbottom-text fs14" style="display:inline-block;">2017-09-12 09:10:00</span>
+                </div>
+                <span v-if="isShow" class="integralAccount-listitem-right-text fr fs14" style="margin-top:14px;">+100元</span>
+                <span v-else="isShow" class="integralAccount-listitem-right-text fr fs14" style="margin-top:14px;">-100元</span>
+              </div>
+            </mt-loadmore>
+          </div>
+
+      </div>
+
+      <div class="integralAccount-listitem-empty-box" v-show="message.length <= 0">
+          <img src="../../assets/img/integralAccount_empty_icon.png" class="integralAccount-listitem-empty-img">
+          <br/>
+          <span class="integralAccount-listitem-empty-text">暂无积分</span>
+      </div>
+
     </div>
 </template>
 
@@ -96,7 +104,7 @@
   .integralAccount{
     height:100vh;
     width:100%;
-    background: #f4f4f4;
+    background: #fcfcfc;
 
     .integralAccount-titlebg-box{
       background: #5fa39b;
@@ -181,6 +189,24 @@
             font-size: 16px;
           }
         }
+      }
+    }
+
+    .integralAccount-listitem-empty-box{
+      width:100%;
+      text-align:center;
+      line-height: 40px;
+
+      .integralAccount-listitem-empty-img{
+        padding-top: 10vh;
+        width:70px;
+        height: 70px;
+      }
+
+      .integralAccount-listitem-empty-text{
+        display:inline-block;
+        font-size: 16px;
+        color: #d7d7d7;
       }
     }
 
