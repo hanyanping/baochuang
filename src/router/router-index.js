@@ -57,6 +57,7 @@ import docChoosePatient from '../views/doctor/docChoosePatient'
 import docReportDetail from '../views/doctor/docReportDetail'
 import docWorkHome from '../views/doctor/docWorkHome'
 import docAppointmentSetting from '../views/doctor/docAppointmentSetting'
+import docVisitInfo from '../views/doctor/docVisitInfo'
 import docVisitDetail from '../views/doctor/docVisitDetail'
 
 Vue.use(Router);
@@ -198,6 +199,11 @@ export default new Router({
           path: 'docVisitDetail',
           name: 'docVisitDetail',
           component: docVisitDetail
+        },
+        {
+          path: 'docVisitInfo',
+          name: 'docVisitInfo',
+          component: docVisitInfo
         }
       ],
     },

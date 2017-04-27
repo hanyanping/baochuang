@@ -124,6 +124,8 @@
           </a>
         </div>
       </div>
+
+      <button v-show="value === true" class="doc-appoint-bottom-button">保存</button>
     </div>
   </div>
 
@@ -352,6 +354,19 @@
           -webkit-appearance:none;
        }
       }
+    }
+    .doc-appoint-bottom-button {
+      display: block;
+      width: 90%;
+      height:45px;
+      margin: auto;
+      background:#62a39c;
+      border:1px solid #86B8B8;
+      border-radius:22px;
+      margin-top:36.5px;
+      outline: none;
+      font-size: 16px;
+      color: #fff;
     }
   }
 </style>
