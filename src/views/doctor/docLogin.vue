@@ -39,6 +39,7 @@
 
 <script>
   import { Toast } from 'mint-ui';
+  import axios from 'axios'
   export default {
     name: 'docLogin',
     data () {
@@ -48,6 +49,7 @@
         isCode: false,
         active: false,
         code: '',
+        mobile:'',
         requestJson: {
             phone: '',
             code: ''
@@ -87,18 +89,26 @@
               return false
             } else {
                 let _this = this
-                this.$http.post('http://testapi.aiganyisheng.net/public/patient_login',this.requestJson)
-                .then((result) => {
-                  console.log(result)
-                  Toast('登录成功！')
-                  setTimeout(function () {
-                    _this.$router.push('/docMoney')
-                  }, 2000)
-                }, (err) => {
-                  console.log(err)
-                })
+              axios.get('/wx/mobile/sendcode',{params: {
+                mobile: this.requestJson.phone
+              }
+              }).then((result) => {
+                console.log(result)
+            })
             }
         },
+//                this.$http.post('http://testapi.aiganyisheng.net/public/patient_login',this.requestJson)
+//                .then((result) => {
+//                  console.log(result)
+//                  Toast('登录成功！')
+//                  setTimeout(function () {
+//                    _this.$router.push('/docMoney')
+//                  }, 2000)
+//                }, (err) => {
+//                  console.log(err)
+//                })
+
+
         //  获取验证码
       getCodes(el) {
         if(!(/^1[34578]\d{9}$/.test(this.requestJson.phone))){
@@ -110,13 +120,12 @@
                 return false
             } else {
               this.isCode = true
-              this.$http.post('http://testapi.aiganyisheng.net/public/phone_verification_code',{telphone:_that.requestJson.phone,type:"1"})
-                .then((result) => {
-                  this.code = result.code
-                  console.log(result)
-                }, (err) => {
-                  console.log(err)
-                })
+              axios.get('/wx/mobile/sendcode',{params: {
+                mobile: this.requestJson.phone
+              }
+              }).then((result) => {
+                console.log(result)
+              })
               clearInterval(t);       //停止计时器
               var t = setInterval(function () {
                 if (_that.time >= 0) {
