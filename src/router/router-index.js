@@ -29,6 +29,9 @@ import subscribeList from '../views/patient/subscribeList'
 import hospitalInfo from '../views/patient/hospitalInfo'
 import doctorInfo from '../views/patient/doctorInfo'
 import selectTestReportCheck from '../views/patient/selectTestReportCheck'
+import checkRecord from '../views/patient/checkRecord'
+import clinicRecord from '../views/patient/clinicRecord'
+
 
 
 
@@ -54,6 +57,8 @@ import docChoosePatient from '../views/doctor/docChoosePatient'
 import docReportDetail from '../views/doctor/docReportDetail'
 import docWorkHome from '../views/doctor/docWorkHome'
 import docAppointmentSetting from '../views/doctor/docAppointmentSetting'
+import docVisitInfo from '../views/doctor/docVisitInfo'
+import docVisitDetail from '../views/doctor/docVisitDetail'
 
 Vue.use(Router);
 
@@ -83,6 +88,8 @@ export default new Router({
         {path: 'hospitalInfo',component: hospitalInfo},
         {path: 'doctorInfo',component: doctorInfo},
         {path: 'selectTestReportCheck',component: selectTestReportCheck},
+        {path: 'checkRecord',component: checkRecord},
+        {path: 'clinicRecord',component: clinicRecord},
       ],
     },
     {
@@ -187,8 +194,17 @@ export default new Router({
           path: 'docAppointmentSetting',
           name: 'docAppointmentSetting',
           component: docAppointmentSetting
+        },
+        {
+          path: 'docVisitDetail',
+          name: 'docVisitDetail',
+          component: docVisitDetail
+        },
+        {
+          path: 'docVisitInfo',
+          name: 'docVisitInfo',
+          component: docVisitInfo
         }
-
       ],
     },
   ]

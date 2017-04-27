@@ -4,7 +4,6 @@
     width:92%;
     margin:4% 4% 0;
     border-radius:3px;
-    box-shadow: 0 0 8px #d2e0e0;
   }
   .item-header,.item-content{
     width:92%;
@@ -55,7 +54,7 @@
         :bottom-method="loadBottom"
         :bottom-all-loaded="allLoaded"
         :autoFill="false">
-        <dl class="order-reserve-item bg-white fs16" v-for="item in message">
+        <dl class="order-reserve-item box-shade bg-white fs16" v-for="item in message">
           <dt class="item-header border-bot">
             <span class="fl">就诊时间：{{item.buyTime}}</span>
             <span class="fr color-warn">待确认{{item.doctorId}}</span>

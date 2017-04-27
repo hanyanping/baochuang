@@ -6,7 +6,6 @@
   .hospital-info {
     width: 92%;
     margin: 165px auto 0;
-    box-shadow: 0 0 8px #d2e0e0;
     overflow: hidden;
   }
   .circle-left{
@@ -76,7 +75,7 @@
 
 <template>
     <div class="bg-hospital">
-      <div class="hospital-info  circular-bead">
+      <div class="hospital-info box-shade  circular-bead">
         <div class="bg-white pos-relate">
           <span class="info-header border-bot-dash fs15">服务内容</span>
           <span class="half-circle-left circle-left pos-absolute bg-grey"></span>
@@ -84,7 +83,7 @@
         </div>
         <div class="disease-label">
           <span class="item-box">
-            <router-link to="javascript:void(0)" class="disease-item marginB15 bg-primary">查化验单</router-link>
+            <router-link to="javascript:void(0)" class="disease-item marginB15 bg-button">查化验单</router-link>
             <router-link to="javascript:void(0)" class="disease-item bg-disable">咨询医生</router-link>
           </span>
           <div class="item-box">

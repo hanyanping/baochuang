@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1493027860338'); /* IE9*/
-  src: url('iconfont.eot?t=1493027860338#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1493027860338') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1493027860338') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1493027860338#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1493277296559'); /* IE9*/
+  src: url('iconfont.eot?t=1493277296559#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1493277296559') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1493277296559') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1493277296559#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -56,6 +56,8 @@
 .icon-zhankai1:before { content: "\e628"; }
 
 .icon-rili2:before { content: "\e64c"; }
+
+.icon-aixin:before { content: "\e604"; }
 
 .icon-rili3:before { content: "\e61a"; }
 
