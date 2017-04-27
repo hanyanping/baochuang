@@ -108,7 +108,6 @@
 //                  console.log(err)
 //                })
 
-
         //  获取验证码
       getCodes(el) {
         if(!(/^1[34578]\d{9}$/.test(this.requestJson.phone))){
