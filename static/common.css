@@ -9,6 +9,8 @@
 .pos-absolute{position:absolute;}
 .pos-relate{position:relative;}
 
+.over-hidden{overflow: hidden}
+
 .fs14{font-size:14px;}
 .fs15{font-size:15px;}
 .fs16{font-size:16px;}
@@ -22,7 +24,6 @@
 
 .bg-grey{background:#f4f4f4;}
 .bg-white{background:#fff;}
-.bg-primary{background:#5fa39b;}
 .bg-disable{background:#e0dede}
 .bg-cure{background:#60a39c;}
 .bg-selected{background:#daf4fa;}
@@ -36,7 +37,7 @@
 .color-white{color:white;}
 .color-shallow{color:#666;}
 .color-selected{color:#5ac4b2;}
-
+.color-black{color:#232323;}
 
 .device-height{min-height:100vh;}
 .item-height{height:50px;}
@@ -54,14 +55,28 @@
 .half-circle-left{width: 7px;height: 14px;  border-radius: 0 14px 14px 0;}
 .half-circle-right{width: 7px;height: 14px;  border-radius: 14px 0 0 14px;}
 
+/*阴影*/
+.box-shade{box-shadow: 0 0 8px #d2e0e0;}
+
+/*外层父元素*/
+.parent-width{width:92%;}
+.parent-margin{margin:15px 4%;}
+
+
+/*纵轴圆*/
+.circle-shaft{width:10px;height:10px;border-radius: 50%; display:inline-block; border:2px solid #fff; z-index: 500;}
+
 
 .marginB15{margin-bottom:15px;}
 .marginL15{margin-left:15px;}
 .marginR15{margin-right:15px;}
+.marginT15{margin-top:15px;}
 .marginT10{margin-top:10px;}
 
 
 .paddingL10{padding-left:10px;}
+.paddingT10{padding-top:10px;}
+.paddingB10{padding-bottom:10px;}
 .paddingL15{padding-left:15px;}
 .paddingR15{padding-right:15px;}
 .paddingT15{padding-top:15px;}

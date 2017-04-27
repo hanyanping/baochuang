@@ -74,6 +74,9 @@
   display:inline-block;
   padding-right:5px;
 }
+
+
+
 </style>
 
 <template>
@@ -92,7 +95,7 @@
             <span class="title-badge bg-cure"></span>
             <span class="fs18">医生介绍</span>
           </div>
-          <i class="up-forward iconfont icon-zhankai1"></i>
+          <i class="up-forward iconfont icon-zhankai1 "></i>
         </div>
         <div class="instruction-content fs16 color-shallow">
           从事传染病工作30年，撰写了多篇论文发表在国际、国家级、省级核心期刊，参加第二节国际消化学大会，

@@ -29,6 +29,9 @@ import subscribeList from '../views/patient/subscribeList'
 import hospitalInfo from '../views/patient/hospitalInfo'
 import doctorInfo from '../views/patient/doctorInfo'
 import selectTestReportCheck from '../views/patient/selectTestReportCheck'
+import checkRecord from '../views/patient/checkRecord'
+import clinicRecord from '../views/patient/clinicRecord'
+
 
 
 
@@ -83,6 +86,8 @@ export default new Router({
         {path: 'hospitalInfo',component: hospitalInfo},
         {path: 'doctorInfo',component: doctorInfo},
         {path: 'selectTestReportCheck',component: selectTestReportCheck},
+        {path: 'checkRecord',component: checkRecord},
+        {path: 'clinicRecord',component: clinicRecord},
       ],
     },
     {
