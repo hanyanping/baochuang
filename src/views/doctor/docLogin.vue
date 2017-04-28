@@ -89,7 +89,7 @@
               return false
             } else {
                 let _this = this
-              axios.get('/wx/mobile/sendcode',{params: {
+              axios.get('/wx/mobile/sendcode',{ params: {
                 mobile: this.requestJson.phone
               }
               }).then((result) => {
@@ -108,7 +108,6 @@
 //                  console.log(err)
 //                })
 
-
         //  获取验证码
       getCodes(el) {
         if(!(/^1[34578]\d{9}$/.test(this.requestJson.phone))){
@@ -120,7 +119,7 @@
                 return false
             } else {
               this.isCode = true
-              axios.get('/wx/mobile/sendcode',{params: {
+              axios.get('/api/wx/mobile/sendcode',{params: {
                 mobile: this.requestJson.phone
               }
               }).then((result) => {

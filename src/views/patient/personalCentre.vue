@@ -5,7 +5,7 @@
       <div class="personalCentre-header-box">
         <div style="display:inline-block;height:100%;line-height: 50px;">
           <img class="personalCentre-header-bg fl" src="../../assets/img/second.png">
-          <span class="personalCentre-header-text fl">士应该</span>
+          <span class="personalCentre-header-text fl">士应该---{{auth}}</span>
         </div>
         <div style="display:inline-block">
           <span class="personalCentre-headerright-text">完善信息</span>
@@ -39,9 +39,11 @@
 
 <script>
   export default {
-
-
-
+    data () {
+      return {
+        auth: localStorage.getItem('auth')
+      }
+    }
   }
 </script>
 
