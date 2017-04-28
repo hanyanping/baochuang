@@ -32,7 +32,6 @@
               </div>
             </mt-loadmore>
           </div>
-
       </div>
 
       <div class="integralAccount-listitem-empty-box" v-show="message.length <= 0">

@@ -28,12 +28,31 @@
 </template>
 
 <script>
+  import util from '../../components/util';
   export default {
     name : 'docMyInfo',
     data () {
       return {
-
+        postData: {
+          authentication: '3437d5824a079a48da95ef2d5ab419b3'
+        },
+        authentication: '3437d5824a079a48da95ef2d5ab419b3'
       }
+    },
+    mounted() {
+      this.getDocInfo()
+    },
+    methods: {
+      // 获取医生信息
+      getDocInfo () {
+        console.log('123')
+        let that = this;
+        that.util.post('/wx/baochuan_d/myinfo' + that.util.formatPara(that.postData)).then((resp) => {
+          console.log(resp.data);
+        }).catch((error) => {
+          console.log(error);
+        })
+      },
     }
   }
 </script>

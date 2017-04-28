@@ -113,7 +113,7 @@
     data () {
       return {
         items: [1,2,3],
-        isSetting: false,
+        isSetting: true,
       }
     }
   }

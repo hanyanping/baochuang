@@ -38,7 +38,11 @@
       </mt-loadmore>
     </div>
 
-
+    <div class="subscribeList-listitem-empty-box" v-show="content.length <= 0">
+      <img src="../../assets/img/integralAccount_empty_icon.png" class="subscribeList-listitem-empty-img">
+      <br/>
+      <span class="subscribeList-listitem-empty-text">暂无预约</span>
+    </div>
   </div>
 </template>
 
@@ -47,7 +51,52 @@
     data () {
       return {
         visitTime: '2017-01-01',
-        content:[]
+        content:[],
+        allLoaded: false,
+        nowPage: 1,
+        message: [],
+        isShow : false,
+        postData: {
+          authentication: 'f9780de6803b8077534534f44fe0535d',
+          rows: 10,
+          page: 1
+        }
+      }
+    },
+    mounted() {
+      //this.getIntegralList();
+    },
+    methods: {
+      getIntegralList() {
+        let that = this;
+        that.util.request.post('/wx/baochuan_p/myscore?' + that.util.formatPara(that.postData) + '&page=1').then((resp) => {
+          console.log(resp.data);
+          that.message = resp.data.data.rows;
+          that.$refs.loadmore.onTopLoaded();
+        }).catch((error) => {
+          console.log(error);
+        })
+      },
+      loadTop() {
+        console.log(2);
+        this.getReserveList();
+      },
+      loadBottom() {
+        console.log(1);
+        let _this = this;
+        _this.nowPage++;
+        _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) + '&page=' + _this.nowPage)
+          .then((resp) => {
+            console.log(resp);
+            if (_this.nowPage * _this.postData.rows >= resp.data.total) {
+              _this.allLoaded = true;
+            } else {
+              _this.message = _this.message.concat(resp.data.data.rows);
+            }
+            _this.$refs.loadmore.onBottomLoaded();
+          }).catch((error) => {
+          console.log(error);
+        });
       }
     }
   }
@@ -60,6 +109,7 @@
     width: 100%;
     background: #fcfcfc;
     overflow:hidden;
+    text-align: center;
 
     .subscribeList-box{
       width:92%;
@@ -112,6 +162,24 @@
           margin-top: -8px;
           margin-right: 10px;
         }
+      }
+    }
+
+    .subscribeList-listitem-empty-box{
+      width:100%;
+      text-align:center;
+      line-height: 40px;
+
+      .subscribeList-listitem-empty-img{
+        padding-top: 10vh;
+        width:70px;
+        height: 70px;
+      }
+
+      .subscribeList-listitem-empty-text{
+        display:inline-block;
+        font-size: 16px;
+        color: #d7d7d7;
       }
     }
 
