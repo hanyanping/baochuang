@@ -89,7 +89,7 @@
               return false
             } else {
                 let _this = this
-              axios.get('/wx/mobile/sendcode',{params: {
+              axios.get('/wx/mobile/sendcode',{ params: {
                 mobile: this.requestJson.phone
               }
               }).then((result) => {
@@ -119,7 +119,7 @@
                 return false
             } else {
               this.isCode = true
-              axios.get('/wx/mobile/sendcode',{params: {
+              axios.get('/api/wx/mobile/sendcode',{params: {
                 mobile: this.requestJson.phone
               }
               }).then((result) => {
