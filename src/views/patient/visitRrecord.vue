@@ -33,7 +33,7 @@
       <div class="visitRrecord-listitem-empty-box" v-show="content.length <= 0">
         <img src="../../assets/img/integralAccount_empty_icon.png" class="visitRrecord-listitem-empty-img">
         <br/>
-        <span class="visitRrecord-listitem-empty-text">暂无积分</span>
+        <span class="visitRrecord-listitem-empty-text">暂无复诊</span>
       </div>
     </div>
 </template>
@@ -42,7 +42,7 @@
     export default {
       data() {
         return {
-          visitTime:'2017',
+          visitTime:'2017-01-01',
           allLoaded: false,
           nowPage: 1,
           content: [],
@@ -183,7 +183,7 @@
       line-height: 40px;
 
       .visitRrecord-listitem-empty-img{
-        padding-top: 10vh;
+        padding-top: 20vh;
         width:70px;
         height: 70px;
       }
