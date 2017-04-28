@@ -1,7 +1,9 @@
 <template>
   <div id="loginBox">
+    <group>
+      <cell title="title" value="value"></cell>
+    </group>
     <div class="docPhone inputBox">
-      <!--<img :src='phone'/>-->
       <div class="fontBox">
         <i class="icon iconfont icon-shouji"></i>
       </div>
@@ -40,16 +42,22 @@
 <script>
   import { Toast } from 'mint-ui';
   import axios from 'axios'
+  import { Group, Cell } from 'vux'
   export default {
     name: 'docLogin',
+    components: {
+      Group,
+      Cell
+    },
     data () {
       return {
+
         getCode:"获取验证码",
         time: 5,
         isCode: false,
         active: false,
         code: '',
-        mobile:'',
+        authentication:'3437d5824a079a48da95ef2d5ab419b3',
         requestJson: {
             phone: '',
             code: ''
@@ -57,7 +65,15 @@
       }
     },
     created() {
-      document.getElementsByTagName('title')[0].innerHTML = '验证手机'
+      document.getElementsByTagName('title')[0].innerHTML = '验证手机';
+      axios.get('/api/wx/baochuan_d/myinfo', {
+        params: {
+          authentication:this.authentication
+      }
+      }).then((result) => {
+        console.log(result)
+      })
+
     },
     watch: {
         'requestJson.phone' () {

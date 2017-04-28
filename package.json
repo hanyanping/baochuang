@@ -63,7 +63,9 @@
     "not ie <= 8"
   ],
   "devDependencies": {
+    "less-loader": "^4.0.3",
     "node-sass": "^4.5.2",
-    "sass-loader": "^6.0.3"
+    "sass-loader": "^6.0.3",
+    "vux-loader": "^1.0.58"
   }
 }
