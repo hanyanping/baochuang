@@ -16,8 +16,7 @@ Vue.prototype.util = util;
 rootRouter.beforeEach(function (to, from, next) {
   // 从localStorage中获取auth
   var auth = localStorage.getItem('auth');
-  // var auth = 'fff'; // 测试使用
-  // var auth = localStorage.getItem('auth');
+  //var auth = 'fff'; // 测试使用
 
   // 使用
   // localStorage.clear();
@@ -27,7 +26,6 @@ rootRouter.beforeEach(function (to, from, next) {
     if (auth == null || auth == '' || auth == undefined) {
       console.log('未登录!');
       window.location.href = "http://testaiganneo.aiganyisheng.com/wx/baochuan_p/login"
-      // window.location.href = "http://testaiganneo.aiganyisheng.cn/wx/yantai_p/login"
     } else {
       console.log('已经登录!');
       localStorage.setItem('auth', auth);
