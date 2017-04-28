@@ -27,17 +27,17 @@ rootRouter.beforeEach(function (to, from, next) {
     auth = getParameterByName('authentication');
     if (auth == null || auth == '' || auth == undefined) {
       console.log('未登录!');
-      alert('未登录!');
+      // alert('未登录!');
       window.location.href = "http://testaiganneo.aiganyisheng.com/wx/baochuan_p/login"
     } else {
-      console.log('已经登录!');
-      alert('url+已经登录!')
+      // console.log('已经登录!');
+      // alert('url+已经登录!')
       localStorage.setItem('auth', auth);
       next();
     }
   } else {
-    console.log('已经登录!');
-    alert('已经登录!');
+    // console.log('已经登录!');
+    // alert('已经登录!');
     next();
   }
 });
