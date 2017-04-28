@@ -4,19 +4,19 @@
     <div class="doc-myinfo-top-box">
       <div class="doc-myinfo-top-name-box">
         <span>姓名</span>
-        <label class="doc-myinfo-top-name-right">王鲲鹏</label>
+        <label class="doc-myinfo-top-name-right">{{data.content.doctor_name}}</label>
       </div>
       <div class="doc-myinfo-top-name-box">
         <span>医院</span>
-        <label class="doc-myinfo-top-name-right">保定市传染病医院</label>
+        <label class="doc-myinfo-top-name-right">{{data.content.hospital}}</label>
       </div>
       <div class="doc-myinfo-top-name-box">
         <span>科室</span>
-        <label class="doc-myinfo-top-name-right">肝病二科A组</label>
+        <label class="doc-myinfo-top-name-right">{{data.content.department}}</label>
       </div>
       <div class="doc-myinfo-top-name-box">
         <span>职称</span>
-        <label class="doc-myinfo-top-name-right">主任医师</label>
+        <label class="doc-myinfo-top-name-right">{{data.content.grade}}</label>
       </div>
     </div>
 
@@ -29,30 +29,35 @@
 
 <script>
   import util from '../../components/util';
+  import axios from 'axios'
+  import { Toast } from 'mint-ui';
   export default {
-    name : 'docMyInfo',
+    name: 'docMyInfo',
     data () {
       return {
-        postData: {
-          authentication: '3437d5824a079a48da95ef2d5ab419b3'
-        },
-        authentication: '3437d5824a079a48da95ef2d5ab419b3'
+        authentication: '3437d5824a079a48da95ef2d5ab419b3',
+        data: [],
       }
     },
     mounted() {
-      this.getDocInfo()
+      this.getDocInfo();
     },
+
     methods: {
       // 获取医生信息
-      getDocInfo () {
-        console.log('123')
-        let that = this;
-        that.util.post('/wx/baochuan_d/myinfo' + that.util.formatPara(that.postData)).then((resp) => {
-          console.log(resp.data);
+      getDocInfo() {
+        axios.get('/api/wx/baochuan_d/myinfo', {
+          params: {
+            authentication: this.authentication
+          }
+        }).then((result) => {
+          console.log(result);
+          this.data = result.data;
         }).catch((error) => {
           console.log(error);
+          Toast('网络不给力 ! 请稍后再试');
         })
-      },
+      }
     }
   }
 </script>
