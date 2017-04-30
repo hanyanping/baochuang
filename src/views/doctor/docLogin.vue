@@ -1,8 +1,5 @@
 <template>
   <div id="loginBox">
-    <group>
-      <cell title="title" value="value"></cell>
-    </group>
     <div class="docPhone inputBox">
       <div class="fontBox">
         <i class="icon iconfont icon-shouji"></i>
