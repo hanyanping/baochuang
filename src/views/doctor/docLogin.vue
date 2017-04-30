@@ -42,14 +42,9 @@
 <script>
   import { Toast } from 'mint-ui';
   import axios from 'axios'
-  import { Group, Cell } from 'vux'
 
   export default {
     name: 'docLogin',
-    components: {
-      Group,
-      Cell
-    },
     data () {
       return {
 
