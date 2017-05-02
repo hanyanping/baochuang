@@ -1,8 +1,5 @@
 <template>
   <div id="loginBox">
-    <group>
-      <cell title="title" value="value"></cell>
-    </group>
     <div class="docPhone inputBox">
       <div class="fontBox">
         <i class="icon iconfont icon-shouji"></i>
@@ -42,13 +39,9 @@
 <script>
   import { Toast } from 'mint-ui';
   import axios from 'axios'
-//  import { Group, Cell } from 'vux'
+
   export default {
     name: 'docLogin',
-//    components: {
-//      Group,
-//      Cell
-//    },
     data () {
       return {
 

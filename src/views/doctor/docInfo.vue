@@ -50,21 +50,43 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
+  import { Toast } from 'mint-ui';
 
   export default {
     name: 'docInfo',
     data () {
       return {
         selected:'1',
-        value:false
+        value:false,
+        authentication: '3437d5824a079a48da95ef2d5ab419b3',
       }
     },
+    mounted() {
+      this.getDocInfo();
+    },
+
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '我的信息'
     },
+
     methods: {
       openPhone() {
          this.value = !this.value;
+      },
+      // 获取个人信息
+      getDocInfo() {
+        axios.get('/api/wx/baochuan_d/myinfo', {
+          params: {
+            authentication: this.authentication
+          }
+        }).then((result) => {
+          console.log(result);
+          this.data = result.data;
+        }).catch((error) => {
+          console.log(error);
+          Toast('网络不给力 ! 请稍后再试');
+        })
       }
    }
   }

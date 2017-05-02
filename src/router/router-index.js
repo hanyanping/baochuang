@@ -22,7 +22,7 @@ import settingVisitTime from '../views/patient/settingVisitTime';
 import reserveList from  '../views/patient/reserveList';
 import completeInfo from '../views/patient/completeInfo';
 import visitRrecord from '../views/patient/visitRrecord';
-import personalCentre from '../views/patient/personalCentre';
+import personalCenter from '../views/patient/personalCenter';
 import selectTestReport from '../views/patient/selectTestReport';
 import integralAccount from '../views/patient/integralAccount'
 import subscribeList from '../views/patient/subscribeList'
@@ -32,6 +32,7 @@ import selectTestReportCheck from '../views/patient/selectTestReportCheck'
 import checkRecord from '../views/patient/checkRecord'
 import clinicRecord from '../views/patient/clinicRecord'
 import changeMainDoctor from '../views/patient/changeMainDoctor'
+import payConfirm from '../views/patient/payConfirm'
 
 
 
@@ -82,7 +83,7 @@ export default new Router({
         {path: 'reserveList', component: reserveList},
         {path: 'completeInfo', component: completeInfo},
         {path: 'visitRrecord', component: visitRrecord},
-        {path: 'personalCentre',component: personalCentre},
+        {path: 'personalCenter',component: personalCenter},
         {path: 'selectTestReport',component: selectTestReport},
         {path: 'integralAccount',component: integralAccount},
         {path: 'subscribeList',component: subscribeList},
@@ -92,6 +93,7 @@ export default new Router({
         {path: 'checkRecord',component: checkRecord},
         {path: 'clinicRecord',component: clinicRecord},
         {path: 'changeMainDoctor',component: changeMainDoctor},
+        {path: 'payConfirm',component: payConfirm},
       ],
     },
     {

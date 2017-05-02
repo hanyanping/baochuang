@@ -31,13 +31,13 @@ rootRouter.beforeEach(function (to, from, next) {
       window.location.href = "http://testaiganneo.aiganyisheng.com/wx/baochuan_p/login"
     } else {
       console.log('已经登录!');
-      alert('url+已经登录!'+ auth);
+      alert('url+已经登录!')
       localStorage.setItem('auth', auth);
       next();
     }
   } else {
     console.log('已经登录!');
-    alert('已经登录!'+ auth);
+    alert('已经登录!');
     next();
   }
 });

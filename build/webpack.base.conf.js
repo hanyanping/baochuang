@@ -58,3 +58,8 @@ module.exports = {
     ]
   }
 }
+// const vuxLoader = require('vux-loader')
+//
+// module.exports = vuxLoader.merge(webpackConfig, {
+//   plugins: ['vux-ui']
+// })
