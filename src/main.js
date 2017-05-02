@@ -19,8 +19,8 @@ Vue.prototype.util = util;
 
 rootRouter.beforeEach(function (to, from, next) {
   // 从localStorage中获取auth
-  // var auth = localStorage.getItem('auth');
-  var auth = 'fff'; // 测试使用
+  var auth = localStorage.getItem('auth');
+  // var auth = 'fff'; // 测试使用
   // localStorage.clear();
   if (auth == null || auth == '' || auth == undefined) {
     // 从URL中获取auth , 对URL进行解析
@@ -31,13 +31,13 @@ rootRouter.beforeEach(function (to, from, next) {
       window.location.href = "http://testaiganneo.aiganyisheng.com/wx/baochuan_p/login"
     } else {
       console.log('已经登录!');
-      alert('url+已经登录!')
+      alert('url+已经登录!'+ auth);
       localStorage.setItem('auth', auth);
       next();
     }
   } else {
     console.log('已经登录!');
-    alert('已经登录!');
+    alert('已经登录!'+ auth);
     next();
   }
 });
