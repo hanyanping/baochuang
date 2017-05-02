@@ -51,7 +51,7 @@
           integral : 0.00,
           allLoaded: false,
           nowPage: 1,
-          message: [],
+          integralList: [],
           isShow : false,
           postData: {
             authentication: 'f9780de6803b8077534534f44fe0535d',
@@ -61,7 +61,7 @@
         }
       },
       mounted() {
-        //this.getIntegralList();
+        this.getIntegralList();
       },
       methods: {
         getIntegralList() {
@@ -77,29 +77,30 @@
           axios.get('/wx/baochuan_p/myscore',{ params: that.postData
           }).then((result) => {
             console.log(result)
+//            that.integralList = resp.data.data.rows;
           })
         },
-        loadTop() {
-          console.log(2);
-          this.getReserveList();
-        },
-        loadBottom() {
-          console.log(1);
-          let _this = this;
-          _this.nowPage++;
-          _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) + '&page=' + _this.nowPage)
-            .then((resp) => {
-              console.log(resp);
-              if (_this.nowPage * _this.postData.rows >= resp.data.total) {
-                _this.allLoaded = true;
-              } else {
-                _this.message = _this.message.concat(resp.data.data.rows);
-              }
-              _this.$refs.loadmore.onBottomLoaded();
-            }).catch((error) => {
-            console.log(error);
-          });
-        }
+//        loadTop() {
+//          console.log(2);
+//          this.getReserveList();
+//        },
+//        loadBottom() {
+//          console.log(1);
+//          let _this = this;
+//          _this.nowPage++;
+//          _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) + '&page=' + _this.nowPage)
+//            .then((resp) => {
+//              console.log(resp);
+//              if (_this.nowPage * _this.postData.rows >= resp.data.total) {
+//                _this.allLoaded = true;
+//              } else {
+//                _this.message = _this.message.concat(resp.data.data.rows);
+//              }
+//              _this.$refs.loadmore.onBottomLoaded();
+//            }).catch((error) => {
+//            console.log(error);
+//          });
+//        }
       }
     }
 </script>
