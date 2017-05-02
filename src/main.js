@@ -22,7 +22,7 @@ rootRouter.beforeEach(function (to, from, next) {
   var auth = localStorage.getItem('auth');
   // var auth = 'fff'; // 测试使用
   // localStorage.clear();
-  // alert('auth==='+auth);
+  alert('auth==='+auth);
   if (auth == null || auth == '' || auth == undefined) {
     alert('从URL中获取auth , 对URL进行解析');
     // 从URL中获取auth , 对URL进行解析
