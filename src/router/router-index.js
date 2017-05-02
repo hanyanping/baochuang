@@ -61,6 +61,8 @@ import docWorkHome from '../views/doctor/docWorkHome'
 import docAppointmentSetting from '../views/doctor/docAppointmentSetting'
 import docVisitInfo from '../views/doctor/docVisitInfo'
 import docVisitDetail from '../views/doctor/docVisitDetail'
+import docErweima from '../views/doctor/docErweima'
+
 
 Vue.use(Router);
 
@@ -125,7 +127,7 @@ export default new Router({
         },
 
         {
-          path: 'docConsult',
+          path: 'docConsult/:patientId',
           name: 'docConsult',
           component: docConsult
         },
@@ -150,7 +152,7 @@ export default new Router({
           component: docReservationDetail
         },
         {
-          path: 'docToBeiZhu',
+          path: 'docToBeiZhu/:patientId/:patientName',
           name: 'docToBeiZhu',
           component: docToBeiZhu
         },
@@ -208,7 +210,13 @@ export default new Router({
           path: 'docVisitInfo',
           name: 'docVisitInfo',
           component: docVisitInfo
+        },
+        {
+          path: 'docErweima',
+          name: 'docErweima',
+          component: docErweima
         }
+
       ],
     },
   ]

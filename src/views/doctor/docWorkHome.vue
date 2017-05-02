@@ -1,12 +1,12 @@
 <template>
   <div class="docWorkRoom" >
-    <div class="qianyue float-box" >
+    <div class="qianyue float-box" @click="visit">
       <span ref="qianyuePatient" class="qianyuePatient">即将就诊患者</span>
       (<span ref="qianyueNum" class="qianyueNum">000</span>)
-      <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': active, 'icon-shouqi': !active}">
+      <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': active, 'icon-shouqi': !active}" >
       </span>
     </div>
-    <div class="visit-box">
+    <div class="visit-box" :class="{'yincang':!active}">
       <div class="visit-patient" v-for="item in lists">
         <div class="visit-info" >
           <img src="../../assets/img/docInfo.png"/>
@@ -19,13 +19,13 @@
         </div>
       </div>
     </div>
-    <div class="qianyue float-box" >
+    <div class="qianyue float-box" @click="yuyue">
       <span ref="qianyuePatient" class="qianyuePatient">预约待处理</span>
       <span ref="qianyueNum" class="qianyueNum">(000)</span>
-      <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': activeOrder, 'icon-shouqi': !activeOrder}">
+      <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': activeOrder, 'icon-shouqi': !activeOrder}" >
       </span>
     </div>
-    <div class="visit-box">
+    <div class="visit-box" :class="{'yincang':!activeOrder}">
       <div class="visit-patient" v-for="item in lists">
         <div class="visit-info" >
           <img src="../../assets/img/docInfo.png"/>
@@ -40,13 +40,13 @@
         </div>
       </div>
     </div>
-    <div class="qianyue float-box" >
+    <div class="qianyue float-box" @click="fuzhen">
       <span ref="qianyuePatient" class="qianyuePatient">复诊时间未设置</span>
       (<span ref="qianyueNum" class="qianyueNum">000</span>)
       <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': activeSet, 'icon-shouqi': !activeSet}">
       </span>
     </div>
-    <div class="visit-box">
+    <div class="visit-box" :class="{'yincang':!activeSet}">
       <div class="visit-patient" v-for="item in lists">
         <div class="visit-info" >
           <img src="../../assets/img/docInfo.png"/>
@@ -61,13 +61,13 @@
         </div>
       </div>
     </div>
-    <div class="qianyue float-box" >
+    <div class="qianyue float-box" @click="consult">
       <span ref="qianyuePatient" class="qianyuePatient">咨询未回复</span>
       (<span ref="qianyueNum" class="qianyueNum">000</span>)
       <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': activeConsult, 'icon-shouqi': !activeConsult}">
       </span>
     </div>
-    <div class="consult-box">
+    <div class="consult-box" :class="{'yincang':!activeConsult}">
       <div class="visit-patient" v-for="item in lists">
         <div class="consult-info-box" >
           <img src="../../assets/img/docInfo.png"/>
@@ -82,13 +82,13 @@
         </div>
       </div>
     </div>
-    <div class="qianyue float-box" >
+    <div class="qianyue float-box" @click="qita">
       <span ref="qianyuePatient" class="qianyuePatient">其他待办事项</span>
       (<span ref="qianyueNum" class="qianyueNum">000</span>)
       <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': activeOthers, 'icon-shouqi': !activeOthers}">
       </span>
     </div>
-    <div class="visit-box">
+    <div class="visit-box" :class="{'yincang':!activeOthers}">
       <div class="visit-patient" v-for="item in lists">
         <div class="other-box" >
           <p class="other-question">{{item.question}}</p>
@@ -102,10 +102,12 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
     name: 'docWorkRoom',
     data () {
       return {
+        authentication:'d1126e11b0392a446acaf724ba9e36c7',
         active:false,
         activeOrder:false,
         activeSet: false,
@@ -145,13 +147,48 @@
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '工作室'
     },
-    methods: {
+    mounted() {
+      this.getDocInfo();
+    },
 
+
+    methods: {
+      // 获取个人信息
+      getDocInfo() {
+        axios.get('/api/wx/baochuan_d/mystudio', {
+          params: {
+            authentication: this.authentication
+          }
+        }).then((result) => {
+          console.log(result);
+          this.erweima = result.data;
+        }).catch((error) => {
+          console.log(error);
+          Toast('网络不给力 ! 请稍后再试');
+        })
+      },
+      visit() {
+          this.active = !this.active;
+      },
+      yuyue() {
+          this.activeOrder = !this.activeOrder;
+      },
+      consult() {
+          this.activeConsult = !this.activeConsult;
+      },
+      fuzhen() {
+          this.activeSet = !this.activeSet;
+      },
+      qita(){
+          this.activeOthers = !this.activeOthers
+      }
     }
   }
 </script>
 <style lang="scss">
  .docWorkRoom{
+  min-height:100vh;
+  background:#f4f4f4;
    .qianyue {
      height: 44px;
      line-height: 44px;
@@ -258,6 +295,9 @@
        }
      }
    }
+  .yincang{
+    display: none;
+  }
    .consult-box{
      .visit-patient{
        display:flex;

@@ -130,6 +130,7 @@
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '选择发送患者';
+
     },
     watch: {
       'content'() {

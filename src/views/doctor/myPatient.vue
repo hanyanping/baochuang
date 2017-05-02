@@ -1,7 +1,7 @@
 <template>
   <div class="docBox">
     <div class="myPatientBox">
-      <mt-search v-model="authentication">
+      <mt-search >
       </mt-search>
     </div>
     <div class="myPatientContent">
@@ -188,107 +188,45 @@
       <div class="qianyueBox">
         <div class="qianyue float-box"  @click="qianyue">
           <span ref="qianyuePatient" class="qianyuePatient">签约患者</span>
-          (<span ref="qianyueNum" class="qianyueNum">000</span>)
+          (<span ref="qianyueNum" class="qianyueNum">{{managePatientCount}}</span>)
           <span ref="qianyueSpan" class="iconfont fr" :class="{'icon-zhankai2': active, 'icon-shouqi': unActive}">
           </span>
         </div>
         <div class="list-box" :class="{yincang:unShow}">
           <div class="guanzhu float-box" @click="firstLine">
             <span ref="guanzhuPatient">关注患者</span>
-            <span ref='guanzhuNum' class="fr">111</span>
+            <span ref='guanzhuNum' class="fr">{{attentionPatientCount}}</span>
           </div>
           <div class="line-box"></div>
           <div class="all-patient" @click="secondLine">
             <span ref="quanbuPatient">全部患者</span>
-            <span ref="quanbuNum" class="fr">222</span>
+            <span ref="quanbuNum" class="fr">{{allPatientCount}}</span>
           </div>
         </div>
         <div class="zhegaiceng" :class="{yincang:unShow}">
           <div class="list-bottom"></div>
         </div>
         <div class="patient-box">
-          <div class="patient-list">
+          <div class="patient-list" v-for="item in message"   @click="goConsult(item.patient_id)">
             <div class="patient-info-box">
               <div class="patient-img">
                 <img src="../../assets/img/bgPerfectInfo.png"/>
               </div>
               <div class="patient-info">
                 <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nan"></i>
-                  <span class="jibing">乙肝</span>
+                  <span class="patient-name">{{item.name}}</span>
+                  <span class="patient-age">{{item.age}}</span>
+                  <i v-if="item.sex == 0" class="iconfont icon-nv"></i>
+                  <i v-else class="iconfont icon-nan"></i>
+                  <span class="jibing">{{item.diseaseName}}</span>
                 </div>
                 <div class="visit-time">
-                  复诊时间：2017-04-12
+                  复诊时间：{{item.revisit}}
                 </div>
               </div>
             </div>
             <div class="patient-time">
-              3月23日咨询过我
-            </div>
-          </div>
-          <div class="patient-list">
-            <div class="patient-info-box">
-              <div class="patient-img">
-                <img src="../../assets/img/second.png"/>
-              </div>
-              <div class="patient-info">
-                <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nv"></i>
-                  <span class="jibing">乙肝</span>
-                </div>
-                <div class="visit-time">
-                  复诊时间：2017-04-12
-                </div>
-              </div>
-            </div>
-            <div class="patient-time">
-              3月23日咨询过我
-            </div>
-          </div>
-          <div class="patient-list">
-            <div class="patient-info-box">
-              <div class="patient-img">
-                <img src="../../assets/img/second.png"/>
-              </div>
-              <div class="patient-info">
-                <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nv"></i>
-                  <span class="jibing">乙肝</span>
-                </div>
-                <div class="visit-time">
-                  复诊时间：2017-04-12
-                </div>
-              </div>
-            </div>
-            <div class="patient-time">
-              3月23日咨询过我
-            </div>
-          </div>
-          <div class="patient-list">
-            <div class="patient-info-box">
-              <div class="patient-img">
-                <img src="../../assets/img/bgPerfectInfo.png"/>
-              </div>
-              <div class="patient-info">
-                <div class="patient-name-info">
-                  <span class="patient-name">王倩</span>
-                  <span class="patient-age">55岁</span>
-                  <i class="iconfont icon-nan"></i>
-                  <span class="jibing">乙肝</span>
-                </div>
-                <div class="visit-time">
-                  复诊时间：2017-04-12
-                </div>
-              </div>
-            </div>
-            <div class="patient-time">
-              3月23日咨询过我
+              {{item.activite}}
             </div>
           </div>
         </div>
@@ -303,30 +241,47 @@
     name: 'myPatient',
     data () {
       return {
+        authentication:'3437d5824a079a48da95ef2d5ab419b3',
         active: true,
         unActive: false,
         unShow:true,
         value:"1",
         selected:'qianyue-patient',
         message:[],
-        authentication: ''
+        allPatientCount:'',
+        attentionPatientCount:'',
+        managePatientCount:''
       }
     },
     watch: {
-        'authentication'() {
-          axios.get('/wx/baochuan_d/patientlist',{params: {
-              authentication: this.authentication
-            }
-          }).then((result) => {
-              console.log(result)
-          })
-
-      }
+//        'authentication'() {
+//          axios.get('/api/wx/baochuan_d/patientlist',{params: {
+//              authentication: this.authentication
+//            }
+//          }).then((result) => {
+//              console.log(result)
+//          })
+//
+//      }
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '我的患者'
+      axios.get('/api/wx/baochuan_d/patientlist',{ params: {
+        authentication: this.authentication,
+      }
+      }).then((result) => {
+       this.message = result.data.content.list;
+       console.log(result.data.content)
+        this.allPatientCount = result.data.content.allPatientCount
+        this.attentionPatientCount = result.data.content.attentionPatientCount
+        this.managePatientCount = result.data.content.managePatientCount
+      })
     },
     methods: {
+      goConsult (id) {
+          console.log(id)
+        this.$router.push({ path:"/baochuan_d/docConsult/" +id});
+      },
       fasongTongzhi() {
         this.$router.push({ path: '/baochuan_d/docFaTongzhi' });
       },
@@ -339,15 +294,23 @@
         this.unActive = !this.unActive
       },
       firstLine() {
-         this.$refs.qianyuePatient.innerHTML = this.$refs.guanzhuPatient.innerHTML;
-         this.$refs.qianyueNum.innerHTML = this.$refs.guanzhuNum.innerHTML;
+        var firstHTML = this.$refs.qianyuePatient.innerHTML;
+        this.$refs.qianyuePatient.innerHTML = this.$refs.guanzhuPatient.innerHTML;
+        this.$refs.guanzhuPatient.innerHTML = firstHTML
+        var firstNum = this.$refs.qianyueNum.innerHTML
+        this.$refs.qianyueNum.innerHTML = this.$refs.guanzhuNum.innerHTML;
+        this.$refs.guanzhuNum.innerHTML = firstNum;
          this.unShow = !this.unShow;
          this.active = !this.active
          this.unActive = !this.unActive
       },
       secondLine() {
+        var secontinnerHTML =  this.$refs.qianyuePatient.innerHTML;
         this.$refs.qianyuePatient.innerHTML = this.$refs.quanbuPatient.innerHTML;
+        this.$refs.quanbuPatient.innerHTML = secontinnerHTML;
+        var secondNum =  this.$refs.qianyueNum.innerHTML;
         this.$refs.qianyueNum.innerHTML = this.$refs.quanbuNum.innerHTML;
+        this.$refs.quanbuNum.innerHTML = secondNum;
         this.unShow = !this.unShow;
         this.active = !this.active
         this.unActive = !this.unActive
@@ -456,6 +419,8 @@
         padding:10px 5px 0px;
       }
       .qianyueBox{
+        background:#f4f4f4;
+        min-height:100vh;
         .list-box{
           position: absolute;
           top: 44px;

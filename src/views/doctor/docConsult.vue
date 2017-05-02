@@ -12,25 +12,31 @@
           <div class="personal-info">
             <div class="personal-info-flex">
               <div>姓名</div>
-              <div class="detail">王倩</div>
+              <div class="detail">{{talkInfo.name}}</div>
             </div>
             <div class="personal-info-flex">
               <div>性别</div>
-              <div class="detail">女</div>
+              <div class="detail">{{talkInfo.sex}}</div>
             </div>
             <div class="personal-info-flex">
               <div>年龄</div>
-              <div class="detail">22</div>
+              <div class="detail">{{talkInfo.age}}</div>
             </div>
             <div class="personal-info-flex">
               <div>主疾病</div>
-              <div style="color:#bbb;">脂肪肝</div>
+              <div style="color:#bbb;">{{talkInfo.disease}}</div>
             </div>
-            <div class="more">
-              <span @click="chakan">查看更多 <i class="iconfont icon-zhankai2"></i></span>
+            <div class="more" :class="{'yincang':More}">
+              <span @click="perChakan">查看更多 <i class="iconfont icon-zhankai2"></i></span>
             </div>
-            <div class="more">
-              <span @click="shouqi">收起 <i class="iconfont icon-zhankai-copy"></i></span>
+            <div class="shouqi" :class="{'yincang':!More}">
+              <div class="personal-info-flex">
+                <div>手机号</div>
+                <div style="color:#bbb;">{{talkInfo.mobile}}</div>
+              </div>
+              <div class="more">
+                <span  @click="perShouqi" style="text-align: center">收起 <i class="iconfont icon-zhankai-copy"></i></span>
+              </div>
             </div>
             <b></b>
             <b></b>
@@ -42,7 +48,7 @@
             </a>
             <div class="beizhu-info">
               <!--<span>重点关注，有高血压，糖尿病伴随疾病，有家族遗传史（母亲有乙肝）</span>-->
-              <a href="" style="color:#82AAA1;">点击添加备注信息 </a>
+              <a @click="toBeizhu"  href="" style="color:#82AAA1;">点击添加备注信息 </a>
             </div>
             <b></b>
             <b></b>
@@ -53,7 +59,7 @@
               <div class="iconfont icon-jiantou"></div>
             </a>
             <div class="beizhu-info">
-              <a href="" style="color:#82AAA1;">点击设置备注信息 </a>
+              <a style="color:#82AAA1;">点击设置备注信息 </a>
               <!--<span>下次复诊：2017年5月21日</span>-->
             </div>
             <b></b>
@@ -144,15 +150,15 @@
                 <span v-else @click="tangchu($event)" ref="messageSpan" class="iconfont icon-jiahao"></span>
               </div>
               <div class="foot-box">
-                <div>
+                <div v-if="">
                   <img src="../../assets/img/fuzhen.png"/>
                   <p class="text">复诊提醒</p>
                 </div>
-                <div>
+                <div @click="outpatient">
                   <img src="../../assets/img/visit-time.png"/>
-                  <p class="text">就诊时间</p>
+                  <p class="text">门诊时间</p>
                 </div>
-                <div>
+                <div v-if="">
                   <img src="../../assets/img/phone.png"/>
                   <p class="text">电话随访</p>
                 </div>
@@ -162,7 +168,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </mt-tab-container-item>
@@ -205,15 +210,27 @@
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
-
   </div>
 </template>
 <script>
+  import axios from 'axios'
+  import {Toast} from 'mint-ui';
+  import { MessageBox } from 'mint-ui';
   export default {
     name: 'docConsult',
     data () {
       return {
-        selected:'talk',
+        MessageBox:{
+          title: '提示',
+          message: '确定执行此操作?',
+          showCancelButton: true
+        },
+        authentication:'3437d5824a079a48da95ef2d5ab419b3',
+        patient_id:'',
+        patient_name:'',
+        selected:'personal',
+        talkInfo:'',
+        More:false,
         bottomShow:false,
         message:[],
         form: {
@@ -234,7 +251,19 @@
         }
     },
     created() {
-      document.getElementsByTagName('title')[0].innerHTML = '王倩'
+      this.patient_id = this.$route.params.patientId
+//      个人资料
+      axios.get('/api/wx/baochuan_d/patientcase',{ params: {
+        authentication: this.authentication,
+        patient_id: this.patient_id
+      }
+      }).then((result) => {
+       this.talkInfo = result.data.content
+        this.patient_name = result.data.content.name
+        document.getElementsByTagName('title')[0].innerHTML = this.patient_name
+      });
+
+
       this.message = [
         {
           talkTime:"2017-03-23",
@@ -280,7 +309,27 @@
         }
       ]
     },
+    mounted(){
+
+
+    },
     methods: {
+//        聊天窗口
+//      门诊提醒
+      outpatient() {
+          console.log(12)
+        axios.get('/api/wx/baochuan_d/clinicremind', {
+          params: {
+            authentication: this.authentication
+          }
+        }).then((result) => {
+          console.log(result);
+        }).catch((error) => {
+          console.log(error);
+          Toast('网络不给力 ! 请稍后再试');
+        })
+      },
+
       // input,focus收起
       shouqi() {
         this.$refs.reply.className = 'reply'
@@ -296,12 +345,27 @@
         } else {
           this.$refs.reply.className += ' prop'
         }
+        axios.get('/api/wx/baochuan_d/getconsultmenushow',{ params: {
+//          authentication: this.authentication,
+          authentication:'d1126e11b0392a446acaf724ba9e36c7',
+          patient_id: this.patient_id
+        }
+        }).then((result) => {
+          console.log(result)
+        }).catch((error) => {
+          console.log(error);
+          Toast('网络不给力 ! 请稍后再试');
+        })
       },
-      chakan() {
-
+//      个人资料start
+      perChakan() {
+        this.More = !this.More;
       },
-      shouqi() {
-
+      perShouqi() {
+        this.More = !this.More;
+      },
+      toBeizhu () {
+        this.$router.push({ path:"/baochuan_d/docToBeiZhu/" +this.patient_id+'/'+this.patient_name});
       }
     }
   }
@@ -660,6 +724,9 @@
           text-align: center;
           font-size:15px;
           color:#bbb;
+        }
+        .yincang{
+          display:none;
         }
         .beizhu-info{
           padding:12px 16px;

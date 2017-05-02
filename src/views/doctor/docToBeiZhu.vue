@@ -6,22 +6,32 @@
       <div class="beizhu-num" >
         <span class='two'><span id="textNum" >0</span>/150</span>
       </div>
-      <button class="button-box" :class="{isButton: active}" >确定</button>
+      <button v-if="active == false" class="button-box " disabled>确定</button>
+      <button v-else  class="button-box isButton" @click="sureBeizhu">确定</button>
     </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data () {
       return {
         textNumber : '',
-        active:false
+        active:false,
+        authentication:'d1126e11b0392a446acaf724ba9e36c7',
+        patient_id:'',
+        patient_name:''
       }
+    },
+    created() {
+      this.patient_id = this.$route.params.patientId
+      this.patient_name = this.$route.params.patientName
+      document.getElementsByTagName('title')[0].innerHTML = this.patient_name
     },
     watch: {
       'textNumber' () {
-          var a=this.textNumber.length;
+          var a = this.textNumber.length;
         document.getElementById('textNum').innerHTML = a;
         if(this.textNumber){
             this.active = true
@@ -31,7 +41,16 @@
       }
     },
     methods: {
-
+      sureBeizhu() {
+        axios.get('/api/wx/baochuan_d/patientremark',{ params: {
+          authentication: this.authentication,
+          patientId: this.patient_id,
+          remark: this.textNumber
+        }
+        }).then((result) => {
+          this.$router.push({ path:"/baochuan_d/docConsult/" +this.patient_id});
+      })
+      }
     }
   }
 </script>

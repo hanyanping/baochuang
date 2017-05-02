@@ -30,8 +30,9 @@ module.exports = {
     proxyTable: {
       '/api': {
         // target: 'http://testaiganneo.aiganyisheng.com',
-        target: 'http://lipengwei.furui.com',      // 个人服务器
-        // target:  'http://testbdwx.aiganyisheng.com', // 测试服务器
+        // target: 'http://liangxing.furui.com',
+        target: 'http://lipengwei.furui.com',
+        // target: 'http://haohaisheng.furui.com',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

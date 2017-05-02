@@ -41,15 +41,36 @@
 </template>
 <script>
   import { Toast,Field } from 'mint-ui';
+  import axios from 'axios'
   export default {
     name: 'docMoney',
     data () {
       return {
+        authentication:'3437d5824a079a48da95ef2d5ab419b3'
       }
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '我的钱包'
-    }
+    },
+    mounted() {
+      this.getDocInfo();
+    },
+    methods: {
+      // 获取个人信息
+      getDocInfo() {
+        axios.get('/api/wx/baochuan_d/wallet', {
+          params: {
+            authentication: this.authentication
+          }
+        }).then((result) => {
+          console.log(result);
+          this.erweima = result.data;
+        }).catch((error) => {
+          console.log(error);
+          Toast('网络不给力 ! 请稍后再试');
+        })
+      }
+    },
   }
 </script>
 
@@ -71,7 +92,7 @@
 }
   .docMoneyBox .moneyHeader{
     background:#529D98;
-    height:30vh;
+    height:31vh;
     color:#BDE4DD;
     padding:0 16px;
   }
@@ -99,7 +120,7 @@
   }
   .docMoneyBox .moneyContainer{
     position: relative;
-    margin:-58px 16px;
+    margin:-55px 16px;
     background:#fff;
     border-radius:5px;
   }

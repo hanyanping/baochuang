@@ -22,8 +22,11 @@
     <div class="lineBox">
       <div class="line"></div>
     </div>
-    <button class="toInfo" :class="{'isButton': active}" @click="login">
-      <label class="mint-button-text">登录</label>
+    <button v-if="active" class="isButton" :class="{'isButton': active}" @click="login">
+      登录
+    </button>
+    <button v-else class="toInfo" disabled >
+      登录
     </button>
     <div class="" style="margin-top:10px;margin-left:5%;">
       <p class="loginXie" >
@@ -44,136 +47,113 @@
     name: 'docLogin',
     data () {
       return {
-
         getCode:"获取验证码",
-        time: 5,
+        time: 60,
         isCode: false,
         active: false,
-        code: '',
-        authentication:'3437d5824a079a48da95ef2d5ab419b3',
+        vericode: '',
         requestJson: {
-            phone: '',
-            code: ''
+          phone: '',
+          code: ''
         }
       }
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '验证手机';
-      axios.get('/api/wx/baochuan_d/myinfo', {
-        params: {
-          authentication:this.authentication
-      }
-      }).then((result) => {
-        console.log(result)
-      })
-
     },
     watch: {
-        'requestJson.phone' () {
-            if (this.requestJson.phone) {
-              this.active = true
-            } else {
-              this.active = false
-            }
-        },
-        'requestJson.code' () {
-          if (this.requestJson.code) {
-            this.active = true
-          } else {
-            this.active = false
-          }
+      'requestJson.phone' () {
+        if (this.requestJson.phone) {
+          this.active = true
+        } else {
+          this.active = false
         }
+      },
+      'requestJson.code' () {
+        if (this.requestJson.code) {
+          this.active = true
+        } else {
+          this.active = false
+        }
+      }
     },
     methods: {
-        //  是否能够提交
-        isLogin() {
-          if (this.requestJson.phone && this.requestJson.code) {
-              this.active = false
-          }
-        },
-        //  登陸
-        login() {
-            if (this.requestJson.code != this.code) {
-              Toast('必填字段不能为空！')
-              return false
-            } else {
-                let _this = this
-              axios.get('/wx/mobile/sendcode',{ params: {
-                mobile: this.requestJson.phone
-              }
-              }).then((result) => {
-                console.log(result)
-            })
-            }
-        },
-//                this.$http.post('http://testapi.aiganyisheng.net/public/patient_login',this.requestJson)
-//                .then((result) => {
-//                  console.log(result)
-//                  Toast('登录成功！')
-//                  setTimeout(function () {
-//                    _this.$router.push('/docMoney')
-//                  }, 2000)
-//                }, (err) => {
-//                  console.log(err)
-//                })
-
-        //  获取验证码
+      //  是否能够提交
+      isLogin() {
+        if (this.requestJson.phone && this.requestJson.code) {
+          this.active = false
+        }
+      },
+      //  获取验证码
       getCodes(el) {
         if(!(/^1[34578]\d{9}$/.test(this.requestJson.phone))){
           Toast('请输入正确手机号！')
           return false
         }else{
-            let _that = this
-            if (this.time >= 0 && this.isCode) {
-                return false
-            } else {
-              this.isCode = true
-              axios.get('/api/wx/mobile/sendcode',{params: {
-                mobile: this.requestJson.phone
-              }
-              }).then((result) => {
-                console.log(result)
-              })
-              clearInterval(t);       //停止计时器
-              var t = setInterval(function () {
-                if (_that.time >= 0) {
-                  _that.time--
-                  el.target.innerHTML = _that.time + '后刷新'
-                }
-                if (_that.time === 0) {
-                  _that.time = 5;
-                  _that.isCode = false;
-                  clearInterval(t);       //停止计时器
-                  el.target.innerHTML = '重获验证码'
-                }
-              }, 1000)
+          let _that = this
+          if (this.time >= 0 && this.isCode) {
+            return false
+          } else {
+            this.isCode = true
+            axios.get('/api/wx/mobile/sendcode',{params: {
+              mobile: this.requestJson.phone
             }
+            }).then((result) => {
+            })
+            clearInterval(t);       //停止计时器
+            var t = setInterval(function () {
+              if (_that.time >= 0) {
+                _that.time--
+                el.target.innerHTML = _that.time + '后刷新'
+              }
+              if (_that.time === 0) {
+                _that.time = 60;
+                _that.isCode = false;
+                clearInterval(t);       //停止计时器
+                el.target.innerHTML = '重获验证码'
+              }
+            }, 1000)
+          }
         }
-
+      },
+      //  登陆
+      login() {
+        if(!(/^1[34578]\d{9}$/.test(this.requestJson.phone))){
+          Toast('请输入正确手机号！')
+          return false
+        } else {
+          let _this = this
+          axios.get('/api/wx/baochuan_d/checkmobilecode',{ params: {
+            mobile: _this.requestJson.phone,
+            vericode: _this.requestJson.code
+          }
+          }).then((result) => {
+            console.log(result)
+          })
+        }
       },
       //  删除验证码
       closeCode() {
-            this.requestJson.code = ''
+        this.requestJson.code = ''
       },
       chn() {
-            this.requestJson.phone = ''
+        this.requestJson.phone = ''
       }
     }
   }
 </script>
-
 <style>
   html{
     height:100%;
     width:100%;
   }
   #loginBox{
-  height:100vh;
-  width:100%;
-  background-image:url(../../assets/img/bacLogin.png);
-  background-size:100% 100%;
-   position: fixed;
-}
+    height:100vh;
+    width:100%;
+    background-image:url(../../assets/img/bacLogin.png);
+    background-size:100% 100%;
+    position: fixed;
+  }
   .lineBox{
     height:1px;
     width:100%;
@@ -211,7 +191,7 @@
   }
   .codeInput{
     height:50px;
-   line-height:50px;
+    line-height:50px;
   }
   .docPhone{
     position: relative;
@@ -245,10 +225,10 @@
     background:#529D98;
     outline: none;
   }
- #loginBox .icon-shouji, .icon-anquan{
-   font-size:22px;
-   color:#fff;
- }
+  #loginBox .icon-shouji, .icon-anquan{
+    font-size:22px;
+    color:#fff;
+  }
   .codeClose {
     height:18px;
     font-size:16px;
@@ -271,7 +251,17 @@
     outline:none;
     font-size:18px;
   }
-  .toInfo.isButton {
+  .isButton {
+    display: block;
+    width: 90%;
+    height:45px;
+    margin:25px auto;
+    background:#529D98;
+    color: #ffffff;
+    border:1px solid #86B8B8;
+    border-radius:22px;
+    outline:none;
+    font-size:18px;
     background:rgba(82,157,152, 0.1);
     border:1px solid #86B8B8;
     /*background:#7e8c8d;*/
