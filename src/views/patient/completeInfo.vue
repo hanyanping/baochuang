@@ -73,8 +73,8 @@
         <div class="item-mes paddingT10">
           <label class="sex">性别</label>
           <div class="fs20">
-            <i class="iconfont color-white" v-for="radio in radioArray"   @click="activeChangeStatus()" :value="radio.value">
-              {{radio.text}}
+            <i class="iconfont color-white" v-for="radio in radioArray"  :class="radio.radioClass"  @click="activeChangeStatus()" :value="radio.value">
+              <em :class="radio.textClass" style="padding-left:6px;">{{radio.text}}</em>
             </i>
           </div>
         </div>
@@ -120,8 +120,8 @@
                   disease: ''
               },
               radioArray: [
-                {radioClass: 'icon-iconfontiocnnan fs18', text: '男', value: '1'},
-                {radioClass: 'icon-xingbienv fs20', text: '女', value: '0'},
+                {radioClass: 'icon-iconfontiocnnan fs18 paddingR15', text: '男', value: '1', textClass:''},
+                {radioClass: 'icon-xingbienv fs22', text: '女', value: '0', textClass:'fs18'},
               ],
               yearArray: [
                 '1940', '1941', '1942', '1943', '1944','1945', '1946', '1947',
