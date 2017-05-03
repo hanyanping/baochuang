@@ -33,15 +33,15 @@ function post(url, params, success, error) {
 function get(url, params, success, error) {
   axios.get(url, params).then(function (result) {
     if (result.data.code == 0) {
-      alert('success(result)');
+      // alert('success(result)');
       success(result);
     }
     else if (result.data.code == -1) {
-      alert('error(-1)');
+      // alert('error(-1)');
       error(result);
       setAuthForNull(); // 清空当前公众号auth
     } else {
-      alert('error(result)');
+      // alert('error(result)');
       error(result);
     }
     Indicator.close();
