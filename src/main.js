@@ -10,7 +10,6 @@ import MintUI from 'mint-ui'
 import util from './components/util'
 
 
-
 //实例化方法
 Vue.config.productionTip = false;
 Vue.use(MintUI);
@@ -18,31 +17,58 @@ Vue.use(MintUI);
 Vue.prototype.util = util;
 
 rootRouter.beforeEach(function (to, from, next) {
-  // 从localStorage中获取auth
-  // var auth = localStorage.getItem('auth');
-  var auth = 'fff'; // 测试使用
+
+  var path = window.location.href;
+  // 从localStorage中获取不同平台的auth
+  var auth = getAuthFromLS(path);
+
+  var auth = 'd265ee3c594c3364cad5b89c7c8e8b80'; // 测试使用
   // localStorage.clear();
   // alert('auth==='+auth);
+
   if (auth == null || auth == '' || auth == undefined) {
-    // alert('从URL中获取auth , 对URL进行解析');
     // 从URL中获取auth , 对URL进行解析
     auth = getParameterByName('authentication');
     if (auth == null || auth == '' || auth == undefined) {
-      console.log('未登录!');
-      // alert('未登录!');
-      window.location.href = "http://testaiganneo.aiganyisheng.com/wx/baochuan_p/login"
+      console.log('未授权!');
+      toLine(path); // 跳转url
     } else {
-      console.log('已经登录!');
-      // alert('url+已经登录!')
-      localStorage.setItem('auth', auth);
+      console.log('已经授权!');
+      setAuthForLS(path);
       next();
     }
   } else {
-    console.log('已经登录!');
-    // alert('已经登录!');
+    console.log('已经授权!');
     next();
   }
 });
+
+// 跳转不同的授权url
+function toLine(path) {
+  if (path.indexOf('baochuan_p') != -1) {
+    window.location.href = "http://testaiganneo.aiganyisheng.com/wx/baochuan_p/login";
+  } else if (path.indexOf('baochuan_d') != -1) {
+    window.location.href = "http://testaiganneo.aiganyisheng.com/wx/baochuan_d/login";
+  }
+}
+
+// 从localStorage中获取不同平台的auth
+function getAuthFromLS(path) {
+  if (path.indexOf('baochuan_p') != -1) {
+    return localStorage.getItem('baochuan_p_auth');
+  } else if (path.indexOf('baochuan_d') != -1) {
+    return localStorage.getItem('baochuan_d_auth');
+  }
+}
+
+// 不同平台设置不同的auth值
+function setAuthForLS(path) {
+  if (path.indexOf('baochuan_p') != -1) {
+    localStorage.setItem('baochuan_p_auth', auth);
+  } else if (path.indexOf('baochuan_d') != -1) {
+    localStorage.setItem('baochuan_d_auth', auth);
+  }
+}
 
 function getParameterByName(name) {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -65,7 +91,7 @@ function getParameterByIndexOf() {
 }
 
 /* eslint-disable no-new */
-new Vue({
+window.eventBus = new Vue({
   el: '#app',
   router: rootRouter,
   template: '<App/>',
