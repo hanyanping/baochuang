@@ -29,8 +29,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://lipengwei.furui.com',      // 个人服务器
-        // target: 'http://liangxing.furui.com',      // 个人服务器
+        // target: 'http://lipengwei.furui.com',      // 个人服务器
+        target: 'http://liangxing.furui.com',      // 个人服务器
         // target:  'http://testbdwx.aiganyisheng.com', // 测试服务器
         // target:  'http://testaiganneo.aiganyisheng.com',
         changeOrigin: true,
