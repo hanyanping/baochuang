@@ -13,12 +13,15 @@ function post(url, params, success, error) {
     Indicator.close();
     console.log(result)
     if (result.data.code == 0) {
+      // alert('success(result)');
       success(result);
     }
     else if (result.data.code == -1) {
+      // alert('error(-1)');
       error(result);
       setAuthForNull(); // 清空当前公众号auth
     } else {
+      // alert('error(result)');
       error(result);
     }
   }).catch(function (network_error) {

@@ -111,7 +111,7 @@
             order_id: that.order_id
           }
         };
-        netWrokUtils.get('/api/wx/baochuan_d/getappointmentdetail', params, function (success) {
+        netWrokUtils.post('/api/wx/baochuan_d/getappointmentdetail', params, function (success) {
           Indicator.close();
           console.log(success);
           that.content = success.data.content;

@@ -32,17 +32,17 @@
 
   import axios from 'axios'
   import {Toast} from 'mint-ui';
+  import {Indicator} from 'mint-ui';
 
   export default {
     name: 'doctorPerfectInfo',
     data () {
       return {
-
         data: {},
         hospitalDapartList: [],
         grade: [],
         requestJson: {
-          authentication: 'd1126e11b0392a446acaf724ba9e36c7',
+          authentication: '4d89652b270cc60c30365868b229ca15',
           name: '',
           hospitalDepartmentId: '',
           grade: '',
@@ -71,10 +71,8 @@
     methods: {
       // 获取科室、职称
       getPerfectinfo () {
-        axios.get('/api/wx/baochuan_d/perfectinfo', {
-          params: {
-            authentication: this.authentication
-          }
+        axios.post('/api/wx/baochuan_d/perfectinfo', {
+          authentication: this.requestJson.authentication
         }).then((result) => {
           console.log(result);
           this.data = result.data;
@@ -98,19 +96,22 @@
           Toast('请选择职称');
           return;
         } else  {
-          Toast('可以提交了');
           console.log(this.requestJson.name);
           console.log(this.requestJson.hospitalDepartmentId);
           console.log(this.requestJson.grade);
-          axios.post('/api/wx/baochuan_d/saveinfo', this.requestJson, {
-            params: {
-              authentication: 'd1126e11b0392a446acaf724ba9e36c7',
-              name: this.requestJson.name,
-              hospitalDepartmentId: this.requestJson.hospitalDepartmentId,
-              grade: this.requestJson.grade,
-            }
+          Indicator.open();
+          axios.post('/api/wx/baochuan_d/saveinfo', {
+            authentication: '4d89652b270cc60c30365868b229ca15',
+            name: this.requestJson.name,
+            hospitalDepartmentId: this.requestJson.hospitalDepartmentId,
+            grade: this.requestJson.grade,
           }).then((result) => {
+            Indicator.close();
+            Toast('提交成功');
             console.log(result);
+          }).catch((error) => {
+            Indicator.close();
+            console.log(error);
           })
         }
       },

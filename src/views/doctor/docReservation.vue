@@ -63,10 +63,8 @@
     methods: {
       // 获取预约列表数据
       getReservationList () {
-        axios.get('/api/wx/baochuan_d/getappointmentrecordlist', {
-          params: {
+        axios.post('/api/wx/baochuan_d/getappointmentrecordlist', {
             authentication: this.authentication
-          }
         }).then((result) => {
           this.data = result.data;
           this.content = result.data.content;
