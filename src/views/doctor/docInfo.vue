@@ -1,3 +1,4 @@
+<!-- 个人中心 -->
 <template>
   <div class="doc-info-box">
     <div class="infoHeader">
@@ -16,20 +17,16 @@
     </div>
     <div class="info-container">
       <div class="info-box">
-        <div class="info-set">
-          <div class="consult-set">
-            咨询设置
-          </div>
+        <div class="info-set" @click="pushConsultSett">
+          <div class="consult-set">咨询设置</div>
           <div class="consult-right">
             <span style="font-size:15px;" v-if="consult_status === 1">已开启</span>
             <span style="font-size:15px;" v-else="">未开启</span>
             <i class="iconfont icon-jiantou"></i>
           </div>
         </div>
-        <div class="info-set">
-          <div class="consult-set">
-            预约设置
-          </div>
+        <div class="info-set" @click="pushAppointSett">
+          <div class="consult-set">预约设置</div>
           <div class="consult-right">
             <span style="font-size:15px;" v-if="subscribe_status === 1">已开启</span>
             <span style="font-size:15px;" v-else="">未开启</span>
@@ -45,7 +42,6 @@
             开启后，您管理的患者可以主动你电话咨询您
           </div>
         </div>
-
       </div>
       <b></b>
       <b></b>
@@ -73,7 +69,7 @@
       return {
         selected: '1',
         value: '',
-        authentication: '3437d5824a079a48da95ef2d5ab419b3',
+        authentication: 'd1126e11b0392a446acaf724ba9e36c7',
         data: [],
         consult_status: '',
         subscribe_status: '',
@@ -124,10 +120,30 @@
       // 电话咨询开
       teleConsultOpen () {
         Toast('true 调用此函数');
+        axios.post('/api/wx/baochuan_d/mobileonoff', {
+          params: {
+            authentication: this.authentication,
+            open_telephone_counseling: 1
+          }
+        }).then((result) => {
+          console.log(result);
+        }).catch((error) => {
+          console.log(error);
+        })
       },
       // 电话咨询关
       teleConsultDown () {
         Toast('fasle 调用此函数');
+      },
+      // 跳转咨询设置页
+      pushConsultSett () {
+        this.$router.push({ path:"/baochuan_d/docConsultSetting/"});
+//        window.location.href="docConsultSetting";
+      },
+      // 跳转预约设置页
+      pushAppointSett () {
+        this.$router.push({ path:"/baochuan_d/docAppointmentSetting/"});
+//        window.location.href="docAppointmentSetting";
       }
     }
   }
@@ -261,7 +277,7 @@
       }
     }
   b:nth-of-type(1) {
-    left: 0px;
+    left: -1px;
     border-radius: 0 14px 14px 0;
   }
 

@@ -4,7 +4,16 @@
     <div class="doc-rev-detail-top-box">
       <div class="doc-rev-detail-top-status-box">
         <span>服务状态</span>
-        <span class="doc-rev-detail-top-status-span">待确认</span>
+        <!--<span class="doc-rev-detail-top-status-span">{{content.status}}</span>-->
+
+        <span v-if="content.status==1" class="doc-rev-detail-top-status-span">待支付</span>
+        <span v-else-if="content.status==2" class="doc-rev-detail-top-status-span">已支付等待审核</span>
+        <span v-else-if="content.status==3" class="doc-rev-detail-top-status-span">审核通过等待医生确认</span>
+        <span v-else-if="content.status==4" class="doc-rev-detail-top-status-span">医生已确认</span>
+        <span v-else-if="content.status==5" class="doc-rev-detail-top-status-span">已就诊</span>
+        <span v-else-if="content.status==6" class="doc-rev-detail-top-status-span">未就诊</span>
+        <span v-else-if="content.status==7||item.status==8||item.status==9||item.status==10||item.status==11
+            ||item.status==12||item.status==13" class="doc-rev-detail-top-status-span">已取消</span>
       </div>
 
       <div class="doc-rev-detail-top-patientinfo-box">
@@ -12,30 +21,32 @@
           <span>患者信息</span>
         </div>
         <div>
-          <span>张小帅</span>
-          <span>男</span>
-          <span>28岁</span>
-          <span>丙肝</span>
+          <span>{{content.patient_name}}</span>
+          <span v-if="content.sex==1">男</span>
+          <span v-else>女</span>
+          <span>{{content.age}}岁</span>
+          <span>{{content.disease_name}}</span>
         </div>
       </div>
 
-      <div class="doc-rev-detail-top-patientinfo-box">
-        <div>
-          <span>预约目的</span>
-        </div>
-        <div>
-          <span>开药</span>
-        </div>
-      </div>
+      <!--<div class="doc-rev-detail-top-patientinfo-box">-->
+        <!--<div>-->
+          <!--<span>预约目的</span>-->
+        <!--</div>-->
+        <!--<div>-->
+          <!--<span>开药</span>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div class="doc-rev-detail-top-revtime-box">
         <div>
           <span>预约时间</span>
         </div>
         <div>
-          <span>2017-02-22</span>
-          <span>周三</span>
-          <span>上午</span>
+          <span>{{content.appointment_date}}</span>
+          <span>{{content.week}}</span>
+          <span v-if="content.am_or_pm==0">上午</span>
+          <span v-else>下午</span>
         </div>
       </div>
     </div>
@@ -53,13 +64,64 @@
 </template>
 
 <script>
+  import axios from 'axios'
+  import netWrokUtils from '../../components/NetWrokUtils'
+  import {Indicator} from 'mint-ui';
+  import {Toast} from 'mint-ui';
+
   export default {
     name : 'docReservationDetail',
     data () {
       return {
+        authentication: 'd1126e11b0392a446acaf724ba9e36c7',
+        order_id: '',
+        content: {}
+      }
+    },
 
+    created () {
+//      eventBus.$on('some', (thing) => this.order_id = thing)
+//      console.log(this.order_id);
+
+//      eventBus.$on('some', function(val) {
+//        console.log(val);
+//      })
+      eventBus.$on('some', (thing) => {
+        console.log(thing);
+        this.order_id = thing;
+      })
+    },
+
+    beforeDestroy () {
+      eventBus.$off('some');
+    },
+
+    mounted () {
+      this.getReservationDetail();
+    },
+
+    methods: {
+      // 获取预约详情数据
+      getReservationDetail () {
+        Indicator.open();
+        let that = this;
+        var params = {
+          params: {
+            authentication: that.authentication,
+            order_id: that.order_id
+          }
+        };
+        netWrokUtils.get('/api/wx/baochuan_d/getappointmentdetail', params, function (success) {
+          Indicator.close();
+          console.log(success);
+          that.content = success.data.content;
+        }, function (failure) {
+          Indicator.close();
+          console.log(failure);
+        });
       }
     }
+
   }
 </script>
 
