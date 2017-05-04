@@ -15,7 +15,7 @@
     </div>
 
     <div class="personalCentre-menu-box pos-relate">
-      <div class="personalCentre-menu-line-box border-bot-dash ">
+      <div class="personalCentre-menu-line-box border-bot-dash" @click="clickTo(0)">
         <span class="personalCentre-menu-text">复诊记录</span>
         <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
       </div>
@@ -23,12 +23,12 @@
       <span class="bg-grey half-circle-left circleleft pos-absolute"></span>
       <span class="bg-grey half-circle-right circleright pos-absolute"></span>
 
-      <div class="personalCentre-menu-line-box border-bot-dash ">
+      <div class="personalCentre-menu-line-box border-bot-dash" @click="clickTo(1)">
         <span class="personalCentre-menu-text">预约记录</span>
         <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
       </div>
 
-      <div class="personalCentre-menu-line-box border-bot-dash">
+      <div class="personalCentre-menu-line-box border-bot-dash" @click="clickTo(2)">
         <span class="personalCentre-menu-text">就诊记录</span>
         <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
       </div>
@@ -42,12 +42,13 @@
   import {Toast} from 'mint-ui';
   import {Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
+  import moment from 'moment/moment.js';
 
   export default {
     data () {
       return {
 //        authentication: localStorage.getItem('auth'),
-        authentication: '33d08dceca0f5fe821b644a0d909a09e',
+        authentication: '4d89652b270cc60c30365868b229ca15',
         name: '',
         sex: '',
         birthday: '',
@@ -62,23 +63,31 @@
     },
     methods: {
       getPatientInfo(){
-        Indicator.open();
         let that = this;
         var params = {
-          params: {
-            authentication: that.authentication
-          }
+          authentication: that.authentication
         }
-        netWrokUtils.get('/api/wx/baochuan_p/myinformation', params, function (result) {
-          Indicator.close();
-          console.log(result);
-//          that.visitRrecordList = result.data.content.list;
-//          that.myrevisitrecords = result.data.content.myrevisitrecords;
-        }, function (error_result) {
-          Indicator.close();
-          Toast(error_result);
+        netWrokUtils.post('/api/wx/baochuan_p/myinformation', params, (result) => {
+          that.name = result.data.content.name;
+          that.sex = result.data.content.sex;
+          that.birthday = result.data.content.birthday;
+          that.diseaseId = result.data.content.diseaseId;
+          that.diseaseName = result.data.content.diseaseName;
+          that.idcard = result.data.content.idcard;
+        }, (error_result) => {
+          Toast(error_result.data.msg);
         })
+      },
+      clickTo(id){
+        if(id == 0) {
+          this.$router.push({path:'visitRecord'})
+        } else if (id == 1){
+          this.$router.push({path:'subscribeList'})
+        } else if (id == 2){
+          this.$router.push({path:'clinicRecord'})
+        }
       }
+
     }
   }
 </script>

@@ -9,6 +9,7 @@
         v-model="pickerValue"
         type="date"
         ref="picker"
+        @confirm="handleChange"
         :startDate="startDateValue"
         year-format="{value} 年"
         month-format="{value} 月"
@@ -53,6 +54,7 @@
   import {Toast} from 'mint-ui';
   import {Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
+  import moment from 'moment/moment.js';
 
   export default {
     data() {
@@ -78,9 +80,8 @@
 //      })
 //
 //      eventBus.$emit('username', 'dddd');
-//      nowDate = new Date();
+
       this.getvisitRrecordList();
-      //console.log(nowDate.getFullYear());
     },
     created(){
       console.log('authentication===' + this.postData.authentication);
@@ -89,10 +90,13 @@
       openPicker() {
         this.$refs.picker.open();
       },
+      handleChange(value) {
+        console.log('value===' + moment(value).format('YYYY-MM-DD'));
+      },
       getvisitRrecordList(){
         let that = this;
         var params = {
-            authentication: that.postData.authentication
+          authentication: that.postData.authentication
         }
         netWrokUtils.post('/api/wx/baochuan_p/myrevisitrecords', params, (result) => {
           that.visitRrecordList = result.data.content.list;
