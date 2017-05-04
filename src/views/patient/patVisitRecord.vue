@@ -64,13 +64,12 @@
         isShow: false,
         postData: {
           //authentication: localStorage.getItem('auth'),
-          authentication: 'd265ee3c594c3364cad5b89c7c8e8b80',
+          authentication: '4d89652b270cc60c30365868b229ca15',
           rows: 10,
           page: 1
         },
         pickerValue: '',
         startDateValue: new Date('2017-05-01'),
-        nowDate : ''
       }
     },
     mounted() {
@@ -93,16 +92,13 @@
       getvisitRrecordList(){
         let that = this;
         var params = {
-          params: {
             authentication: that.postData.authentication
-          }
         }
-        netWrokUtils.get('/api/wx/baochuan_p/myrevisitrecords', params,  (result) => {
-          console.log(result);
+        netWrokUtils.post('/api/wx/baochuan_p/myrevisitrecords', params, (result) => {
           that.visitRrecordList = result.data.content.list;
           that.nextRevisitTime = result.data.content.nextRevisitTime;
         }, (error_result) => {
-          Toast(error_result);
+          Toast(error_result.data.msg);
         })
       },
 
