@@ -11,28 +11,28 @@ import baochuan_p_rootRouter from '../components/patientIndex'
 
 // 具体页面
 // 公共页面
-// import Hello from '../components/Hello'
 
 // 患者端页面
-import patientMenu from '../views/patient/patientMenu'
-import userSignDeal from '../views/patient/userSignDeal'
-import myDoctorList from '../views/patient/myDoctorList'
-import testReportIdentityCard from '../views/patient/testReportIdentityCard'
-import settingVisitTime from '../views/patient/settingVisitTime';
-import reserveList from  '../views/patient/reserveList';
-import completeInfo from '../views/patient/completeInfo';
-import visitRrecord from '../views/patient/visitRrecord';
-import personalCenter from '../views/patient/personalCenter';
-import selectTestReport from '../views/patient/selectTestReport';
-import integralAccount from '../views/patient/integralAccount'
-import subscribeList from '../views/patient/subscribeList'
-import hospitalInfo from '../views/patient/hospitalInfo'
-import doctorInfo from '../views/patient/doctorInfo'
-import selectTestReportCheck from '../views/patient/selectTestReportCheck'
-import checkRecord from '../views/patient/checkRecord'
-import clinicRecord from '../views/patient/clinicRecord'
-import changeMainDoctor from '../views/patient/changeMainDoctor'
-import payConfirm from '../views/patient/payConfirm'
+import patientMenu from '../views/patient/patPatientMenu';
+import userSignDeal from '../views/patient/patUserSignDeal';
+import myDoctorList from '../views/patient/patMyDoctorList';
+import testReportIdentityCard from '../views/patient/patTestReportIdentityCard';
+import settingVisitTime from '../views/patient/patSettingVisitTime';
+import reserveList from  '../views/patient/patReserveList';
+import completeInfo from '../views/patient/patCompleteInfo';
+import visitRecord from '../views/patient/patVisitRecord';
+import personalCenter from '../views/patient/patPersonalCenter';
+import selectTestReport from '../views/patient/patSelectTestReport';
+import integralAccount from '../views/patient/patIntegralAccount';
+import subscribeList from '../views/patient/patSubscribeList';
+import hospitalInfo from '../views/patient/patHospitalInfo';
+import doctorInfo from '../views/patient/patDoctorInfo';
+import selectTestReportCheck from '../views/patient/patSelectTestReportCheck';
+import checkRecord from '../views/patient/patCheckRecord';
+import clinicRecord from '../views/patient/patClinicRecord';
+import changeMainDoctor from '../views/patient/patChangeMainDoctor';
+import payConfirm from '../views/patient/patPayConfirm';
+import patientLogin from '../views/patient/patPatientLogin';
 
 
 
@@ -84,7 +84,7 @@ export default new Router({
         {path: 'testReportIdentityCard', component: testReportIdentityCard},
         {path: 'reserveList', component: reserveList},
         {path: 'completeInfo', component: completeInfo},
-        {path: 'visitRrecord', component: visitRrecord},
+        {path: 'visitRecord', component: visitRecord},
         {path: 'personalCenter',component: personalCenter},
         {path: 'selectTestReport',component: selectTestReport},
         {path: 'integralAccount',component: integralAccount},
@@ -96,6 +96,7 @@ export default new Router({
         {path: 'clinicRecord',component: clinicRecord},
         {path: 'changeMainDoctor',component: changeMainDoctor},
         {path: 'payConfirm',component: payConfirm},
+        {path: 'patientLogin',component: patientLogin},
       ],
     },
     {
@@ -216,7 +217,6 @@ export default new Router({
           name: 'docErweima',
           component: docErweima
         }
-
       ],
     },
   ]
