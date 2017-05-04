@@ -3,7 +3,17 @@
   <div class="visitRrecord">
     <div class="visitRrecord-title-box">
       <span class="visitRrecord-title-text">下次复诊时间</span>
-      <span class="visitRrecord-title-text">{{myrevisitrecords}}</span>
+      <span class="visitRrecord-title-text" v-show="nextRevisitTime != ''">{{nextRevisitTime}}</span>
+      <Button class="visitRrecord-setting-botton" v-show="nextRevisitTime == ''" @click="openPicker">设 置</Button>
+      <mt-datetime-picker
+        v-model="pickerValue"
+        type="date"
+        ref="picker"
+        :startDate="startDateValue"
+        year-format="{value} 年"
+        month-format="{value} 月"
+        date-format="{value} 日">
+      </mt-datetime-picker>
     </div>
 
     <div class="visitRrecord-cue-box" v-show="visitRrecordList.length > 0">
@@ -47,7 +57,7 @@
   export default {
     data() {
       return {
-        myrevisitrecords: '',
+        nextRevisitTime: '',
         allLoaded: false,
         nowPage: 1,
         visitRrecordList: [],
@@ -58,6 +68,9 @@
           rows: 10,
           page: 1
         },
+        pickerValue: '',
+        startDateValue: new Date('2017-05-01'),
+        nowDate : ''
       }
     },
     mounted() {
@@ -66,27 +79,29 @@
 //      })
 //
 //      eventBus.$emit('username', 'dddd');
+//      nowDate = new Date();
       this.getvisitRrecordList();
+      //console.log(nowDate.getFullYear());
     },
     created(){
       console.log('authentication===' + this.postData.authentication);
     },
     methods: {
+      openPicker() {
+        this.$refs.picker.open();
+      },
       getvisitRrecordList(){
-        Indicator.open();
         let that = this;
         var params = {
           params: {
             authentication: that.postData.authentication
           }
         }
-        netWrokUtils.get('/api/wx/baochuan_p/myrevisitrecords', params, function (result) {
-          Indicator.close();
+        netWrokUtils.get('/api/wx/baochuan_p/myrevisitrecords', params,  (result) => {
           console.log(result);
           that.visitRrecordList = result.data.content.list;
-          that.myrevisitrecords = result.data.content.myrevisitrecords;
-        }, function (error_result) {
-          Indicator.close();
+          that.nextRevisitTime = result.data.content.nextRevisitTime;
+        }, (error_result) => {
           Toast(error_result);
         })
       },
@@ -152,6 +167,17 @@
     font-size: 15px;
     display: inline-block;
     line-height: 30px;
+  }
+
+  .visitRrecord-setting-botton {
+    color: #fff;
+    font-size: 15px;
+    margin-left: 80px;
+    margin-right: 80px;
+    display: inline-block;
+    line-height: 30px;
+    border: 1px solid #b5b5b5;
+    background: #5da096;
   }
 
   }
