@@ -1,5 +1,24 @@
 <!--我的医生列表-->
 <style lang="scss" scoped>
+  .mydoctorlist-empty-box{
+    text-align: center;
+    img{
+      height:60px;
+      width: 60px;
+      margin-top: 40vh;
+    }
+    .mydoctorlist-empty-to{
+      width: 100px;
+      height:30px;
+      margin: 20px auto;
+      background: #5ac4b2;
+      border-radius: 10px;
+      padding:2px 8px;
+      line-height: 30px;
+      color: white;
+      font-size: 16px;
+    }
+  }
   .list-item{
     background:url(../../assets/img/selectTestReportCheck_bg.png) no-repeat center/cover;
     height:203px;
@@ -45,31 +64,37 @@
 </style>
 
 <template>
-  <mt-loadmore
-    :top-method="loadTop" ref="loadmore"
-    :bottom-method="loadBottom"
-    :bottom-all-loaded="allLoaded"
-    :autoFill="false">
+
   <div class="device-height over-hidden">
-    <div class="parent-width marginL15 marginR15 marginT15 marginB15">
-      <i class="iconfont icon-wenhao1 color-grey fs20 paddingL10"></i>
-      <span class="color-grey fs16">什么是主管医生</span>
+    <mt-loadmore
+      :top-method="loadTop" ref="loadmore"
+      :bottom-method="loadBottom"
+      :bottom-all-loaded="allLoaded"
+      :autoFill="false">
+    <div v-show="myDoctorList.length == 0">
+      <div class="parent-width marginL15 marginR15 marginT15 marginB15">
+        <i class="iconfont icon-wenhao1 color-grey fs20 paddingL10"></i>
+        <span class="color-grey fs16">什么是主管医生</span>
+      </div>
+      <div class="list-item pos-relate parent-width parent-margin circular-bead box-shade" v-for="item in myDoctorList">
+        <img class="pos-absolute bg-doctor-logo" src="../../assets/img/main-doctor.png"/>
+        <div class="doctor-info">
+          <span class="color-black fs22 doctor-name">{{item.name}}</span><br>
+          <span class="color-grey">{{item.grade}}</span><br>
+          <span class="color-grey">医院：{{item.name}}</span>
+        </div>
+        <div class="btn-menu">
+          <router-link to="" class="btn-consult color-white">发消息</router-link>
+          <router-link to="" class="btn-reserve color-white">预约</router-link>
+        </div>
+      </div>
     </div>
-    <div class="list-item pos-relate parent-width parent-margin circular-bead box-shade" v-for="item in myDoctorList">
-      <img class="pos-absolute bg-doctor-logo" src="../../assets/img/main-doctor.png"/>
-      <div class="doctor-info">
-        <span class="color-black fs22 doctor-name">{{item.name}}</span><br>
-        <span class="color-grey">{{item.grade}}</span><br>
-        <span class="color-grey">医院：{{item.name}}</span>
-      </div>
-      <div class="btn-menu">
-        <router-link to="" class="btn-consult color-white">发消息</router-link>
-        <router-link to="" class="btn-reserve color-white">预约</router-link>
-      </div>
+    </mt-loadmore>
+    <div class="mydoctorlist-empty-box" v-show="myDoctorList.length > 0">
+      <img src="../../assets/img/phone.png">
+      <p class="mydoctorlist-empty-to">选择医生</p>
     </div>
   </div>
-  </mt-loadmore>
-
 </template>
 
 <script>
