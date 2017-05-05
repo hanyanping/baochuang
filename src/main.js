@@ -31,10 +31,8 @@ rootRouter.beforeEach(function (to, from, next) {
     auth = getParameterByName('authentication');
     if (auth == null || auth == '' || auth == undefined) {
       console.log('未授权!');
-      alert('auth===未授权');
       toLine(path); // 跳转url
     } else {
-      alert('auth===已经授权');
       console.log('已经授权!');
       setAuthForLS(path,auth);
       next();
@@ -56,12 +54,9 @@ function toLine(path) {
 
 // 从localStorage中获取不同平台的auth
 function getAuthFromLS(path) {
-  alert('getAuthFromLS==path==' + path);
   if (path.indexOf('baochuan_p') != -1) {
-    alert('baochuan_p_auth==' + localStorage.getItem('baochuan_p_auth'));
     return localStorage.getItem('baochuan_p_auth');
   } else if (path.indexOf('baochuan_d') != -1) {
-    alert('dd');
     return localStorage.getItem('baochuan_d_auth');
   }
 }
