@@ -6,8 +6,13 @@ import axios from 'axios';
 import {Toast} from 'mint-ui';
 import {Indicator} from 'mint-ui';
 
+const API_HOST = 'http://testaiganneo.aiganyisheng.com';
+
 // post 请求
 function post(url, params, success, error) {
+  if (url[0]=='/')
+    url = API_HOST + url;
+    
   Indicator.open();
   axios.post(url, params).then(function (result) {
     Indicator.close();
