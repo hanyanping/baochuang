@@ -256,7 +256,7 @@
         authentication: this.authentication,
         patientId: this.patientId,
       }
-      netWrokUtils.post('/api/wx/baochuan_d/patientcase', params, function (result) {
+      netWrokUtils.post('/wx/baochuan_d/patientcase', params, function (result) {
         this.perInfo = result.data.content
         conssole.log(this.perInfo)
         this.patient_name = result.data.content.name
@@ -323,7 +323,7 @@
           pageIndex:this.pageIndex,
           number:this.number,
         }
-        netWrokUtils.post('/api/wx/baochuan_d/getconsultrecordlist', params, function (result) {
+        netWrokUtils.post('/wx/baochuan_d/getconsultrecordlist', params, function (result) {
           this.message = result.data.content;
           console.log(this.message);
         }, function (error_result) {
