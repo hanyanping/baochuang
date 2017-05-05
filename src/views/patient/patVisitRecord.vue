@@ -1,6 +1,6 @@
 <!-- 复诊记录页 -->
 <template>
-  <div class="visitRrecord">
+  <div class="visitRrecord" @click="openPicker">
     <div class="visitRrecord-title-box">
       <span class="visitRrecord-title-text">下次复诊时间</span>
       <span class="visitRrecord-title-text" v-show="nextRevisitTime != ''">{{nextRevisitTime}}</span>
