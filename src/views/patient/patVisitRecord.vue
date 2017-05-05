@@ -10,6 +10,7 @@
         type="date"
         ref="picker"
         @confirm="handleChange"
+        @cancel="cancelChange"
         :startDate="startDateValue"
         year-format="{value} 年"
         month-format="{value} 月"
@@ -110,40 +111,18 @@
         let that = this;
         var params = {
           authentication: that.postData.authentication,
-          doctorId : '27',
-          revisitTime : timeValue
+          doctorId: '27',
+          revisitTime: timeValue
         }
         netWrokUtils.post('/wx/baochuan_d/setrevisit', params, (result) => {
+          this.$refs.picker.close();
           Toast(error_result.data.msg);
           that.nextRevisitTime = timeValue;
         }, (error_result) => {
+          this.$refs.picker.close();
           Toast(error_result.data.msg);
         })
       },
-
-
-      //        getvisitRrecordList() {
-      //          Indicator.open();
-      //          let that = this;
-      //          axios.get('/api/wx/baochuan_p/myrevisitrecords', {
-      //            params: {
-      //              authentication: that.postData.authentication
-      //            }
-      //          }).then((result) => {
-      //            Indicator.close();
-      //            console.log(result);
-      //            if(result.data.code == 0){
-      //              that.visitRrecordList = result.data.content.list;
-      //              that.myrevisitrecords = result.data.content.myrevisitrecords;
-      //            }else{
-      //              Toast(result.msg);
-      //            }
-      //          }).catch((error) => {
-      //            Indicator.close();
-      //            console.log(error);
-      //            Toast('网络不给力 ! 请稍后再试');
-      //          })
-      //        },
       loadTop()
       {
       }

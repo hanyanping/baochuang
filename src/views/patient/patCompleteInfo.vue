@@ -119,7 +119,7 @@
             return{
               isActive: false,
               currentView: 'child1',
-              authentication: 'e5edd65e69e6a1b3f25782357908284c',
+              authentication: '4d89652b270cc60c30365868b229ca15',
               requestJson: {
                   name: '',
                   sex: 1,
@@ -149,7 +149,7 @@
         },
         methods: {
           getDiseaseLabel(){
-            axios.post('/api/wx/baochuan_p/getpatientmaindisease',{
+            axios.post('/wx/baochuan_p/getpatientmaindisease',{
                   authentication: this.authentication
             }).then((result)=>{
                this.diseaseList = result.data.content;
@@ -158,7 +158,7 @@
             })
           },
           getUserInfo(){
-            axios.post('/api/wx/baochuan_p/myinformation',{
+            axios.post('/wx/baochuan_p/myinformation',{
                   authentication: this.authentication
             }).then((resp) => {
                 console.log(resp);
@@ -189,7 +189,7 @@
               Toast('请选择疾病类型');
               return false;
             } else{
-                axios.post('/api/wx/baochuan_p/saveinfo', {
+                axios.post('/wx/baochuan_p/saveinfo', {
                       authentication: this.authentication,
                       name: this.requestJson.name,
                       sex: this.requestJson.sex,
