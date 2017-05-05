@@ -7,7 +7,7 @@
           <img class="personalCentre-header-bg fl" src="../../assets/img/second.png">
           <span class="personalCentre-header-text fl">{{name}}</span>
         </div>
-        <div style="display:inline-block">
+        <div style="display:inline-block" v-show="isPerfectInfo == 0">
           <span class="personalCentre-headerright-text">完善信息</span>
           <i class="iconfont personalCentre-header-icon icon-jiantou"></i>
         </div>
@@ -55,7 +55,8 @@
         diseaseId: '',
         diseaseName: '',
         diseaseList: [],
-        idcard: ''
+        idcard: '',
+        isPerfectInfo: '0'
       }
     },
     mounted() {
@@ -67,24 +68,25 @@
         var params = {
           authentication: that.authentication
         }
-        netWrokUtils.post('/api/wx/baochuan_p/myinformation', params, (result) => {
+        netWrokUtils.post('/wx/baochuan_p/myinformation', params, (result) => {
           that.name = result.data.content.name;
           that.sex = result.data.content.sex;
           that.birthday = result.data.content.birthday;
           that.diseaseId = result.data.content.diseaseId;
           that.diseaseName = result.data.content.diseaseName;
           that.idcard = result.data.content.idcard;
+          that.isPerfectInfo = result.data.content.isPerfectInfo;
         }, (error_result) => {
           Toast(error_result.data.msg);
         })
       },
       clickTo(id){
-        if(id == 0) {
-          this.$router.push({path:'visitRecord'})
-        } else if (id == 1){
-          this.$router.push({path:'subscribeList'})
-        } else if (id == 2){
-          this.$router.push({path:'clinicRecord'})
+        if (id == 0) {
+          this.$router.push({path: 'visitRecord'})
+        } else if (id == 1) {
+          this.$router.push({path: 'subscribeList'})
+        } else if (id == 2) {
+          this.$router.push({path: 'clinicRecord'})
         }
       }
 
