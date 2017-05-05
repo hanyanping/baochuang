@@ -28,7 +28,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
+      '/wx': {
         // target: 'http://lipengwei.furui.com',      // 个人服务器
         // target: 'http://liangxing.furui.com',      // 个人服务器
         // target: 'http://luhongguang.furui.com',      // 个人服务器
@@ -36,7 +36,7 @@ module.exports = {
         // target:  'http://testaiganneo.aiganyisheng.com',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^/wx': '/wx'
         }
       }
     },

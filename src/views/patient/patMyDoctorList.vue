@@ -182,7 +182,7 @@
         var params = {
           authentication: that.authentication
         }
-        netWrokUtils.post('/api/wx/baochuan_p/mydoctor', params, (result) => {
+        netWrokUtils.post('/wx/baochuan_p/mydoctor', params, (result) => {
           that.myDoctorList = result.data.content.list;
           for (var i in that.myDoctorList) {
             if (that.myDoctorList[i].open_consult == 0) {

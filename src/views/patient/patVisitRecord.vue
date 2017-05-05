@@ -99,7 +99,7 @@
         var params = {
           authentication: that.postData.authentication
         }
-        netWrokUtils.post('/api/wx/baochuan_p/myrevisitrecords', params, (result) => {
+        netWrokUtils.post('/wx/baochuan_p/myrevisitrecords', params, (result) => {
           that.visitRrecordList = result.data.content.list;
           that.nextRevisitTime = result.data.content.nextRevisitTime;
         }, (error_result) => {
@@ -113,7 +113,7 @@
           doctorId : '27',
           revisitTime : timeValue
         }
-        netWrokUtils.post('/api/wx/baochuan_d/setrevisit', params, (result) => {
+        netWrokUtils.post('/wx/baochuan_d/setrevisit', params, (result) => {
           Toast(error_result.data.msg);
           that.nextRevisitTime = timeValue;
         }, (error_result) => {
