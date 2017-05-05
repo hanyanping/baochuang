@@ -4,26 +4,26 @@
       <div class="moneyHeader">
         <div class="balance">余额 (元)</div>
         <div class="moneyTail">
-          <div class="moneyNum">789.00</div>
+          <div class="moneyNum">{{moneyInfo.balance}}</div>
           <div class="goTixian">提现</div>
         </div>
-        <div class="moneyAvailable">可提现金额 : 600.00</div>
+        <div class="moneyAvailable">可提现金额 : {{moneyInfo.getmoney}}</div>
       </div>
-      <div class="moneyContainer">
+      <div v-if="moneyInfo.length!='0'"  class="moneyContainer">
         <div class="mingxinDetail">
           <div class="detailName">明细</div>
-          <div class="detailList">
+          <div class="detailList" v-for="item in moneyList">
             <div class="tixianBox">
               <div class="tixinaMoney">
-                <div class="tixianWenzi">提现</div>
-                <div class="tixianJine">-600.00元</div>
+                <div class="tixianWenzi">{{item.name}} <span class="patientName">患者：<span>王小二</span></span></div>
+                <div :class="{'xiaofeiJine':showRed,'tixianJine':!showRed}">{{item.money}} 元</div>
               </div>
-              <div class="tixianTime">2017-03-23  <span>12:45:23</span></div>
+              <div class="tixianTime">{{item.time}}</div>
             </div>
             <div class="yuyueBox tixianBox">
               <div class="tixinaMoney">
-                <div class="tixianWenzi">咨询服务费 <span class="patientName">患者：<span>王小二</span></span></div>
-                <div class="xiaofeiJine">+10.00元</div>
+                <div class="tixianWenzi">咨询服务费 </div>
+                <div class=""  :class="{'xiaofeiJine':showRed,'tixianJine':!showRed}">+10.00元</div>
               </div>
               <div class="tixianTime">2017-03-23  <span>12:45:23</span></div>
             </div>
@@ -35,6 +35,9 @@
         <b></b>
         <i></i>
       </div>
+      <div v-else class="nodata">
+        <img src="../../assets/img/nodatatips.png"/>
+      </div>
     </div>
   </div>
 
@@ -42,11 +45,15 @@
 <script>
   import { Toast,Field } from 'mint-ui';
   import axios from 'axios'
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'docMoney',
     data () {
       return {
-        authentication:'3437d5824a079a48da95ef2d5ab419b3'
+        authentication: '3437d5824a079a48da95ef2d5ab419b3',
+        moneyInfo: {},
+        moneyList: {},
+        showRed: ''
       }
     },
     created() {
@@ -58,17 +65,15 @@
     methods: {
       // 获取个人信息
       getDocInfo() {
-        axios.get('/api/wx/baochuan_d/wallet', {
-          params: {
-            authentication: this.authentication
-          }
-        }).then((result) => {
-          console.log(result);
-          this.erweima = result.data;
-        }).catch((error) => {
-          console.log(error);
-          Toast('网络不给力 ! 请稍后再试');
-        })
+       axios.post('/api/wx/baochuan_d/wallet', {
+         authentication: this.authentication
+       }).then((result) => {
+            this.moneyInfo = result.data.content;
+            console.log(this.moneyInfo)
+       }).catch((error) => {
+            console.log(error);
+       })
+
       }
     },
   }
@@ -76,23 +81,20 @@
 
 <style>
   .bodyBox{
-    background:#f4f4f4;
+    background:#FCFCFC;
     height:100vh;
     width:100%;
-
   }
-
   html{
     height:100%;
     width:100%;
   }
 .docMoneyBox{
   width:100%;
-
 }
   .docMoneyBox .moneyHeader{
     background:#529D98;
-    height:31vh;
+    height:33vh;
     color:#BDE4DD;
     padding:0 16px;
   }
@@ -115,14 +117,17 @@
   .goTixian{
     font-size:16px;
     border: 1px solid #BDE4DD;
-    padding:1px 10px 0;
+    padding:1px 10px 1px;
     border-radius:5px;
+    line-height: 18px;
+    vertical-align: middle;
   }
   .docMoneyBox .moneyContainer{
     position: relative;
-    margin:-55px 16px;
+    margin:-66px 16px;
     background:#fff;
     border-radius:5px;
+    box-shadow: 0 6px 25px -5px #529D98;
   }
   .docMoneyBox .moneyContainer b:nth-of-type(1){
     left: -1px;
@@ -169,6 +174,10 @@
     border-bottom:1px dashed #dfdfdf;
     padding:15px 0;
   }
+  .moneyContainer .detailList .tixianBox .patientName{
+    color:#bbb;
+    font-size:15px;
+  }
   .docMoneyBox .moneyContainer .detailList .tixianBox:nth-last-child(1){
     border:none;
   }
@@ -184,7 +193,7 @@
   .docMoneyBox .moneyContainer .detailList .tixianWenzi{
     color:#232323;
   }
-  .docMoneyBox .xiaofeiJine, .yuyueBox .patientName{
+  .docMoneyBox .xiaofeiJine{
     color:#bbb;
     font-size:15px;
 }

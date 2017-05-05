@@ -6,7 +6,7 @@ import Router from 'vue-router'
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/docLogin'
 import docMoney from '../views/doctor/docMoney'
-import myPatient from '../views/doctor/myPatient'
+import myPatient from '../views/doctor/docPatient'
 import docConsult from '../views/doctor/docConsult'
 
 Vue.use(Router)

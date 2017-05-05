@@ -35,7 +35,7 @@ module.exports = {
         target:  'http://testaiganneo.aiganyisheng.com',// 测试服务器
         changeOrigin: true,
         pathRewrite: {
-          '^/wx': '/wx'
+          '^/api': ''
         }
       }
     },

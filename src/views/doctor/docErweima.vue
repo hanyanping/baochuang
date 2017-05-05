@@ -6,12 +6,12 @@
           <img src="../../assets/img/fuzhen.png"/>
         </div>
         <div class="docInfo-detail">
-          <p style="font-size:16px;color:#232323;">石莹莹 副主任医师</p>
-          <p style="font-size:15px;color:#bbb;padding-top:8px;">河北保定传染病医院 传染科</p>
+          <p style="font-size:16px;color:#232323;">{{docContent.doctorName}} {{docContent.doctorName}}</p>
+          <p style="font-size:15px;color:#bbb;padding-top:8px;">{{docContent.hospitalName}} {{docContent.hospitalDepartmentName}}</p>
         </div>
       </div>
       <div class="docEeweima-img">
-        <img src="../../assets/img/erwei.jpg"/>
+        <img v-bind:src="docContent.qrcodeUrl"/>
         <p>微信扫一扫，和我保持联系</p>
       </div>
       <b></b>
@@ -22,43 +22,42 @@
 <script>
   import axios from 'axios'
   import { Toast } from 'mint-ui';
-
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'docInfo',
     data () {
       return {
-        authentication: 'd1126e11b0392a446acaf724ba9e36c7',
-        erweima:''
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
+        doctorId: 26,
+        erweima:'',
+        docContent:[ ]
       }
     },
     mounted() {
       this.getDocInfo();
     },
-
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '我的随访二维码'
-    },
 
+    },
     methods: {
       // 获取个人信息
       getDocInfo() {
-        axios.get('/api/wx/baochuan_d/myqrcode', {
-          params: {
-            authentication: this.authentication
+          var that = this;
+          var params = {
+              authentication: this.authentication,
+              doctorId: that.doctorId
           }
-        }).then((result) => {
-          console.log(result);
-          this.erweima = result.data;
-        }).catch((error) => {
-          console.log(error);
-          Toast('网络不给力 ! 请稍后再试');
+        netWrokUtils.post('/api/wx/baochuan_p/doctorqrcode', params, function (result) {
+          that.docContent = result.data.content;
+          console.log(result.data.content.qrcodeUrl);
+        }, function (error_result) {
+//          Indicator.close();
+          Toast(error_result);
         })
       }
     }
-
-
   }
-
 </script>
 
 <style lang="scss">

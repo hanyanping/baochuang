@@ -8,10 +8,7 @@ import {Indicator} from 'mint-ui';
 
 // post 请求
 function post(url, params, success, error) {
-  Indicator.open();
   axios.post(url, params).then(function (result) {
-    Indicator.close();
-    console.log(result)
     if (result.data.code == 0) {
       // alert('success(result)');
       success(result);
@@ -24,17 +21,17 @@ function post(url, params, success, error) {
       // alert('error(result)');
       error(result);
     }
+    Indicator.close();
+    // Toast('ffff');
   }).catch(function (network_error) {
     Indicator.close();
     console.log(network_error);
-    Toast('网络不给力 ! 请稍后再试!' + network_error);
+    Toast('网络不给力 ! 请稍后再试!');
   })
 }
 
 function get(url, params, success, error) {
-  Indicator.open();
   axios.get(url, params).then(function (result) {
-    Indicator.close();
     if (result.data.code == 0) {
       // alert('success(result)');
       success(result);
@@ -47,6 +44,8 @@ function get(url, params, success, error) {
       // alert('error(result)');
       error(result);
     }
+    Indicator.close();
+    // Toast('ffff');
   }).catch(function (network_error) {
     Indicator.close();
     console.log(network_error);

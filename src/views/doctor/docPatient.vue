@@ -237,11 +237,12 @@
 </template>
 <script>
   import axios from 'axios'
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'myPatient',
     data () {
       return {
-        authentication:'3437d5824a079a48da95ef2d5ab419b3',
+        authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
         active: true,
         unActive: false,
         unShow:true,
@@ -266,15 +267,18 @@
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '我的患者'
-      axios.get('/api/wx/baochuan_d/patientlist',{ params: {
+      var params = {
         authentication: this.authentication,
       }
-      }).then((result) => {
-       this.message = result.data.content.list;
-       console.log(result.data.content)
+      netWrokUtils.post('/api/wx/baochuan_d/patientlist', params, function (result) {
+        this.message = result.data.content.list;
+        console.log(result.data.content)
         this.allPatientCount = result.data.content.allPatientCount
         this.attentionPatientCount = result.data.content.attentionPatientCount
         this.managePatientCount = result.data.content.managePatientCount
+      }, function (error_result) {
+//          Indicator.close();
+        Toast(error_result);
       })
     },
     methods: {

@@ -41,7 +41,7 @@ import patientLogin from '../views/patient/patPatientLogin';
 import doctorMain from '../views/doctor/doctorMain'
 import docLogin from '../views/doctor/docLogin'
 import docMoney from '../views/doctor/docMoney'
-import myPatient from '../views/doctor/myPatient'
+import docPatient from '../views/doctor/docPatient'
 import docConsult from '../views/doctor/docConsult'
 import doctorPerfectInfo from '../views/doctor/doctorPerfectInfo'
 import doctorMenu from '../views/doctor/doctorMenu'
@@ -122,9 +122,9 @@ export default new Router({
           component: doctorPerfectInfo
         },
         {
-          path: 'myPatient',
-          name: 'myPatient',
-          component: myPatient
+          path: 'docPatient',
+          name: 'docPatient',
+          component: docPatient
         },
 
         {

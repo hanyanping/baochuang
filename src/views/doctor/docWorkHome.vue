@@ -205,12 +205,9 @@
      }
    }
    .visit-box, .consult-box{
-     -webkit-box-shadow:inset 0 5px 5px #D2E6E3;
-     -moz-box-shadow:inset 0 5px 5px #D2E6E3;
-     box-shadow:-2px 0 0 #D2E6E3,
-     inset 0 -6px 5px #D2E6E3,
-     inset 0 6px 5px#D2E6E3,
-     2px 0 0 #D2E6E3;
+     -webkit-box-shadow:inset 0 10px 5px #D2E6E3;
+     -moz-box-shadow:inset 0 10px 5px #D2E6E3;
+     box-shadow:inset 0px 10px 5px #D2E6E3;
      background:#fcfcfc;
      .visit-patient{
        display:flex;

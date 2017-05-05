@@ -1,5 +1,5 @@
 <template>
-  <div class="docConsult">
+  <div class="docConsult-box">
     <mt-navbar v-model="selected">
       <mt-tab-item id="personal">个人资料</mt-tab-item>
       <mt-tab-item id="talk">患者聊天</mt-tab-item>
@@ -12,19 +12,19 @@
           <div class="personal-info">
             <div class="personal-info-flex">
               <div>姓名</div>
-              <div class="detail">{{talkInfo.name}}</div>
+              <div class="detail">{{perInfo.name}}</div>
             </div>
             <div class="personal-info-flex">
               <div>性别</div>
-              <div class="detail">{{talkInfo.sex}}</div>
+              <div class="detail">{{perInfo.sex}}</div>
             </div>
             <div class="personal-info-flex">
               <div>年龄</div>
-              <div class="detail">{{talkInfo.age}}</div>
+              <div class="detail">{{perInfo.age}}</div>
             </div>
             <div class="personal-info-flex">
               <div>主疾病</div>
-              <div style="color:#bbb;">{{talkInfo.disease}}</div>
+              <div style="color:#bbb;">{{perInfo.disease}}</div>
             </div>
             <div class="more" :class="{'yincang':More}">
               <span @click="perChakan">查看更多 <i class="iconfont icon-zhankai2"></i></span>
@@ -32,7 +32,7 @@
             <div class="shouqi" :class="{'yincang':!More}">
               <div class="personal-info-flex">
                 <div>手机号</div>
-                <div style="color:#bbb;">{{talkInfo.mobile}}</div>
+                <div style="color:#bbb;">{{perInfo.mobile}}</div>
               </div>
               <div class="more">
                 <span  @click="perShouqi" style="text-align: center">收起 <i class="iconfont icon-zhankai-copy"></i></span>
@@ -150,15 +150,15 @@
                 <span v-else @click="tangchu($event)" ref="messageSpan" class="iconfont icon-jiahao"></span>
               </div>
               <div class="foot-box">
-                <div v-if="">
+                <div v-if="jiaStatius == '1'"  @click="fuzhenDialog">
                   <img src="../../assets/img/fuzhen.png"/>
                   <p class="text">复诊提醒</p>
                 </div>
-                <div @click="outpatient">
+                <div @click="outpatientDialog">
                   <img src="../../assets/img/visit-time.png"/>
                   <p class="text">门诊时间</p>
                 </div>
-                <div v-if="">
+                <div v-if="jiaStatius == '1'" click="phoneDialog">
                   <img src="../../assets/img/phone.png"/>
                   <p class="text">电话随访</p>
                 </div>
@@ -214,22 +214,21 @@
 </template>
 <script>
   import axios from 'axios'
-  import {Toast} from 'mint-ui';
-  import { MessageBox } from 'mint-ui';
+  import { Toast, MessageBox } from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'docConsult',
     data () {
       return {
-        MessageBox:{
-          title: '提示',
-          message: '确定执行此操作?',
-          showCancelButton: true
-        },
-        authentication:'3437d5824a079a48da95ef2d5ab419b3',
-        patient_id:'',
+        authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
+        patientId:2,
+        pageIndex:1,
+        number:2,
         patient_name:'',
-        selected:'personal',
-        talkInfo:'',
+        selected:'talk',
+        perStatus:'',
+        perInfo:'',
+        jiaStatius:'',
         More:false,
         bottomShow:false,
         message:[],
@@ -251,19 +250,22 @@
         }
     },
     created() {
-      this.patient_id = this.$route.params.patientId
+//      this.patientId = this.$route.params.patientId
 //      个人资料
-      axios.get('/api/wx/baochuan_d/patientcase',{ params: {
+      var params = {
         authentication: this.authentication,
-        patient_id: this.patient_id
+        patientId: this.patientId,
       }
-      }).then((result) => {
-       this.talkInfo = result.data.content
+      netWrokUtils.post('/api/wx/baochuan_d/patientcase', params, function (result) {
+        this.perInfo = result.data.content
+        conssole.log(this.perInfo)
         this.patient_name = result.data.content.name
+        this.perStatus = result.data.content.status
+
         document.getElementsByTagName('title')[0].innerHTML = this.patient_name
-      });
-
-
+      }, function (error_result) {
+        Toast(error_result);
+      })
       this.message = [
         {
           talkTime:"2017-03-23",
@@ -310,53 +312,150 @@
       ]
     },
     mounted(){
-
-
+        this.consultList()
     },
     methods: {
 //        聊天窗口
-//      门诊提醒
-      outpatient() {
-          console.log(12)
-        axios.get('/api/wx/baochuan_d/clinicremind', {
-          params: {
-            authentication: this.authentication
-          }
-        }).then((result) => {
-          console.log(result);
-        }).catch((error) => {
-          console.log(error);
-          Toast('网络不给力 ! 请稍后再试');
+      consultList() {
+        var params = {
+          authentication: this.authentication,
+          patientId: this.patientId,
+          pageIndex:this.pageIndex,
+          number:this.number,
+        }
+        netWrokUtils.post('/api/wx/baochuan_d/getconsultrecordlist', params, function (result) {
+          this.message = result.data.content;
+          console.log(this.message);
+        }, function (error_result) {
+//          Indicator.close();
+          Toast(error_result);
         })
       },
-
+//      点击加号
+      tangchu() {
+        this.bottomShow = !this.bottomShow;
+        if(this.$refs.reply.className === 'reply prop') {
+          return false
+        } else {
+          this.$refs.reply.className += ' prop'
+        }
+        var params = {
+            authentication:this.authentication,
+             patientId: this.patientId
+        }
+        netWrokUtils.post('/api/wx/baochuan_d/getconsultmenushow', params, function (result) {
+            var that = this;
+          that.jiaStatius =  result.data.content.is_show
+        }, function (error_result) {
+//          Indicator.close();
+          Toast(error_result);
+        })
+      },
+//      复诊提醒
+      fuzhenDialog() {
+        var params = {
+            authentication: this.authentication,
+            patientId:2
+        }
+        netWrokUtils.post('/api/wx/baochuan_d/revisitremind', params, function (result) {
+          var _this = this;
+          var outpatientContent = [];
+          outpatientContent = result.data.content;
+          if(outpatientContent == ''){
+            var str = '<h3>您还未设置复诊时间，请去设置</h3>'
+            MessageBox({
+              title: '',
+              message: str,
+              confirmButtonText:'去设置',
+              cancelButtonText:'以后再说',
+              showCancelButton: true
+            }).then((result) => {
+              if(result == "confirm"){
+                _this.$router.push({ path:'/baochuan_d/docVisitInfo'});
+              }
+            });
+          }else{
+            MessageBox({
+              title: '您即将发送消息',
+              message: outpatientContent,
+              showCancelButton: true
+            }).then((result) => {
+              if(result == "confirm"){
+//                  调取发送信息接口
+              }
+            });
+          }
+        }, function (error_result) {
+//          Indicator.close();
+          Toast(error_result);
+        })
+      },
+//      门诊提醒
+      outpatientDialog() {
+        var params = {
+            authentication: '9abada2c209a05e2ebd462f7bf68c5cf'
+        }
+        netWrokUtils.post('/api/wx/baochuan_d/clinicremind', params, function (result) {
+          var that = this;
+          var outpatientContent = result.data.content;
+          if(outpatientContent == ''){
+            var str = '<h3>您还未设置门诊时间，请去设置</h3>'
+            MessageBox({
+              title: '',
+              message: str,
+              confirmButtonText:'去设置',
+              cancelButtonText:'以后再说',
+              showCancelButton: true
+            }).then((result) => {
+              if(result == "confirm"){
+                that.$router.push({ path:'/baochuan_d/docAppointmentSetting'});
+              }
+            });
+          }else{
+            var str = '<h3>您好,我的门诊时间是:</h3>'
+            for (let i in outpatientContent) {
+              str += '<div>'+ outpatientContent[i] +'</div>'
+            }
+            MessageBox({
+              title: '您即将发送消息',
+              message: str,
+              showCancelButton: true
+            }).then((result) => {
+              if(result=="confirm"){
+//                  发送接口
+              }
+            });
+          }
+        }, function (error_result) {
+//          Indicator.close();
+          Toast(error_result);
+        })
+      },
+//      电话随访
+      phoneDialog() {},
       // input,focus收起
       shouqi() {
         this.$refs.reply.className = 'reply'
       },
       //  回复消息
       messages() {
-        this.item.content= this.form.content;
-      },
-      tangchu() {
-          this.bottomShow = !this.bottomShow;
-        if(this.$refs.reply.className === 'reply prop') {
-            return false
-        } else {
-          this.$refs.reply.className += ' prop'
+          var that = this;
+          console.log(that.item.content)
+//        that.item.content = that.form.content;
+        var params = {
+          params: {
+            authentication: this.authentication,
+            patientId:1
+          }
         }
-        axios.get('/api/wx/baochuan_d/getconsultmenushow',{ params: {
-//          authentication: this.authentication,
-          authentication:'d1126e11b0392a446acaf724ba9e36c7',
-          patient_id: this.patient_id
-        }
-        }).then((result) => {
+        netWrokUtils.post('/api/wx/baochuan_d/replyconsult', params, function (result) {
           console.log(result)
-        }).catch((error) => {
-          console.log(error);
-          Toast('网络不给力 ! 请稍后再试');
+        }, function (error_result) {
+//          Indicator.close();
+          Toast(error_result);
         })
       },
+
 //      个人资料start
       perChakan() {
         this.More = !this.More;
@@ -373,7 +472,10 @@
 </script>
 
 <style lang="scss">
-  .docConsult{
+  .mint-msgbox-message{
+    line-height: 25px!important;
+  }
+  .docConsult-box{
     .mint-navbar{
       border-bottom: 1px solid #f4f4f4;
     }
@@ -463,8 +565,8 @@
                   float: left;
                   margin: 0px 10px 0 10px;
                   max-width: 64%;
-                  border: 1px solid #f4f4f4;
-                  box-shadow: 0 0 3px #ccc;
+                  border: 1px solid #CCC;
+                  /*box-shadow: 0 0 3px #ccc;*/
                   font-size:16px;
                   color:#232323;
                   line-height:18px;
@@ -547,7 +649,7 @@
             }
             input{
               height:35px;
-              width:80%;
+              width:85%;
               border:1px solid #E2E2E4;
               border-radius: 5px;
             }
