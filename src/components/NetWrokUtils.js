@@ -27,7 +27,7 @@ function post(url, params, success, error) {
   }).catch(function (network_error) {
     Indicator.close();
     console.log(network_error);
-    Toast('网络不给力 ! 请稍后再试!');
+    Toast('网络不给力 ! 请稍后再试!' + network_error);
   })
 }
 
