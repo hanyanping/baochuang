@@ -323,7 +323,7 @@
           pageIndex:this.pageIndex,
           number:this.number,
         }
-        netWrokUtils.post('/wx/baochuan_d/getconsultrecordlist', params, function (result) {
+        netWrokUtils.post('/api/wx/baochuan_d/getconsultrecordlist', params, function (result) {
           this.message = result.data.content;
           console.log(this.message);
         }, function (error_result) {
@@ -395,7 +395,7 @@
         var params = {
             authentication: '9abada2c209a05e2ebd462f7bf68c5cf'
         }
-        netWrokUtils.post('/api/wx/baochuan_d/clinicremind', params, function (result) {
+        netWrokUtils.post('/wx/baochuan_d/clinicremind', params, function (result) {
           var that = this;
           var outpatientContent = result.data.content;
           if(outpatientContent == ''){

@@ -34,9 +34,9 @@ module.exports = {
         // target:  'http://testbdwx.aiganyisheng.com', // 测试服务器
         target:  'http://testaiganneo.aiganyisheng.com',
         changeOrigin: true,
-        pathRewrite: {
-          '^/wx': 'wx'
-        }
+        // pathRewrite: {
+        //   '^/wx': '/wx'
+        // }
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
