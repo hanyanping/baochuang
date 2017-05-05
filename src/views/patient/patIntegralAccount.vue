@@ -58,6 +58,7 @@
             rows: 10,
             page: 1
           },
+          message : []
         }
       },
       mounted() {
@@ -66,14 +67,6 @@
       methods: {
         getIntegralList() {
           let that = this;
-//          that.util.request.post('/wx/baochuan_p/myscore?' + that.util.formatPara(that.postData) + '&page=1').then((resp) => {
-//            console.log(resp.data);
-//            that.message = resp.data.data.rows;
-//            that.$refs.loadmore.onTopLoaded();
-//          }).catch((error) => {
-//            console.log(error);
-//          })
-
           axios.get('/wx/baochuan_p/myscore',{ params: that.postData
           }).then((result) => {
             console.log(result)
