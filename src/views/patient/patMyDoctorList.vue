@@ -1,5 +1,6 @@
 <!--我的医生列表-->
 <style lang="scss" scoped>
+
   .mydoctorlist-empty-box {
     text-align: center;
 
@@ -22,6 +23,7 @@
   }
 
   }
+
   .list-item {
     height: 203px;
     background-position: center center;
@@ -83,43 +85,51 @@
 
   }
   }
+
+  .mint-msgbox-message{
+    text-align: left;
+  }
+
 </style>
 
 <template>
 
-  <div class="device-height over-hidden">
+  <div class="device-height over-hidden ">
     <mt-loadmore
       :top-method="loadTop" ref="loadmore"
       :bottom-method="loadBottom"
       :bottom-all-loaded="allLoaded"
       :autoFill="false">
-      <div v-show="myDoctorList.length > 0">
-        <div class="parent-width marginL15 marginR15 marginT15 marginB15">
-          <i class="iconfont icon-wenhao1 color-grey fs20 paddingL10"></i>
-          <span class="color-grey fs16">什么是主管医生</span>
-        </div>
-        <div class="list-item pos-relate parent-width parent-margin circular-bead box-shade"
-             v-for="item in myDoctorList" :style="{backgroundImage: 'url(' + item.doctor_img + ')'}">
-          <!--<div class="list-item pos-relate parent-width parent-margin circular-bead box-shade"-->
-          <!--v-for="item in myDoctorList" :style="{backgroundImage: 'url('+aa+')'}">-->
-
-          <img class="pos-absolute bg-doctor-logo" src="../../assets/img/main-doctor.png" v-show="item.relation == 1"/>
-          <img class="pos-absolute bg-doctor-logo" src="../../assets/img/guarantee-doctor.png"
-               v-show="item.relation == 2"/>
-          <div class="doctor-info">
-            <span class="color-black fs22 doctor-name">{{item.name}}</span><br>
-            <span class="color-grey">{{item.grade}}</span><br>
-            <span class="color-grey">医院：{{item.name}}</span>
+      <div class="mydoctorlist-message-box">
+        <div v-show="myDoctorList.length > 0">
+          <div class="parent-width marginL15 marginR15 marginT15 marginB15" style="text-align: left" @click="showMessageBox">
+            <i class="iconfont icon-wenhao1 color-grey fs20 paddingL10"></i>
+            <span class="color-grey fs16">什么是主管医生</span>
           </div>
-          <div class="btn-menu">
-            <a @click="toSendMsg()"
-               :class="{'btn-consult':consult_active, 'btn-consult_disable':!consult_active} "
-               class="color-white">发消息
-            </a>
-            <a @click="toSubscribe()"
-               :class="{'btn-reserve':subscribe_active, 'btn-reserve_disable':!subscribe_active} "
-               class="color-white">预约
-            </a>
+          <div class="list-item pos-relate parent-width parent-margin circular-bead box-shade"
+               v-for="item in myDoctorList" :style="{backgroundImage: 'url(' + item.doctor_img + ')'}">
+            <!--<div class="list-item pos-relate parent-width parent-margin circular-bead box-shade"-->
+            <!--v-for="item in myDoctorList" :style="{backgroundImage: 'url('+aa+')'}">-->
+
+            <img class="pos-absolute bg-doctor-logo" src="../../assets/img/main-doctor.png"
+                 v-show="item.relation == 2"/>
+            <img class="pos-absolute bg-doctor-logo" src="../../assets/img/guarantee-doctor.png"
+                 v-show="item.relation == 1"/>
+            <div class="doctor-info">
+              <span class="color-black fs22 doctor-name">{{item.name}}</span><br>
+              <span class="color-grey">{{item.grade}}</span><br>
+              <span class="color-grey">医院：{{item.name}}</span>
+            </div>
+            <div class="btn-menu">
+              <a @click="toSendMsg()"
+                 :class="{'btn-consult':consult_active, 'btn-consult_disable':!consult_active} "
+                 class="color-white">发消息
+              </a>
+              <a @click="toSubscribe()"
+                 :class="{'btn-reserve':subscribe_active, 'btn-reserve_disable':!subscribe_active} "
+                 class="color-white">预约
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -135,6 +145,7 @@
 
   import axios from 'axios';
   import {Toast} from 'mint-ui';
+  import {MessageBox} from 'mint-ui';
   import {Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
   import moment from 'moment/moment.js';
@@ -149,7 +160,7 @@
         consult_active: false,
         subscribe_active: false,
         isPerfect: false,
-        authentication: '4d89652b270cc60c30365868b229ca15',
+        authentication: auth,
         aa: 'http://sucai.qqjay.com/qqjayxiaowo/201210/26/1.jpg'
       }
     },
@@ -157,9 +168,16 @@
       this.getMyDoctorList();
     },
     created(){
-//      console.log('authentication===' + this.postData.authentication);
     },
     methods: {
+      showMessageBox(){
+        var str = '<div>签约医生在慢病管理期间，一对一为您提供检查报告解读、复诊提醒、咨询和预约服务。</div>';
+        MessageBox({
+          title: '',
+          message: str,
+          confirmButtonText: '我知道了'
+        });
+      },
       toSelectDoc(){
         this.$router.push({path: 'visitRecord'}) //跳转选择医生
       },
