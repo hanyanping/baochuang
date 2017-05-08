@@ -9,8 +9,9 @@ import {Indicator} from 'mint-ui';
 
 // post 请求
 function post(url, params, success, error) {
-  // if (url[0]=='/')
-  //   url = API_HOST + url;
+  if (url[0]=='/')
+    url = process.env.API_HOST + url;
+    // console.log('---',url);
 
   Indicator.open();
   axios.post(url, params).then(function (result) {
