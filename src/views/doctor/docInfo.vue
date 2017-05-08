@@ -101,7 +101,7 @@
     methods: {
       // 获取个人信息
       getDocInfo () {
-        axios.post('/api/wx/baochuan_d/myinfo', {
+        axios.post('/wx/baochuan_d/myinfo', {
           authentication: this.authentication
         }).then((result) => {
           console.log(result);
@@ -126,7 +126,7 @@
       // 电话咨询开
       teleConsultOpen () {
         Indicator.open();
-        axios.post('/api/wx/baochuan_d/mobileonoff', {
+        axios.post('/wx/baochuan_d/mobileonoff', {
           authentication: this.authentication,
           open_telephone_counseling: 1
         }).then((result) => {
@@ -140,7 +140,7 @@
       // 电话咨询关
       teleConsultDown () {
         Indicator.open();
-        axios.post('/api/wx/baochuan_d/mobileonoff', {
+        axios.post('/wx/baochuan_d/mobileonoff', {
           authentication: this.authentication,
           open_telephone_counseling: 0
         }).then((result) => {

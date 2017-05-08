@@ -28,6 +28,18 @@
   </div>
 </template>
 
+<script>
+  export default {
+    name: 'docVisitInfo',
+    data () {
+      return {
+        items: [1,2,3],
+        isSetting: true,
+      }
+    }
+  }
+</script>
+
 <style lang="scss">
   .doc-visi-container-box {
     overflow: hidden;
@@ -106,15 +118,3 @@
     }
   }
 </style>
-
-<script>
-  export default {
-    name: 'docVisitInfo',
-    data () {
-      return {
-        items: [1,2,3],
-        isSetting: true,
-      }
-    }
-  }
-</script>

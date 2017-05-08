@@ -71,7 +71,7 @@
     methods: {
       // 获取科室、职称
       getPerfectinfo () {
-        axios.post('/api/wx/baochuan_d/perfectinfo', {
+        axios.post('/wx/baochuan_d/perfectinfo', {
           authentication: this.requestJson.authentication
         }).then((result) => {
           console.log(result);
@@ -100,7 +100,7 @@
           console.log(this.requestJson.hospitalDepartmentId);
           console.log(this.requestJson.grade);
           Indicator.open();
-          axios.post('/api/wx/baochuan_d/saveinfo', {
+          axios.post('/wx/baochuan_d/saveinfo', {
             authentication: this.requestJson.authentication,
             name: this.requestJson.name,
             hospitalDepartmentId: this.requestJson.hospitalDepartmentId,
