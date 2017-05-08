@@ -128,7 +128,7 @@ export default new Router({
         },
 
         {
-          path: 'docConsult/:patientId',
+          path: 'docConsult',
           name: 'docConsult',
           component: docConsult
         },
@@ -153,7 +153,7 @@ export default new Router({
           component: docReservationDetail
         },
         {
-          path: 'docToBeiZhu/:patientId/:patientName',
+          path: 'docToBeiZhu',
           name: 'docToBeiZhu',
           component: docToBeiZhu
         },

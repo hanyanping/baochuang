@@ -65,7 +65,7 @@
     name: 'myPatient',
     data () {
       return {
-
+        patientId:''
       }
     },
     watch: {
@@ -73,6 +73,10 @@
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '化验单详情'
+      eventBus.$on('some', (thing) => {
+        this.patientId = thing;
+        console.log(this.patientId)
+      })
     },
     methods: {
     }

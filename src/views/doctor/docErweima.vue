@@ -3,7 +3,7 @@
     <div class="erweima-info">
       <div class="docInfo">
         <div class="docImg">
-          <img src="../../assets/img/fuzhen.png"/>
+          <img :src="docContent.doctorImg"/>
         </div>
         <div class="docInfo-detail">
           <p style="font-size:16px;color:#232323;">{{docContent.doctorName}} {{docContent.doctorName}}</p>
@@ -48,7 +48,7 @@
               authentication: this.authentication,
               doctorId: that.doctorId
           }
-        netWrokUtils.post('/api/wx/baochuan_p/doctorqrcode', params, function (result) {
+        netWrokUtils.post('/wx/baochuan_p/doctorqrcode', params, function (result) {
           that.docContent = result.data.content;
           console.log(result.data.content.qrcodeUrl);
         }, function (error_result) {

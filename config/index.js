@@ -30,8 +30,10 @@ module.exports = {
     proxyTable: {
       '/wx': {
         // target: 'http://lipengwei.furui.com',      // 个人服务器
-        target: 'http://liangxing.furui.com',      // 个人服务器
-        // target:  'http://testaiganneo.aiganyisheng.com', // 测试服务器
+        // target: 'http://liangxing.furui.com',      // 个人服务器
+        // target: 'http://luhongguang.furui.com',
+        // target:  'http://testbdwx.aiganyisheng.com', // 测试服务器
+        target:  'http://testaiganneo.aiganyisheng.com',
         changeOrigin: true,
         // pathRewrite: {
         //   '^/wx': '/wx'

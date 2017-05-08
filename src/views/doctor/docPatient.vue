@@ -243,6 +243,7 @@
     data () {
       return {
         authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
+        patientId:'',
         active: true,
         unActive: false,
         unShow:true,
@@ -281,10 +282,13 @@
         Toast(error_result);
       })
     },
+    destroyed () {
+      eventBus.$emit('patientId', this.patientId);
+    },
     methods: {
       goConsult (id) {
-          console.log(id)
-        this.$router.push({ path:"/baochuan_d/docConsult/" +id});
+          this.patientId = id;
+        this.$router.push({ path:"/baochuan_d/docConsult"});
       },
       fasongTongzhi() {
         this.$router.push({ path: '/baochuan_d/docFaTongzhi' });

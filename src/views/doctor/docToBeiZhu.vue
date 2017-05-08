@@ -20,15 +20,19 @@
       return {
         textNumber : '',
         active:false,
-        authentication:'d1126e11b0392a446acaf724ba9e36c7',
-        patient_id:'',
-        patient_name:''
+        authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
+        patientId:'',
+        patientName:''
       }
     },
     created() {
-      this.patient_id = this.$route.params.patientId
-      this.patient_name = this.$route.params.patientName
-      document.getElementsByTagName('title')[0].innerHTML = this.patient_name
+      var that = this;
+      eventBus.$on('some', (thing) => {
+        that.patientId = thing.patientId;
+        that.patientName = thing.patientName
+        console.log(that.patientName)
+     })
+      document.getElementsByTagName('title')[0].innerHTML = this.patientName;
     },
     watch: {
       'textNumber' () {
@@ -43,13 +47,13 @@
     },
     methods: {
       sureBeizhu() {
-        axios.get('/api/wx/baochuan_d/patientremark',{ params: {
+        axios.get('/wx/baochuan_d/patientremark',{ params: {
           authentication: this.authentication,
-          patientId: this.patient_id,
+          patientId: this.patientId,
           remark: this.textNumber
         }
         }).then((result) => {
-          this.$router.push({ path:"/baochuan_d/docConsult/" +this.patient_id});
+          this.$router.push({ path:"/baochuan_d/docConsult"});
       })
       }
     }

@@ -30,7 +30,7 @@
               <span @click="perChakan">查看更多 <i class="iconfont icon-zhankai2"></i></span>
             </div>
             <div class="shouqi" :class="{'yincang':!More}">
-              <div class="personal-info-flex">
+              <div class="personal-info-flex" v-if="perInfo.status == 2">
                 <div>手机号</div>
                 <div style="color:#bbb;">{{perInfo.mobile}}</div>
               </div>
@@ -41,27 +41,37 @@
             <b></b>
             <b></b>
           </div>
-          <div class="remark-info">
+          <div v-if="perInfo.status == 2" class="remark-info" >
             <a class="personal-info-flex">
               <div>备注信息</div>
               <div class="iconfont icon-jiantou"></div>
             </a>
             <div class="beizhu-info">
-              <!--<span>重点关注，有高血压，糖尿病伴随疾病，有家族遗传史（母亲有乙肝）</span>-->
-              <a @click="toBeizhu"  href="" style="color:#82AAA1;">点击添加备注信息 </a>
+              <a  v-if = "perInfo.remark == ''" @click="toBeizhu"  href="" style="color:#82AAA1;">点击添加备注信息 </a>
+              <span  @click="toBeizhu" v-else>{{perInfo.remark}}</span>
             </div>
             <b></b>
             <b></b>
           </div>
-          <div class="futher-info">
+          <div v-if="perInfo.status == 2" class="futher-info">
             <a class="personal-info-flex">
               <div>复诊信息</div>
               <div class="iconfont icon-jiantou"></div>
             </a>
-            <div class="beizhu-info">
-              <a style="color:#82AAA1;">点击设置备注信息 </a>
-              <!--<span>下次复诊：2017年5月21日</span>-->
+            <div class="beizhu-info" @click="openPicker">
+              <a v-if="perInfo.revisit_time == ''" style="color:#82AAA1;">点击设置复诊时间 </a>
+              <span v-else>下次复诊：{{perInfo.revisit_time}}</span>
             </div>
+            <mt-datetime-picker
+              v-model="pickerValue"
+              type="date"
+              ref="picker"
+              @confirm="handleChange"
+              :startDate="now"
+              year-format="{value} 年"
+              month-format="{value} 月"
+              date-format="{value} 日">
+            </mt-datetime-picker>
             <b></b>
             <b></b>
           </div>
@@ -71,8 +81,8 @@
               <div class="iconfont icon-jiantou"></div>
             </a>
             <div class="visit-box-info">
-              <div class="no-visit">暂无就诊记录</div>
-              <div class="visit-box">
+              <div v-if="" class="no-visit">暂无就诊记录</div>
+              <div class="visit-box" v-for="item in perInfo.visit_list">
                 <div class="visit-detail">
                   <div class="visit-core">
                   </div>
@@ -131,17 +141,20 @@
         <div class="talk-box" >
           <div class="chatroom">
             <div class="box" :class="{'boxBottom':bottomShow}" ref="box" @click="shouqi">
-              <div class="record clearfix" v-for="(item, key) in message">
-                <div class="talkTime" v-if="item.talkTime!==''">{{item.talkTime}}</div>
-                <div class="avatar left" v-if="item.admin_id === null">
-                  <img src="../../assets/img/code.png" alt="" width="45" height="45">
-                  <span>{{item.content}}</span>
+              <mt-loadmore :top-method="loadTop" ref="loadmore">
+                <div class="record clearfix" v-for="(item, key) in message">
+                  <div class="talkTime" v-if="item.ctime!==''">{{item.ctime}}</div>
+                  <div class="avatar left" v-if="item.from_id == item.patient_user_id">
+                    <img :src="item.logo" alt="" width="45" height="45">
+                    <span v-if="item.content!= ''">{{item.message}}</span>
+                    <img v-if="item.content == ''" src="../../assets/img/paizhao.png" width="45" height="45"/>
+                  </div>
+                  <div class="avatar right" v-if="item.from_id != item.patient_user_id">
+                    <img :src="item.logo" alt="" width="45" height="45">
+                    <span >{{item.message}}</span>
+                  </div>
                 </div>
-                <div class="avatar right" v-else>
-                  <img  src="../../assets/img/second.png" alt="" width="45" height="45"/>
-                  <span >{{item.content}}</span>
-                </div>
-              </div>
+              </mt-loadmore>
             </div>
             <div class="reply" ref="reply">
               <div class="input-box">
@@ -162,7 +175,10 @@
                   <img src="../../assets/img/phone.png"/>
                   <p class="text">电话随访</p>
                 </div>
-                <div>
+                <div style="position:relative;">
+                  <span class="file">
+                    <input type="file" @change="uploadFile" class="uploadinput" accept="image/*"/>
+                  </span>
                   <img src="../../assets/img/paizhao.png"/>
                   <p class="text">照片</p>
                 </div>
@@ -214,8 +230,9 @@
 </template>
 <script>
   import axios from 'axios'
-  import { Toast, MessageBox } from 'mint-ui';
+  import { Toast, MessageBox, Loadmore, Indicator, DatetimePicker } from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
+  import moment from 'moment/moment.js';
   export default {
     name: 'docConsult',
     data () {
@@ -224,14 +241,23 @@
         patientId:2,
         pageIndex:1,
         number:2,
-        patient_name:'',
+        talkData:{},
+        threadId:'',
+        contentType:'',
+        content:'',
+        pageAll: 6,
+        patientName:'',
         selected:'talk',
         perStatus:'',
         perInfo:'',
+        allLoaded: false,
         jiaStatius:'',
         More:false,
         bottomShow:false,
         message:[],
+        objSome:{},
+        pickerValue:'',
+        now: new Date(''),
         form: {
           file_name: '',
           content: '',
@@ -250,86 +276,77 @@
         }
     },
     created() {
-//      this.patientId = this.$route.params.patientId
-//      个人资料
-      var params = {
-        authentication: this.authentication,
-        patientId: this.patientId,
-      }
-      netWrokUtils.post('/wx/baochuan_d/patientcase', params, function (result) {
-        this.perInfo = result.data.content
-        conssole.log(this.perInfo)
-        this.patient_name = result.data.content.name
-        this.perStatus = result.data.content.status
+        eventBus.$on('some', (thing) => {
+          this.patientId = thing;
+        })
 
-        document.getElementsByTagName('title')[0].innerHTML = this.patient_name
-      }, function (error_result) {
-        Toast(error_result);
-      })
-      this.message = [
-        {
-          talkTime:"2017-03-23",
-          avatar_url: '../../assets/img/code.png',
-          content: 'chenchenchen',
-          admin_id: null
-        },
-        {
-          talkTime:"2017-03-24",
-          avatar_url: '../../assets/img/second.png',
-          content: '看快递费看hanhjv剧看风景你看快hanhjv剧看风景你看快递费看 ',
-          admin_id: '11'
-        },
-        {
-          talkTime:"",
-          avatar_url: '../../assets/img/second.png',
-          content: 'hanhanhan',
-          admin_id: '1'
-        },
-        {
-          talkTime:"",
-          avatar_url: '/src/assets/img/code.png',
-          content: 'chenchenchen',
-          admin_id: null
-        },
-        {
-          talkTime:"2017-03-27",
-          avatar_url: '/src/assets/img/code.png',
-          content: 'chenchenchen22',
-          admin_id: null
-        },
-        {
-          talkTime:"2017-03-27",
-          avatar_url: '/src/assets/img/code.png',
-          content: 'chenchenchen22',
-          admin_id: null
-        },
-        {
-          talkTime:"2017-03-27",
-          avatar_url: '/src/assets/img/code.png',
-          content: 'chenchenchen221',
-          admin_id: null
-        }
-      ]
     },
     mounted(){
-        this.consultList()
+        this.consultList(1);
+//      setTimeout("this.consultList(1)",1000);
+      this.personalInfo()
+    },
+    destroyed () {
+      this.objSome = {
+          patientId: this.patientId,
+          patientName: this.patientName
+      }
+      eventBus.$emit('some',this.objSome);
     },
     methods: {
 //        聊天窗口
-      consultList() {
-        var params = {
+      consultList(page) {
+        var than = this
+        this.pageIndex = page
+        var params = this.talkList
+        axios.post('/wx/baochuan_d/getconsultrecordlist', {
           authentication: this.authentication,
           patientId: this.patientId,
           pageIndex:this.pageIndex,
           number:this.number,
-        }
-        netWrokUtils.post('/api/wx/baochuan_d/getconsultrecordlist', params, function (result) {
-          this.message = result.data.content;
-          console.log(this.message);
-        }, function (error_result) {
-//          Indicator.close();
-          Toast(error_result);
+        }).then((result) => {
+          this.talkData = result.data.content
+          for (var i = 0; i <this.talkData.length / 2; i++) {
+            var temp = this.talkData[i]; //交换变量
+            this.talkData[i] = this.talkData[this.talkData.length - i - 1];
+            this.talkData[this.talkData.length-i-1]=temp;
+          }
+          for (let i in this.talkData) {
+            this.message.push(this.talkData[i])
+          }
+        }).catch((error) => {
+          console.log(error);
         })
+      },
+//      上拉刷新加载更多数据
+      loadTop() {
+        var pageIndex = this.talkList.pageIndex
+        pageIndex++
+        console.log(this.talkData)
+        if (this.talkData == "") {
+            Toast('没有更多数据了')
+        } else {
+          this.consultList(pageIndex)
+        }
+        this.$refs.loadmore.onTopLoaded();
+      },
+      //  上传图片
+      uploadFile (el) {
+        console.log(el)
+        var file = el.target.files[0]
+        var type = file.type.indexOf('image')
+        var size = file.size / 1024 / 1024
+        var filename = file.name
+        var k = filename.substr(filename.lastIndexOf('.'))
+        var fd = new FormData()
+        fd.append("file", file)
+        axios.post(URL, fd)
+          .then((result) => {
+
+          })
+          .catch((err) => {
+
+          })
       },
 //      点击加号
       tangchu() {
@@ -343,12 +360,12 @@
             authentication:this.authentication,
              patientId: this.patientId
         }
-        netWrokUtils.post('/api/wx/baochuan_d/getconsultmenushow', params, function (result) {
-            var that = this;
+        var that = this;
+        netWrokUtils.post('/wx/baochuan_d/getconsultmenushow', params, function (result) {
           that.jiaStatius =  result.data.content.is_show
         }, function (error_result) {
 //          Indicator.close();
-          Toast(error_result);
+//          Toast(error_result);
         })
       },
 //      复诊提醒
@@ -357,7 +374,7 @@
             authentication: this.authentication,
             patientId:2
         }
-        netWrokUtils.post('/api/wx/baochuan_d/revisitremind', params, function (result) {
+        netWrokUtils.post('/wx/baochuan_d/revisitremind', params, function (result) {
           var _this = this;
           var outpatientContent = [];
           outpatientContent = result.data.content;
@@ -395,7 +412,9 @@
         var params = {
             authentication: '9abada2c209a05e2ebd462f7bf68c5cf'
         }
-        netWrokUtils.post('/wx/baochuan_d/clinicremind', params, function (result) {
+        axios.post('/wx/baochuan_d/clinicremind', {
+          authentication: "9abada2c209a05e2ebd462f7bf68c5cf"
+        }).then((result) => {
           var that = this;
           var outpatientContent = result.data.content;
           if(outpatientContent == ''){
@@ -426,9 +445,8 @@
               }
             });
           }
-        }, function (error_result) {
-//          Indicator.close();
-          Toast(error_result);
+        }).catch((error) => {
+          console.log(error);
         })
       },
 //      电话随访
@@ -439,24 +457,83 @@
       },
       //  回复消息
       messages() {
-          var that = this;
-          console.log(that.item.content)
-//        that.item.content = that.form.content;
-        var params = {
-          params: {
-            authentication: this.authentication,
-            patientId:1
-          }
-        }
-        netWrokUtils.post('/api/wx/baochuan_d/replyconsult', params, function (result) {
-          console.log(result)
-        }, function (error_result) {
-//          Indicator.close();
-          Toast(error_result);
+        axios.post('/wx/baochuan_d/sendconsultpost', {
+          authentication: this.authentication,
+          patientId: this.patientId,
+        }).then((result) => {
+          this.perInfo = result.data.content
+          this.patient_name = result.data.content.name
+          this.perStatus = result.data.content.status
+          console.log(this.perStatus)
+          document.getElementsByTagName('title')[0].innerHTML = this.patient_name
+        }).catch((error) => {
+          console.log(error);
         })
       },
 
 //      个人资料start
+      personalInfo() {
+        //      个人资料
+        this.now = new Date();
+        axios.post('/wx/baochuan_d/patientcase', {
+          authentication: this.authentication,
+          patientId: 2,
+        }).then((result) => {
+          this.perInfo = result.data.content
+          this.patientName = result.data.content.name
+          this.perStatus = result.data.content.status
+          this.now = new Date(result.data.content.now);
+          document.getElementsByTagName('title')[0].innerHTML = this.patientName
+        }).catch((error) => {
+          console.log(error);
+        })
+      },
+//      复诊提醒
+      openPicker() {
+        this.$refs.picker.open();
+        console.log(123)
+      },
+      handleChange(value) {
+          console.log(value)
+        console.log('value===' + moment(value).format('YYYY-MM-DD'));
+        this.settingVisitTime(moment(value).format('YYYY-MM-DD'));
+      },
+      getvisitRrecordList(){
+        let that = this;
+        var params = {
+          authentication: that.postData.authentication
+        }
+        netWrokUtils.post('/wx/baochuan_p/myrevisitrecords', params, (result) => {
+          that.visitRrecordList = result.data.content.list;
+          that.nextRevisitTime = result.data.content.nextRevisitTime;
+          that.now = new Date(result.data.content.now);
+        }, (error_result) => {
+          Toast(error_result.data.msg);
+        })
+      },
+      settingVisitTime(timeValue){
+        let that = this;
+        var params = {
+          authentication: that.postData.authentication,
+          doctorId: '27',
+          revisitTime: timeValue
+        }
+        netWrokUtils.post('/wx/baochuan_p/setrevisit', params, (result) => {
+          this.$refs.picker.close();
+          Toast(result.data.msg);
+          that.nextRevisitTime = timeValue;
+        }, (error_result) => {
+          this.$refs.picker.close();
+          Toast(error_result.data.msg);
+        })
+      },
+      loadTop()
+      {
+      }
+      ,
+      loadBottom()
+      {
+      },
       perChakan() {
         this.More = !this.More;
       },
@@ -464,7 +541,7 @@
         this.More = !this.More;
       },
       toBeizhu () {
-        this.$router.push({ path:"/baochuan_d/docToBeiZhu/" +this.patient_id+'/'+this.patient_name});
+        this.$router.push({ path:"/baochuan_d/docToBeiZhu"});
       }
     }
   }
@@ -508,7 +585,7 @@
             .talkTime{
               background:#E0E0E0;
               color:#fff;
-              width:50%;
+              width:60%;
               margin:auto;
               text-align: center;
               border-radius: 50px;
@@ -519,12 +596,14 @@
               width: 100%;
               clear: both;
               overflow: hidden;
+              padding-left:5px;
               &.right{
                 img, span{
                   float: right;
                 }
                 img{
                   border-radius:50%;
+                  margin-right:10px;
                 }
                 span{
                   background: #7cfc00;
@@ -533,8 +612,7 @@
                   float: right;
                   margin: 6px 10px 0 10px;
                   max-width: 64%;
-                  border: 1px solid #ccc;
-                  box-shadow: 0 0 3px #ccc;
+                  border: 1px solid #FCFCFC;
                   font-size:16px;
                   color:#232323;
                   line-height:20px;
@@ -565,7 +643,7 @@
                   float: left;
                   margin: 0px 10px 0 10px;
                   max-width: 64%;
-                  border: 1px solid #CCC;
+                  border: 1px solid #FCFCFC;
                   /*box-shadow: 0 0 3px #ccc;*/
                   font-size:16px;
                   color:#232323;
@@ -590,6 +668,7 @@
               img {
                 border-radius: 50%;
                 display: inline-block;
+                margin-right:6px;
               }
               .name {
                 font-size: 12px;
@@ -659,6 +738,30 @@
             padding:10px;
             display:flex;
             justify-content:space-around;
+            .file {
+              position: absolute;
+              display: inline-block;
+              border: 1px solid #f4f4f4;
+              border-radius: 4px;
+              padding: 4px 12px;
+              overflow: hidden;
+              text-decoration: none;
+              text-indent: 0;
+              line-height: 20px;
+              left:0;
+              width:60px;
+              height:60px;
+              input {
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
+              }
+            }
+            .file:hover {
+              text-decoration: none;
+            }
             img{
               height:60px;
               width:60px;

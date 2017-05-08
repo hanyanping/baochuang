@@ -55,7 +55,6 @@
   import {Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
   import moment from 'moment/moment.js';
-
   export default {
     data() {
       return {
