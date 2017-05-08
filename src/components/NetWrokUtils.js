@@ -19,6 +19,9 @@ function post(url, params, success, error) {
     if (result.data.code == 0) {
       success(result);
     }
+    else if (result.data.code == 2) { // 参数错误
+      error(result);
+    }
     else if (result.data.code == -1) {
       error(result);
       setAuthForNull(); // 清空当前公众号auth

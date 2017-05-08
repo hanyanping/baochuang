@@ -1,7 +1,7 @@
 <!-- 预约管理 -->
 <template>
   <div class="doc-reservation-box">
-    <div style="padding:10px 15px;">
+    <div v-if="content.length != 0" style="padding:10px 15px;">
       <div v-for="item in content" class="doc-reservation-list-box" @click="pushReservationDetail(item.order_id)">
         <div class="doc-reservation-list-content-top">
           <div class="doc-reservation-list-content-top-left">
@@ -12,14 +12,14 @@
             <span class="doc-reservation-list-content-top-span-style">{{item.disease_name}}</span>
           </div>
           <div class="doc-reservation-list-content-top-right">
-            <span v-if="item.status==1" class="doc-reservation-list-content-top-span-status">待支付</span>
-            <span v-else-if="item.status==2" class="doc-reservation-list-content-top-span-status">已支付等待审核</span>
-            <span v-else-if="item.status==3" class="doc-reservation-list-content-top-span-status">审核通过等待医生确认</span>
-            <span v-else-if="item.status==4" class="doc-reservation-list-content-top-span-status">医生已确认</span>
-            <span v-else-if="item.status==5" class="doc-reservation-list-content-top-span-status">已就诊</span>
-            <span v-else-if="item.status==6" class="doc-reservation-list-content-top-span-status">未就诊</span>
-            <span v-else-if="item.status==7||item.status==8||item.status==9||item.status==10||item.status==11
-            ||item.status==12||item.status==13" class="doc-reservation-list-content-top-span-status">已取消</span>
+            <span class="doc-reservation-list-content-top-span-status">{{item.status_value}}</span>
+            <!--<span v-else-if="item.status==2" class="doc-reservation-list-content-top-span-status">已支付等待审核</span>-->
+            <!--<span v-else-if="item.status==3" class="doc-reservation-list-content-top-span-status">审核通过等待医生确认</span>-->
+            <!--<span v-else-if="item.status==4" class="doc-reservation-list-content-top-span-status">医生已确认</span>-->
+            <!--<span v-else-if="item.status==5" class="doc-reservation-list-content-top-span-status">已就诊</span>-->
+            <!--<span v-else-if="item.status==6" class="doc-reservation-list-content-top-span-status">未就诊</span>-->
+            <!--<span v-else-if="item.status==7||item.status==8||item.status==9||item.status==10||item.status==11-->
+            <!--||item.status==12||item.status==13" class="doc-reservation-list-content-top-span-status">已取消</span>-->
           </div>
         </div>
         <div class="doc-reservation-list-content-mid">
@@ -35,21 +35,26 @@
         <div class="doc-reservation-list-content-bottom">{{item.order_ctime}}</div>
       </div>
     </div>
+    <div v-else class="doc-reservation-empty-box" style="text-align: center">
+      <img src="../../assets/img/nodatatips.png" style="margin-top: 30vh; width: 150px; height: 180px; line-height: 50%">
+      <p style="color: #939393">暂无预约</p>
+    </div>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
   import {Toast} from 'mint-ui';
+  import {Indicator} from 'mint-ui';
 
   export default {
     name : 'docReservation',
     data () {
       return {
-        authentication: 'd1126e11b0392a446acaf724ba9e36c7',
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
         data: {},
         content: [],
-        order_id:''
+        order_id:'',
       }
     },
     mounted () {
@@ -63,65 +68,24 @@
     methods: {
       // 获取预约列表数据
       getReservationList () {
-        axios.post('/api/wx/baochuan_d/getappointmentrecordlist', {
+        Indicator.open();
+        axios.post('/wx/baochuan_d/getappointmentrecordlist', {
             authentication: this.authentication
         }).then((result) => {
+          Indicator.close();
+          console.log(result);
           this.data = result.data;
           this.content = result.data.content;
-          console.log(this.content);
-//          for (var i=0; i<this.content.length; i++) {
-//            switch (this.content[i].status) {
-//              case 1:
-//                this.status = '待支付'
-//                break;
-//              case 2:
-//                this.status = '已支付等待审核'
-//                break;
-//              case 3:
-//                this.status = '审核通过等待医生确认'
-//                break;
-//              case 4:
-//                this.status = '医生已确认'
-//                break;
-//              case 5:
-//                this.status = '已就诊'
-//                break;
-//              case 6:
-//                this.status = '未就诊'
-//                break;
-//              case 7:
-//                this.status = '失败 医生取消'
-//                break;
-//              case 8:
-//                this.status = '失败 超时未支付自动取消'
-//                break;
-//              case 9:
-//                this.status = '失败 未支付取消'
-//                break;
-//              case 10:
-//                this.status = '失败 审核失败'
-//                break;
-//              case 11:
-//                this.status = '失败 预约前一天已审核未确认自动取消'
-//                break;
-//              case 12:
-//                this.status = '失败 运营取消'
-//                break;
-//              case 13:
-//                this.status = '失败 预约前一天未审核 自动取消'
-//                break;
-//              default:
-//                break;
-//            }
-//          }
         }).catch((error) => {
+          Indicator.close();
           console.log(error);
         })
       },
 
       pushReservationDetail (order_id) {
         this.order_id = order_id;
-        this.$router.push({ path:"/baochuan_d/docReservationDetail/"});
+        this.$router.push({ path:"/baochuan_d/docReservationDetail"});
+//        window.location.href="docReservationDetail";
       }
     }
   }

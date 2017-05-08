@@ -2,9 +2,9 @@
 <template>
   <div class="doc-info-box">
     <div class="infoHeader">
-      <div class="headerBox">
+      <div class="headerBox" @click="pushMyInfo">
         <div class="headerLeft">
-          <div class="infoImg"></div>
+          <img class="infoImg" :src="data.content.doctor_img">
           <div class="headerInfo">
             <div class="docName">{{data.content.doctor_name}}
               <span class="docZhicheng">{{data.content.grade}}</span>
@@ -62,6 +62,7 @@
 
   import axios from 'axios'
   import {Toast} from 'mint-ui';
+  import {Indicator} from 'mint-ui';
 
   export default {
     name: 'docInfo',
@@ -69,18 +70,22 @@
       return {
         selected: '1',
         value: '',
-        authentication: 'd1126e11b0392a446acaf724ba9e36c7',
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
         data: [],
         consult_status: '',
         subscribe_status: '',
       }
     },
-    mounted() {
+    mounted () {
       this.getDocInfo ();
     },
 
-    created() {
+    created () {
       document.getElementsByTagName('title')[0].innerHTML = '我的信息'
+    },
+
+    destroyed () {
+      eventBus.$emit('value', this.consult_status);
     },
 
     watch: {
@@ -96,10 +101,8 @@
     methods: {
       // 获取个人信息
       getDocInfo () {
-        axios.get('/api/wx/baochuan_d/myinfo', {
-          params: {
-            authentication: this.authentication
-          }
+        axios.post('/api/wx/baochuan_d/myinfo', {
+          authentication: this.authentication
         }).then((result) => {
           console.log(result);
 
@@ -112,39 +115,59 @@
           } else {
             this.value = true;
           }
+
         }).catch((error) => {
           console.log(error);
           Toast('网络不给力 ! 请稍后再试');
         })
       },
+
+
       // 电话咨询开
       teleConsultOpen () {
-        Toast('true 调用此函数');
+        Indicator.open();
         axios.post('/api/wx/baochuan_d/mobileonoff', {
-          params: {
-            authentication: this.authentication,
-            open_telephone_counseling: 1
-          }
+          authentication: this.authentication,
+          open_telephone_counseling: 1
         }).then((result) => {
+          Indicator.close();
           console.log(result);
         }).catch((error) => {
+          Indicator.close();
           console.log(error);
         })
       },
       // 电话咨询关
       teleConsultDown () {
-        Toast('fasle 调用此函数');
+        Indicator.open();
+        axios.post('/api/wx/baochuan_d/mobileonoff', {
+          authentication: this.authentication,
+          open_telephone_counseling: 0
+        }).then((result) => {
+          Indicator.close();
+          console.log(result);
+        }).catch((error) => {
+          Indicator.close();
+          console.log(error);
+        })
       },
+
+
       // 跳转咨询设置页
       pushConsultSett () {
-        this.$router.push({ path:"/baochuan_d/docConsultSetting/"});
+        this.$router.push({ path:"/baochuan_d/docConsultSetting"});
 //        window.location.href="docConsultSetting";
       },
       // 跳转预约设置页
       pushAppointSett () {
-        this.$router.push({ path:"/baochuan_d/docAppointmentSetting/"});
+        this.$router.push({ path:"/baochuan_d/docAppointmentSetting"});
 //        window.location.href="docAppointmentSetting";
+      },
+      // 跳转我的信息页面
+      pushMyInfo () {
+        this.$router.push({ path:"/baochuan_d/docMyInfo"});
       }
+
     }
   }
 
@@ -174,7 +197,7 @@
             border-radius: 50%;
             height: 60px;
             width: 60px;
-            background: url(../../assets/img/second.png);
+            /*background: url(../../assets/img/second.png);*/
             background-size: 100% 100%;
             padding-right: 5px;
           }

@@ -6,14 +6,14 @@
         <span>服务状态</span>
         <!--<span class="doc-rev-detail-top-status-span">{{content.status}}</span>-->
 
-        <span v-if="content.status==1" class="doc-rev-detail-top-status-span">待支付</span>
-        <span v-else-if="content.status==2" class="doc-rev-detail-top-status-span">已支付等待审核</span>
-        <span v-else-if="content.status==3" class="doc-rev-detail-top-status-span">审核通过等待医生确认</span>
-        <span v-else-if="content.status==4" class="doc-rev-detail-top-status-span">医生已确认</span>
-        <span v-else-if="content.status==5" class="doc-rev-detail-top-status-span">已就诊</span>
-        <span v-else-if="content.status==6" class="doc-rev-detail-top-status-span">未就诊</span>
-        <span v-else-if="content.status==7||item.status==8||item.status==9||item.status==10||item.status==11
-            ||item.status==12||item.status==13" class="doc-rev-detail-top-status-span">已取消</span>
+        <span class="doc-rev-detail-top-status-span">{{content.status_value}}</span>
+        <!--<span v-else-if="content.status==2" class="doc-rev-detail-top-status-span">已支付等待审核</span>-->
+        <!--<span v-else-if="content.status==3" class="doc-rev-detail-top-status-span">审核通过等待医生确认</span>-->
+        <!--<span v-else-if="content.status==4" class="doc-rev-detail-top-status-span">医生已确认</span>-->
+        <!--<span v-else-if="content.status==5" class="doc-rev-detail-top-status-span">已就诊</span>-->
+        <!--<span v-else-if="content.status==6" class="doc-rev-detail-top-status-span">未就诊</span>-->
+        <!--<span v-else-if="content.status==7||item.status==8||item.status==9||item.status==10||item.status==11-->
+            <!--||item.status==12||item.status==13" class="doc-rev-detail-top-status-span">已取消</span>-->
       </div>
 
       <div class="doc-rev-detail-top-patientinfo-box">
@@ -58,8 +58,8 @@
       </div>
     </div>
 
-    <button class="doc-rev-detail-bottom-button">确认接收</button>
-    <a class="fr doc-rev-detail-bottom-nobutton">暂不接收</a>
+    <button class="doc-rev-detail-bottom-button" @click="confirmReceive" :class="{'no-show':!show}">确认接收</button>
+    <a class="fr doc-rev-detail-bottom-nobutton" @click="pushCancelReason" :class="{'no-show':!show}">暂不接收</a>
   </div>
 </template>
 
@@ -73,9 +73,10 @@
     name : 'docReservationDetail',
     data () {
       return {
-        authentication: 'd1126e11b0392a446acaf724ba9e36c7',
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
         order_id: '',
-        content: {}
+        content: {},
+        show: ''
       }
     },
 
@@ -87,17 +88,16 @@
 //        console.log(val);
 //      })
       eventBus.$on('some', (thing) => {
-        console.log(thing);
         this.order_id = thing;
       })
     },
 
-    beforeDestroy () {
-      eventBus.$off('some');
-    },
-
     mounted () {
       this.getReservationDetail();
+    },
+
+    destroyed () {
+      eventBus.$emit('some', this.order_id);
     },
 
     methods: {
@@ -106,29 +106,56 @@
         Indicator.open();
         let that = this;
         var params = {
-          params: {
-            authentication: that.authentication,
-            order_id: that.order_id
-          }
+          authentication: that.authentication,
+          order_id: that.order_id
         };
-        netWrokUtils.post('/api/wx/baochuan_d/getappointmentdetail', params, function (success) {
+        netWrokUtils.post('/wx/baochuan_d/getappointmentdetail', params, function (success) {
           Indicator.close();
           console.log(success);
           that.content = success.data.content;
+          if (that.content.status_value == '未确认') {
+            that.show = true;
+          }
         }, function (failure) {
           Indicator.close();
           console.log(failure);
+          Toast('网络异常,请稍后再试');
         });
-      }
-    }
+      },
 
+      // 确认接收
+      confirmReceive () {
+        console.log('1111');
+        Indicator.open();
+        let that = this;
+        var params = {
+          authentication: that.authentication,
+          orderId: that.order_id
+        };
+        netWrokUtils.post('/wx/baochuan_d/confirmappointment', params, (success) => {
+          Indicator.close();
+          console.log(success);
+          this.$router.push({ path: "/baochuan_d/docReservation"});
+
+        }), (failure) => {
+          Indicator.close();
+          console.log(failure);
+        };
+      },
+
+      // 跳转取消预约
+      pushCancelReason () {
+        this.$router.push({ path: "/baochuan_d/docCancelReason"});
+      }
+
+    }
   }
 </script>
 
 <style lang="scss">
   .doc-rev-detail-container-box {
     background-color: #f4f4f4;
-    position: fixed; /* 固定 */
+    overflow: hidden; /* 解决高度塌陷问题(背景色不能充满屏幕,有空白)*/
     height: 100vh;
     width: 100%;
 
@@ -202,6 +229,9 @@
       padding-top: 35px;
       padding-right: 28px;
       font-size: 17px;
+    }
+    .no-show {
+      display: none;
     }
   }
 </style>
