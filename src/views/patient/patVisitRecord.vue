@@ -51,7 +51,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import {Toast} from 'mint-ui';
   import {Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
