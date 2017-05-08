@@ -17,15 +17,12 @@ function post(url, params, success, error) {
     Indicator.close();
     console.log(result)
     if (result.data.code == 0) {
-      // alert('success(result)');
       success(result);
     }
     else if (result.data.code == -1) {
-      // alert('error(-1)');
       error(result);
       setAuthForNull(); // 清空当前公众号auth
     } else {
-      // alert('error(result)');
       error(result);
     }
   }).catch(function (network_error) {
@@ -40,21 +37,18 @@ function get(url, params, success, error) {
   axios.get(url, params).then(function (result) {
     Indicator.close();
     if (result.data.code == 0) {
-      // alert('success(result)');
       success(result);
     }
     else if (result.data.code == -1) {
-      // alert('error(-1)');
       error(result);
       setAuthForNull(); // 清空当前公众号auth
     } else {
-      // alert('error(result)');
       error(result);
     }
   }).catch(function (network_error) {
     Indicator.close();
     console.log(network_error);
-    Toast('网络不给力 ! 请稍后再试!');
+    Toast('网络不给力 ! 请稍后再试!' + network_error);
   })
 }
 

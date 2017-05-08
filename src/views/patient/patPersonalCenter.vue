@@ -47,8 +47,7 @@
   export default {
     data () {
       return {
-//        authentication: localStorage.getItem('auth'),
-        authentication: '4d89652b270cc60c30365868b229ca15',
+        authentication: auth,
         name: '',
         sex: '',
         birthday: '',
@@ -84,7 +83,7 @@
         if (id == 0) {
           this.$router.push({path: 'visitRecord'})
         } else if (id == 1) {
-          this.$router.push({path: 'subscribeList'})
+          this.$router.push({path: 'reserveList'})
         } else if (id == 2) {
           this.$router.push({path: 'clinicRecord'})
         }
