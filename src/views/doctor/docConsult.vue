@@ -60,7 +60,7 @@
             </a>
             <div class="beizhu-info" @click="openPicker">
               <a v-if="perInfo.revisit_time == ''" style="color:#82AAA1;">点击设置复诊时间 </a>
-              <span v-else>下次复诊：{{perInfo.revisit_time}}</span>
+              <span v-else>下次复诊：{{revisit_time}}</span>
             </div>
             <mt-datetime-picker
               v-model="pickerValue"
@@ -72,6 +72,16 @@
               month-format="{value} 月"
               date-format="{value} 日">
             </mt-datetime-picker>
+            <!--<mt-datetime-picker-->
+              <!--v-model="pickerValue"-->
+              <!--type="date"-->
+              <!--ref="picker"-->
+              <!--@confirm="handleChange"-->
+              <!--:startDate="now"-->
+              <!--year-format="{value} 年"-->
+              <!--month-format="{value} 月"-->
+              <!--date-format="{value} 日">-->
+            <!--</mt-datetime-picker>-->
             <b></b>
             <b></b>
           </div>
@@ -257,6 +267,7 @@
         message:[],
         objSome:{},
         pickerValue:'',
+        revisit_time:'',
         now: new Date(''),
         form: {
           file_name: '',
@@ -279,7 +290,6 @@
         eventBus.$on('some', (thing) => {
           this.patientId = thing;
         })
-
     },
     mounted(){
         this.consultList(1);
@@ -297,35 +307,40 @@
 //        聊天窗口
       consultList(page) {
         var than = this
-        this.pageIndex = page
-        var params = this.talkList
-        axios.post('/wx/baochuan_d/getconsultrecordlist', {
+        this.pageIndex = page;
+        var params = {
           authentication: this.authentication,
           patientId: this.patientId,
           pageIndex:this.pageIndex,
           number:this.number,
-        }).then((result) => {
-          this.talkData = result.data.content
-          for (var i = 0; i <this.talkData.length / 2; i++) {
-            var temp = this.talkData[i]; //交换变量
-            this.talkData[i] = this.talkData[this.talkData.length - i - 1];
-            this.talkData[this.talkData.length-i-1]=temp;
+        }
+        var that = this;
+        netWrokUtils.post('/wx/baochuan_d/getconsultrecordlist', params, function (result) {
+          that.talkData = result.data.content
+          for (var i = 0; i <that.talkData.length / 2; i++) {
+            var temp = that.talkData[i]; //交换变量
+            that.talkData[i] = that.talkData[that.talkData.length - i - 1];
+            that.talkData[that.talkData.length-i-1]=temp;
           }
-          for (let i in this.talkData) {
-            this.message.push(this.talkData[i])
+          for (let i in that.talkData) {
+            that.message.push(that.talkData[i])
           }
-        }).catch((error) => {
-          console.log(error);
+        }, function (error_result) {
+//          Indicator.close();
+//          Toast(error_result);
         })
       },
 //      上拉刷新加载更多数据
       loadTop() {
-        var pageIndex = this.talkList.pageIndex
+        var pageIndex = this.pageIndex
         pageIndex++
+        console.log(121)
         console.log(this.talkData)
         if (this.talkData == "") {
             Toast('没有更多数据了')
+
         } else {
+            console.log(12)
           this.consultList(pageIndex)
         }
         this.$refs.loadmore.onTopLoaded();
@@ -342,10 +357,8 @@
         fd.append("file", file)
         axios.post(URL, fd)
           .then((result) => {
-
           })
           .catch((err) => {
-
           })
       },
 //      点击加号
@@ -409,13 +422,11 @@
       },
 //      门诊提醒
       outpatientDialog() {
+        var that = this;
         var params = {
-            authentication: '9abada2c209a05e2ebd462f7bf68c5cf'
+          authentication: '9abada2c209a05e2ebd462f7bf68c5cf'
         }
-        axios.post('/wx/baochuan_d/clinicremind', {
-          authentication: "9abada2c209a05e2ebd462f7bf68c5cf"
-        }).then((result) => {
-          var that = this;
+        netWrokUtils.post('/wx/baochuan_d/clinicremind', params, (result) => {
           var outpatientContent = result.data.content;
           if(outpatientContent == ''){
             var str = '<h3>您还未设置门诊时间，请去设置</h3>'
@@ -445,8 +456,8 @@
               }
             });
           }
-        }).catch((error) => {
-          console.log(error);
+        }, (error_result) => {
+          Toast(error_result.data.msg);
         })
       },
 //      电话随访
@@ -457,82 +468,62 @@
       },
       //  回复消息
       messages() {
-        axios.post('/wx/baochuan_d/sendconsultpost', {
+          var that = this;
+        var params = {
           authentication: this.authentication,
           patientId: this.patientId,
-        }).then((result) => {
-          this.perInfo = result.data.content
-          this.patient_name = result.data.content.name
-          this.perStatus = result.data.content.status
-          console.log(this.perStatus)
-          document.getElementsByTagName('title')[0].innerHTML = this.patient_name
-        }).catch((error) => {
-          console.log(error);
+        }
+        netWrokUtils.post('/wx/baochuan_d/sendconsultpost', params, (result) => {
+          that.perInfo = result.data.content
+          that.patient_name = result.data.content.name
+          that.perStatus = result.data.content.status
+          document.getElementsByTagName('title')[0].innerHTML = that.patient_name
+        }, (error_result) => {
+          Toast(error_result.data.msg);
         })
       },
 
 //      个人资料start
       personalInfo() {
-        //      个人资料
-        this.now = new Date();
-        axios.post('/wx/baochuan_d/patientcase', {
+        var that = this
+        var params = {
           authentication: this.authentication,
           patientId: 2,
-        }).then((result) => {
-          this.perInfo = result.data.content
-          this.patientName = result.data.content.name
-          this.perStatus = result.data.content.status
-          this.now = new Date(result.data.content.now);
-          document.getElementsByTagName('title')[0].innerHTML = this.patientName
-        }).catch((error) => {
-          console.log(error);
+        }
+        netWrokUtils.post('/wx/baochuan_d/patientcase', params, (result) => {
+          that.perInfo = result.data.content
+          that.patientName = result.data.content.name
+          that.perStatus = result.data.content.status
+          that.now = new Date(result.data.content.now);
+          that.revisit_time = result.data.content.revisit_time
+        }, (error_result) => {
+          Toast(error_result.data.msg);
         })
       },
 //      复诊提醒
       openPicker() {
         this.$refs.picker.open();
-        console.log(123)
       },
       handleChange(value) {
           console.log(value)
         console.log('value===' + moment(value).format('YYYY-MM-DD'));
         this.settingVisitTime(moment(value).format('YYYY-MM-DD'));
       },
-      getvisitRrecordList(){
-        let that = this;
-        var params = {
-          authentication: that.postData.authentication
-        }
-        netWrokUtils.post('/wx/baochuan_p/myrevisitrecords', params, (result) => {
-          that.visitRrecordList = result.data.content.list;
-          that.nextRevisitTime = result.data.content.nextRevisitTime;
-          that.now = new Date(result.data.content.now);
-        }, (error_result) => {
-          Toast(error_result.data.msg);
-        })
-      },
       settingVisitTime(timeValue){
         let that = this;
         var params = {
-          authentication: that.postData.authentication,
-          doctorId: '27',
+          authentication: that.authentication,
+          patientId: 2,
           revisitTime: timeValue
         }
-        netWrokUtils.post('/wx/baochuan_p/setrevisit', params, (result) => {
+        netWrokUtils.post('/wx/baochuan_d/setrevisit', params, (result) => {
           this.$refs.picker.close();
           Toast(result.data.msg);
-          that.nextRevisitTime = timeValue;
+          that.revisit_time = timeValue;
         }, (error_result) => {
           this.$refs.picker.close();
           Toast(error_result.data.msg);
         })
-      },
-      loadTop()
-      {
-      }
-      ,
-      loadBottom()
-      {
       },
       perChakan() {
         this.More = !this.More;

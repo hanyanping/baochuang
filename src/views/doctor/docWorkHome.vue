@@ -116,6 +116,7 @@
 <script>
   import axios from 'axios'
   import { Toast } from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'docWorkRoom',
     data () {
@@ -143,18 +144,18 @@
     methods: {
       // 获取个人信息
       getDocInfo() {
-        axios.get('/wx/baochuan_d/mystudio', {
-          params: {
-            authentication: this.authentication
-          }
-        }).then((result) => {
-          this.lists = result.data.content.list;
+        var that = this
+        var params ={
+          authentication: this.authentication
+        }
+        netWrokUtils.post('/wx/baochuan_d/mystudio', params, (result) => {
+          that.lists = result.data.content.list;
           var noReplyThreadList = result.data.content.list.noReplyThreadList
           var otherList =  result.data.content.list.otherList
           for(let i in noReplyThreadList){
-              if( noReplyThreadList[i].post.length>6){
-                noReplyThreadList[i].post = noReplyThreadList[i].post.substring(0,6)+"..."
-              }
+            if( noReplyThreadList[i].post.length>6){
+              noReplyThreadList[i].post = noReplyThreadList[i].post.substring(0,6)+"..."
+            }
           }
           for(let i in otherList){
             if( otherList[i].title.length>15){
@@ -162,9 +163,8 @@
             }
           }
           this.workCount = result.data.content
-        }).catch((error) => {
-          console.log(error);
-          Toast('网络不给力  请稍后再试');
+        }, (error_result) => {
+          Toast(error_result.data.msg);
         })
       },
       visit() {

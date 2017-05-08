@@ -15,6 +15,7 @@
 
 <script>
   import axios from 'axios'
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     data () {
       return {
@@ -47,14 +48,17 @@
     },
     methods: {
       sureBeizhu() {
-        axios.get('/wx/baochuan_d/patientremark',{ params: {
+        var that = this
+        var params ={
           authentication: this.authentication,
           patientId: this.patientId,
           remark: this.textNumber
         }
-        }).then((result) => {
+        netWrokUtils.post('/wx/baochuan_d/patientremark', params, (result) => {
           this.$router.push({ path:"/baochuan_d/docConsult"});
-      })
+        }, (error_result) => {
+          Toast(error_result.data.msg);
+        })
       }
     }
   }
