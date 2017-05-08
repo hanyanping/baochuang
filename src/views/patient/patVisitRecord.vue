@@ -43,7 +43,7 @@
     </div>
 
     <div class="visitRrecord-listitem-empty-box" v-show="visitRrecordList.length <= 0">
-      <img src="../../assets/img/integralAccount_empty_icon.png" class="visitRrecord-listitem-empty-img">
+      <img src="../../assets/img/recode_icon.png" class="visitRrecord-listitem-empty-img">
       <br/>
       <span class="visitRrecord-listitem-empty-text">暂无复诊</span>
     </div>
