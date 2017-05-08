@@ -36,15 +36,19 @@
     },
 
     created () {
-      eventBus.$on('some', (thing) => {
-        this.orderId = thing;
-        console.log(this.orderId);
-      })
+//      eventBus.$on('some', (thing) => {
+//        this.orderId = thing;
+//        console.log(this.orderId);
+//      })
     },
 
-    beforeDestroy () {
-      eventBus.$off('some');
-    },
+//    destroyed () {
+//      eventBus.$emit('some', this.order_id);
+//    },
+
+//    beforeDestroy () {
+//      eventBus.$off('some');
+//    },
 
     methods: {
       commitButton () {
@@ -61,14 +65,14 @@
             } else {
               params = {
                 authentication: that.authentication,
-                orderId: that.orderId,
+                orderId: window.localStorage.getItem('order_id'),
                 cancelCause: that.text
               }
             }
           } else {
             params = {
               authentication: that.authentication,
-              orderId: that.orderId,
+              orderId: window.localStorage.getItem('order_id'),
               cancelCause: that.value
             }
           }
@@ -77,7 +81,7 @@
             Indicator.close();
             console.log(success);
             Toast('预约已取消');
-            this.$router.push({ path: "/baochuan_d/docReservationDetail"});
+//            this.$router.push({ path: "/baochuan_d/docReservationDetail"});
           }), (failure) => {
             Indicator.close();
             console.log(failure);

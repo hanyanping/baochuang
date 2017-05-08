@@ -61,9 +61,9 @@
       this.getReservationList();
     },
 
-    destroyed () {
-      eventBus.$emit('some', this.order_id);
-    },
+//    destroyed () {
+//      eventBus.$emit('some', this.order_id);
+//    },
 
     methods: {
       // 获取预约列表数据
@@ -82,11 +82,15 @@
         })
       },
 
+      // 跳转预约详情页
       pushReservationDetail (order_id) {
         this.order_id = order_id;
+        delete window.localStorage.order_id;
+        window.localStorage.setItem('order_id', this.order_id);
         this.$router.push({ path:"/baochuan_d/docReservationDetail"});
 //        window.location.href="docReservationDetail";
       }
+
     }
   }
 </script>
