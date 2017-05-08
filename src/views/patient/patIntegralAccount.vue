@@ -59,7 +59,7 @@
           integralList: [],
           isShow : false,
           postData: {
-            authentication: '4d89652b270cc60c30365868b229ca15',
+            authentication: auth,
             rows: 10,
             page: 1
           }
