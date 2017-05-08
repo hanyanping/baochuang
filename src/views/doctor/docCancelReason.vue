@@ -73,7 +73,7 @@
             }
           }
           Indicator.open();
-          netWrokUtils.post('/api/wx/baochuan_d/cancelappointment', params, (success) => {
+          netWrokUtils.post('/wx/baochuan_d/cancelappointment', params, (success) => {
             Indicator.close();
             console.log(success);
             Toast('预约已取消');

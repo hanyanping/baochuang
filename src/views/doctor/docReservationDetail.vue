@@ -109,7 +109,7 @@
           authentication: that.authentication,
           order_id: that.order_id
         };
-        netWrokUtils.post('/api/wx/baochuan_d/getappointmentdetail', params, function (success) {
+        netWrokUtils.post('/wx/baochuan_d/getappointmentdetail', params, function (success) {
           Indicator.close();
           console.log(success);
           that.content = success.data.content;
@@ -132,7 +132,7 @@
           authentication: that.authentication,
           orderId: that.order_id
         };
-        netWrokUtils.post('/api/wx/baochuan_d/confirmappointment', params, (success) => {
+        netWrokUtils.post('/wx/baochuan_d/confirmappointment', params, (success) => {
           Indicator.close();
           console.log(success);
           this.$router.push({ path: "/baochuan_d/docReservation"});
