@@ -12,14 +12,9 @@
             <span class="doc-reservation-list-content-top-span-style">{{item.disease_name}}</span>
           </div>
           <div class="doc-reservation-list-content-top-right">
-            <span class="doc-reservation-list-content-top-span-status">{{item.status_value}}</span>
-            <!--<span v-else-if="item.status==2" class="doc-reservation-list-content-top-span-status">已支付等待审核</span>-->
-            <!--<span v-else-if="item.status==3" class="doc-reservation-list-content-top-span-status">审核通过等待医生确认</span>-->
-            <!--<span v-else-if="item.status==4" class="doc-reservation-list-content-top-span-status">医生已确认</span>-->
-            <!--<span v-else-if="item.status==5" class="doc-reservation-list-content-top-span-status">已就诊</span>-->
-            <!--<span v-else-if="item.status==6" class="doc-reservation-list-content-top-span-status">未就诊</span>-->
-            <!--<span v-else-if="item.status==7||item.status==8||item.status==9||item.status==10||item.status==11-->
-            <!--||item.status==12||item.status==13" class="doc-reservation-list-content-top-span-status">已取消</span>-->
+            <span class="doc-reservation-list-content-top-span-status" style="color: #d50202" v-if="item.status_value=='待确认'">{{item.status_value}}</span>
+            <span class="doc-reservation-list-content-top-span-status" style="color: #63a910" v-else-if="item.status_value=='已确认'">{{item.status_value}}</span>
+            <span class="doc-reservation-list-content-top-span-status" style="color: #666666" v-else>{{item.status_value}}</span>
           </div>
         </div>
         <div class="doc-reservation-list-content-mid">
@@ -143,7 +138,7 @@
             padding-right: 15px;
 
             .doc-reservation-list-content-top-span-status {
-              color: #ff0000;
+
             }
           }
         }

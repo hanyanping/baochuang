@@ -4,16 +4,9 @@
     <div class="doc-rev-detail-top-box">
       <div class="doc-rev-detail-top-status-box">
         <span>服务状态</span>
-        <!--<span class="doc-rev-detail-top-status-span">{{content.status}}</span>-->
-
-        <span class="doc-rev-detail-top-status-span">{{content.status_value}}</span>
-        <!--<span v-else-if="content.status==2" class="doc-rev-detail-top-status-span">已支付等待审核</span>-->
-        <!--<span v-else-if="content.status==3" class="doc-rev-detail-top-status-span">审核通过等待医生确认</span>-->
-        <!--<span v-else-if="content.status==4" class="doc-rev-detail-top-status-span">医生已确认</span>-->
-        <!--<span v-else-if="content.status==5" class="doc-rev-detail-top-status-span">已就诊</span>-->
-        <!--<span v-else-if="content.status==6" class="doc-rev-detail-top-status-span">未就诊</span>-->
-        <!--<span v-else-if="content.status==7||item.status==8||item.status==9||item.status==10||item.status==11-->
-            <!--||item.status==12||item.status==13" class="doc-rev-detail-top-status-span">已取消</span>-->
+        <span class="doc-rev-detail-top-status-span" style="color: #d50202" v-if="content.status_value=='待确认'">{{content.status_value}}</span>
+        <span class="doc-rev-detail-top-status-span" style="color: #63a910" v-else-if="content.status_value=='已确认'">{{content.status_value}}</span>
+        <span class="doc-rev-detail-top-status-span" style="color: #666666" v-else>{{content.status_value}}</span>
       </div>
 
       <div class="doc-rev-detail-top-patientinfo-box">
@@ -173,7 +166,6 @@
         border-bottom: 1px dashed #06b80a;
 
         .doc-rev-detail-top-status-span {
-          color: #ff0000;
           float: right;
         }
       }
