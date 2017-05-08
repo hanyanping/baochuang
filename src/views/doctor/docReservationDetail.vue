@@ -87,18 +87,18 @@
 //      eventBus.$on('some', function(val) {
 //        console.log(val);
 //      })
-      eventBus.$on('some', (thing) => {
-        this.order_id = thing;
-      })
+//      eventBus.$on('some', (thing) => {
+//        this.order_id = thing;
+//      })
     },
 
     mounted () {
       this.getReservationDetail();
     },
 
-    destroyed () {
-      eventBus.$emit('some', this.order_id);
-    },
+//    destroyed () {
+//      eventBus.$emit('some', this.order_id);
+//    },
 
     methods: {
       // 获取预约详情数据
@@ -107,7 +107,7 @@
         let that = this;
         var params = {
           authentication: that.authentication,
-          order_id: that.order_id
+          order_id: window.localStorage.getItem('order_id')
         };
         netWrokUtils.post('/wx/baochuan_d/getappointmentdetail', params, function (success) {
           Indicator.close();
@@ -130,7 +130,7 @@
         let that = this;
         var params = {
           authentication: that.authentication,
-          orderId: that.order_id
+          orderId: window.localStorage.getItem('order_id')
         };
         netWrokUtils.post('/wx/baochuan_d/confirmappointment', params, (success) => {
           Indicator.close();
