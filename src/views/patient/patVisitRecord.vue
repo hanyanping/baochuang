@@ -1,16 +1,15 @@
 <!-- 复诊记录页 -->
 <template>
-  <div class="visitRrecord" @click="openPicker">
+  <div class="visitRrecord">
     <div class="visitRrecord-title-box">
-      <span class="visitRrecord-title-text">下次复诊时间</span>
-      <span class="visitRrecord-title-text" v-show="nextRevisitTime != ''">{{nextRevisitTime}}</span>
+      <span class="visitRrecord-title-text" @click="openPicker">下次复诊时间</span>
+      <span class="visitRrecord-title-text" v-show="nextRevisitTime != ''" @click="openPicker">{{nextRevisitTime}}</span>
       <Button class="visitRrecord-setting-botton" v-show="nextRevisitTime == ''" @click="openPicker">设 置</Button>
       <mt-datetime-picker
         v-model="pickerValue"
         type="date"
         ref="picker"
         @confirm="handleChange"
-        @cancel="cancelChange"
         :startDate="startDateValue"
         year-format="{value} 年"
         month-format="{value} 月"
