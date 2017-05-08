@@ -3,14 +3,15 @@
   <div class="visitRrecord">
     <div class="visitRrecord-title-box">
       <span class="visitRrecord-title-text" @click="openPicker">下次复诊时间</span>
-      <span class="visitRrecord-title-text" v-show="nextRevisitTime != ''" @click="openPicker">{{nextRevisitTime}}</span>
+      <span class="visitRrecord-title-text" v-show="nextRevisitTime != ''"
+            @click="openPicker">{{nextRevisitTime}}</span>
       <Button class="visitRrecord-setting-botton" v-show="nextRevisitTime == ''" @click="openPicker">设 置</Button>
       <mt-datetime-picker
         v-model="pickerValue"
         type="date"
         ref="picker"
         @confirm="handleChange"
-        :startDate="startDateValue"
+        :startDate="now"
         year-format="{value} 年"
         month-format="{value} 月"
         date-format="{value} 日">
@@ -71,7 +72,8 @@
           page: 1
         },
         pickerValue: '',
-        startDateValue: new Date('2017-05-01'),
+//        startDateValue: new Date('2017-05-01'),
+        now: new Date('')
       }
     },
     mounted() {
@@ -102,6 +104,7 @@
         netWrokUtils.post('/wx/baochuan_p/myrevisitrecords', params, (result) => {
           that.visitRrecordList = result.data.content.list;
           that.nextRevisitTime = result.data.content.nextRevisitTime;
+          that.now = new Date(result.data.content.now);
         }, (error_result) => {
           Toast(error_result.data.msg);
         })
@@ -113,9 +116,9 @@
           doctorId: '27',
           revisitTime: timeValue
         }
-        netWrokUtils.post('/wx/baochuan_d/setrevisit', params, (result) => {
+        netWrokUtils.post('/wx/baochuan_p/setrevisit', params, (result) => {
           this.$refs.picker.close();
-          Toast(error_result.data.msg);
+          Toast(result.data.msg);
           that.nextRevisitTime = timeValue;
         }, (error_result) => {
           this.$refs.picker.close();
