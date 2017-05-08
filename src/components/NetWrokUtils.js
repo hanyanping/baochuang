@@ -20,6 +20,9 @@ function post(url, params, success, error) {
       // alert('success(result)');
       success(result);
     }
+    else if (result.data.code == 2) { // 参数错误
+      error(result);
+    }
     else if (result.data.code == -1) {
       // alert('error(-1)');
       error(result);

@@ -42,7 +42,7 @@
         hospitalDapartList: [],
         grade: [],
         requestJson: {
-          authentication: '4d89652b270cc60c30365868b229ca15',
+          authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
           name: '',
           hospitalDepartmentId: '',
           grade: '',
@@ -101,7 +101,7 @@
           console.log(this.requestJson.grade);
           Indicator.open();
           axios.post('/api/wx/baochuan_d/saveinfo', {
-            authentication: '4d89652b270cc60c30365868b229ca15',
+            authentication: this.requestJson.authentication,
             name: this.requestJson.name,
             hospitalDepartmentId: this.requestJson.hospitalDepartmentId,
             grade: this.requestJson.grade,

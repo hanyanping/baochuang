@@ -31,11 +31,13 @@
   import util from '../../components/util';
   import axios from 'axios'
   import { Toast } from 'mint-ui';
+  import {Indicator} from 'mint-ui';
+
   export default {
     name: 'docMyInfo',
     data () {
       return {
-        authentication: '3437d5824a079a48da95ef2d5ab419b3',
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
         data: [],
       }
     },
@@ -46,15 +48,14 @@
     methods: {
       // 获取医生信息
       getDocInfo() {
-        axios.get('/api/wx/baochuan_d/myinfo', {
-          params: {
-            authentication: this.authentication
-          }
+        Indicator.open();
+        axios.post('/api/wx/baochuan_d/myinfo', {
+          authentication: this.authentication
         }).then((result) => {
-          console.log(result);
+          Indicator.close();
           this.data = result.data;
         }).catch((error) => {
-          console.log(error);
+          Indicator.close();
           Toast('网络不给力 ! 请稍后再试');
         })
       }

@@ -7,7 +7,7 @@
           <span>咨询设置</span>
         </div>
         <div>
-          <mt-switch v-model="value"></mt-switch>
+          <mt-switch v-model="value" :click="changeOpenDown()"></mt-switch>
         </div>
       </div>
 
@@ -20,18 +20,23 @@
         <div v-show="value === true">
           <span>服务费用</span>
         </div>
+
         <div v-show="value === true" class="doc-ConsultSetting-two-select-box">
           <div class="doc-ConsultSetting-two-select-smallbox">
-            <select class="doc-ConsultSetting-two-select">
-              <option value="0">0元</option>
-              <option>5元</option>
-              <option>10元</option>
-              <option>15元</option>
-            </select>
+            <!--<select class="doc-ConsultSetting-two-select">-->
+              <!--<option value="0">0元</option>-->
+              <!--<option>5元</option>-->
+              <!--<option>10元</option>-->
+              <!--<option>15元</option>-->
+            <!--</select>-->
+            <input type="tel" style="text-align: right; width: 100px" placeholder="0">
           </div>
-          <div class="iconfont icon-jiantou doc-ConsultSetting-two-jiantou">
+          <div style="display: flex">
+            <span style="flex: 1">元</span>
+            <div class="iconfont icon-jiantou doc-ConsultSetting-two-jiantou"></div>
           </div>
         </div>
+
       </div>
 
       <b></b>
@@ -49,18 +54,45 @@
 </template>
 
 <script>
+  import {Indicator} from 'mint-ui';
+  import {Toast} from 'mint-ui';
+
   export default {
     name: 'docConsultSetting',
     data () {
       return {
-        value: false,
+        value: true,
+        first: ''
       }
     },
-    created () {
-      console.log(this.value)
-    },
-    methods: {
 
+    created () {
+      document.getElementsByTagName('title')[0].innerHTML = '咨询设置';
+      // 获取上个页面传递过来的值,是否开启了咨询设置
+      eventBus.$on('value', (thing) => {
+        if (thing == 1) {
+          this.value = true;
+          this.first = 1;
+        } else {
+          this.first = 1;
+          this.value = false;
+        }
+      });
+    },
+
+    beforeDestroy () {
+      eventBus.$off('some');
+    },
+
+    methods: {
+      changeOpenDown () {
+        if (this.first === 1) {
+          this.first++;
+          return;
+        } else {
+          console.log(this.value);
+        }
+      }
     }
   }
 </script>

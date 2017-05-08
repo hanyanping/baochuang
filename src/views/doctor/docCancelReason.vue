@@ -5,27 +5,86 @@
       <mt-radio
         title="请选择取消原因"
         v-model="value"
-        :options="['门诊时间调整', '临时工作安排，不能出诊', '外出开会，暂停出诊', '其他']">
+        :options="['门诊时间调整', '临时工作安排，不能出诊', '外出开会，暂停出诊', '其它']">
       </mt-radio>
 
       <div class="beizhu-box">
-      <textarea name="" v-model="textNumber" maxlength="200" minlength="5"
+      <textarea v-show="value=='其它'" name="" v-model="text" maxlength="200" minlength="5"
                 class="zhengzhuang" placeholder="请输入取消原因（至少5个字）">
       </textarea>
       </div>
     </div>
 
-    <button class="doc-rev-detail-bottom-button">保存</button>
+    <button class="doc-rev-detail-bottom-button" @click="commitButton">保存</button>
   </div>
 </template>
 
 <script>
+  import {Toast} from 'mint-ui';
+  import {Indicator} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
+
   export default {
     name: 'docCancelReason',
     data () {
       return {
-
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
+        orderId: '',
+        value: '',
+        text: '',
       }
+    },
+
+    created () {
+      eventBus.$on('some', (thing) => {
+        this.orderId = thing;
+        console.log(this.orderId);
+      })
+    },
+
+    beforeDestroy () {
+      eventBus.$off('some');
+    },
+
+    methods: {
+      commitButton () {
+        if (this.value == '') {
+          Toast('请选择取消原因');
+          return;
+        } else {
+          let that = this;
+          var params;
+          if (that.value == '其它') {
+            if (that.text.length < 5) {
+              Toast('至少输入5个字');
+              return;
+            } else {
+              params = {
+                authentication: that.authentication,
+                orderId: that.orderId,
+                cancelCause: that.text
+              }
+            }
+          } else {
+            params = {
+              authentication: that.authentication,
+              orderId: that.orderId,
+              cancelCause: that.value
+            }
+          }
+          Indicator.open();
+          netWrokUtils.post('/api/wx/baochuan_d/cancelappointment', params, (success) => {
+            Indicator.close();
+            console.log(success);
+            Toast('预约已取消');
+            this.$router.push({ path: "/baochuan_d/docReservationDetail"});
+          }), (failure) => {
+            Indicator.close();
+            console.log(failure);
+          };
+        }
+      }
+
     }
   }
 </script>
