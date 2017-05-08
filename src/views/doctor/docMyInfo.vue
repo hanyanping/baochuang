@@ -49,7 +49,7 @@
       // 获取医生信息
       getDocInfo() {
         Indicator.open();
-        axios.post('/api/wx/baochuan_d/myinfo', {
+        axios.post('/wx/baochuan_d/myinfo', {
           authentication: this.authentication
         }).then((result) => {
           Indicator.close();
