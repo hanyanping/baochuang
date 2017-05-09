@@ -67,6 +67,9 @@
     text-align: center;
     border-radius: 20px;
   }
+  .bgButton{
+    background:#5fa39b
+  }
 
 </style>
 
@@ -85,7 +88,7 @@
           <span class="main-tip fs14 bg-button color-white">现签约医生</span>
         </div>
       </div>
-      <div @click="isSelected(index,item.id,item.name)"   v-for="(item,index) in doctorList" class="doctor-list-height parent-width parent-margin circular-bead box-shade bg-white over-hidden">
+      <div @click="isSelected(index,item.id,item.name,item.change_money)"   v-for="(item,index) in doctorList" class="doctor-list-height parent-width parent-margin circular-bead box-shade bg-white over-hidden">
         <div class="check-box fl pos-relate">
           <label  :class="{bgButton: isActive==index}" class="radio-doctor"></label>
           <!--<input type="radio" name="doctor" id="111" class="doctor-radio pos-absolute">-->
@@ -103,6 +106,7 @@
 <script>
   import axios from 'axios';
   import {MessageBox} from 'mint-ui';
+  import {Toast} from 'mint-ui';
     export default{
       data() {
         return {
@@ -112,7 +116,8 @@
           mainDoctor: '',
           requestJson: {
             id: '',
-            name: ''
+            name: '',
+            change_money: ''
           }
         }
       },
@@ -120,10 +125,11 @@
         this.getDoctorList()
       },
       methods: {
-        isSelected(i,id,name){
+        isSelected(i,id,name,money){
           this.isActive = i;
           this.requestJson.id = id;
           this.requestJson.name = name;
+          this.requestJson.change_money = money;
         },
         getDoctorList(){
           axios.post('/wx/baochuan_p/doctorlist', {
@@ -136,22 +142,30 @@
           })
         },
         changeDoctor(){
-          MessageBox.confirm('更换后，您只能接收'+this.requestJson.name+'医生的检查报告解读和复诊提醒服务；更换签约医生是付费服务，需要支付10元（1000积分）。').then(
+          MessageBox.confirm('更换后，您只能接收'+this.requestJson.name+'医生的检查报告解读和复诊提醒服务；更换签约医生是付费服务，需要支付'+this.requestJson.change_money+'元（'+this.requestJson.change_money*100+'积分）。').then(
              //确定操作
               action => {
-                axios.post('/wx/baochuan_p/changedoctor',{
-                    authentication: this.authentication,
-                    doctorId: this.requestJson.id
-                }).then((resp) => {
-                    if(resp.data.content.paymentStatus ==1){
+                  if(this.requestJson.id == '' || this.requestJson.id == null || this.requestJson.id ==undefined){
+                    Toast('请选择医生');
+                    return false;
+                  }else{
+                    axios.post('/wx/baochuan_p/changedoctor',{
+                      authentication: this.authentication,
+                      doctorId: this.requestJson.id
+                    }).then((resp) => {
+                      if(resp.data.content.paymentStatus ==1){
+                        this.$router.push('payConfirm/1?doctorId='+this.requestJson.id);
+                      }else{
+                        WeixinJSBridge.invoke('closeWindow',{},function(res){
 
-                    }else{
-                        this.$route.push();
-                    }
-                  console.log(resp.data.content.paymentStatus);
-                }).catch((error) => {
-                  console.log(error);
-                })
+                          //alert(res.err_msg);
+
+                        });
+                      }
+                    }).catch((error) => {
+                      console.log(error);
+                    })
+                  }
               },
               //取消操作
               action => {
@@ -159,6 +173,9 @@
             }
           );
         }
+      },
+      destroyed() {
+//        eventBus.$emit('doctorId', this.requestJson.id);
       }
     }
 </script>
