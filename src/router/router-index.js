@@ -95,7 +95,7 @@ export default new Router({
         {path: 'checkRecord',component: checkRecord},
         {path: 'clinicRecord',component: clinicRecord},
         {path: 'changeMainDoctor',component: changeMainDoctor},
-        {path: 'payConfirm',component: payConfirm},
+        {path: 'payConfirm/:type',component: payConfirm},
         {path: 'patientLogin',component: patientLogin},
       ],
     },
