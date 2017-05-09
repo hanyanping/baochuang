@@ -36,7 +36,7 @@
         <div class="phone-set">
           <div class="info-set">
             <div style="font-size: 16px">电话咨询</div>
-            <mt-switch v-model="value"></mt-switch>
+            <mt-switch v-model="value" @change="change(value)"></mt-switch>
           </div>
           <div class="phone-wenan">
             开启后，您管理的患者可以主动你电话咨询您
@@ -90,16 +90,6 @@
       eventBus.$emit('value', this.consult_status);
     },
 
-    watch: {
-      'value' () {
-        if (this.value == false) {
-          this.teleConsultDown();
-        }else {
-          this.teleConsultOpen();
-        }
-      }
-    },
-
     methods: {
 
       // 获取个人信息
@@ -123,6 +113,15 @@
         }), (failure) => {
           Indicator.close();
           console.log(failure);
+        }
+      },
+
+      change (value) {
+        console.log(value);
+        if (value == false) { // 电话咨询关
+          Toast('手动关闭,调电话关接口');
+        } else { // 电话咨询开
+          Toast('手动开启,调电话开接口');
         }
       },
 

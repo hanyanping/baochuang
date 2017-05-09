@@ -7,7 +7,7 @@
           <span>咨询设置</span>
         </div>
         <div>
-          <mt-switch v-model="value" :click="change(value)"></mt-switch>
+          <mt-switch v-model="value" @change="change(value)"></mt-switch>
         </div>
       </div>
 
@@ -54,8 +54,7 @@
     name: 'docConsultSetting',
     data () {
       return {
-        value: true,
-        first: 1
+        value: '',
       }
     },
 
@@ -65,9 +64,7 @@
       eventBus.$on('value', (thing) => {
         if (thing == 1) {
           this.value = true;
-          this.first = 1;
         } else {
-          this.first = 1;
           this.value = false;
         }
       });
@@ -79,15 +76,11 @@
 
     methods: {
       change (value) {
-        if (this.first == 1) {
-          console.log('000000000000000');
-          this.first++;
-          return;
-        } else {
-          console.log(1111111111111111);
-        }
-      }
+        console.log(value);
+      },
+
     }
+
   }
 </script>
 
