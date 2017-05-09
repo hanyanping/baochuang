@@ -184,15 +184,16 @@
             NetWorkUtils.post('/wx/baochuan_p/getchangeorder', this.params, (resp)=>{
               this.payInfo = resp.data.content;
               if(this.isChecked){
-                  this.point = this.payInfo.integral;
-                  if((this.payInfo.change_money - this.point/100) > 0){
+                  this.point = parseInt(this.payInfo.integral);
+                  if((this.payInfo.change_money - parseInt(this.point/100)) > 0){
                       this.shouldPay = this.payInfo.change_money - this.point/100
                   }else{
                     this.shouldPay = 0;
+                    this.costScore = (this.point/100 - this.payInfo.change_money)*100;
                   }
               }else{
-                this.point = 0;
                 this.shouldPay = this.payInfo.change_money;
+                this.costScore = 0;
               }
             },(error)=>{
 
@@ -205,15 +206,16 @@
         },
         getValue(val){
             this.isChecked = !this.isChecked;
-            if(this.isChecked == false){
-              this.point = 0;
+            if(!this.isChecked){
               this.shouldPay = this.payInfo.change_money;
+              this.costScore = 0;
             }else{
-              this.point = val;
+              this.point = parseInt(val);
               if((this.payInfo.change_money - this.point/100) > 0){
                 this.shouldPay = this.payInfo.change_money - this.point/100
               }else{
                 this.shouldPay = 0;
+                this.costScore = (this.point/100 - this.payInfo.change_money)*100;
               }
             }
         },
@@ -223,7 +225,7 @@
             authentication: this.params.authentication,
             doctorId: this.params.doctorId,
             account: this.payInfo.change_money,
-            score: (parseInt(this.payInfo.integral) - this.payInfo.change_money*100),
+            score: this.costScore,
             cost: this.shouldPay
           };
           console.log(param.score);
