@@ -32,6 +32,7 @@
   import axios from 'axios'
   import { Toast } from 'mint-ui';
   import {Indicator} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils';
 
   export default {
     name: 'docMyInfo',
@@ -49,15 +50,18 @@
       // 获取医生信息
       getDocInfo() {
         Indicator.open();
-        axios.post('/wx/baochuan_d/myinfo', {
-          authentication: this.authentication
-        }).then((result) => {
+        let that = this;
+        var params = {
+          authentication: that.authentication
+        };
+        netWrokUtils.post('/wx/baochuan_d/myinfo', params, (success) => {
           Indicator.close();
-          this.data = result.data;
-        }).catch((error) => {
+          console.log(success);
+          that.data = success.data;
+        }), (failure) => {
           Indicator.close();
-          Toast('网络不给力 ! 请稍后再试');
-        })
+          console.log(failure);
+        };
       }
     }
   }

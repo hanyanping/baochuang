@@ -7,7 +7,7 @@
           <span>咨询设置</span>
         </div>
         <div>
-          <mt-switch v-model="value" :click="changeOpenDown()"></mt-switch>
+          <mt-switch v-model="value" :click="change(value)"></mt-switch>
         </div>
       </div>
 
@@ -23,12 +23,6 @@
 
         <div v-show="value === true" class="doc-ConsultSetting-two-select-box">
           <div class="doc-ConsultSetting-two-select-smallbox">
-            <!--<select class="doc-ConsultSetting-two-select">-->
-              <!--<option value="0">0元</option>-->
-              <!--<option>5元</option>-->
-              <!--<option>10元</option>-->
-              <!--<option>15元</option>-->
-            <!--</select>-->
             <input type="tel" style="text-align: right; width: 100px" placeholder="0">
           </div>
           <div style="display: flex">
@@ -36,7 +30,6 @@
             <div class="iconfont icon-jiantou doc-ConsultSetting-two-jiantou"></div>
           </div>
         </div>
-
       </div>
 
       <b></b>
@@ -62,7 +55,7 @@
     data () {
       return {
         value: true,
-        first: ''
+        first: 1
       }
     },
 
@@ -81,16 +74,17 @@
     },
 
     beforeDestroy () {
-      eventBus.$off('some');
+      eventBus.$off('value');
     },
 
     methods: {
-      changeOpenDown () {
-        if (this.first === 1) {
+      change (value) {
+        if (this.first == 1) {
+          console.log('000000000000000');
           this.first++;
           return;
         } else {
-          console.log(this.value);
+          console.log(1111111111111111);
         }
       }
     }

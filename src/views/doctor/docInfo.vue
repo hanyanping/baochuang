@@ -63,6 +63,7 @@
   import axios from 'axios'
   import {Toast} from 'mint-ui';
   import {Indicator} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils';
 
   export default {
     name: 'docInfo',
@@ -76,6 +77,7 @@
         subscribe_status: '',
       }
     },
+
     mounted () {
       this.getDocInfo ();
     },
@@ -99,57 +101,62 @@
     },
 
     methods: {
+
       // 获取个人信息
       getDocInfo () {
-        axios.post('/wx/baochuan_d/myinfo', {
-          authentication: this.authentication
-        }).then((result) => {
-          console.log(result);
-
-          this.data = result.data;
-          this.consult_status = result.data.content.open_consult;
-          this.subscribe_status = result.data.content.open_subscribe;
-
-          if (result.data.content.open_telephone_counseling == 0) {
+        Indicator.open();
+        let that = this;
+        var params = {
+          authentication: that.authentication
+        };
+        netWrokUtils.post('/wx/baochuan_d/myinfo', params, (success) => {
+          Indicator.close();
+          console.log(success);
+          this.data = success.data;
+          this.consult_status = success.data.content.open_consult;
+          this.subscribe_status = success.data.content.open_subscribe;
+          if (success.data.content.open_telephone_counseling == 0) {
             this.value = false;
           } else {
             this.value = true;
           }
-
-        }).catch((error) => {
-          console.log(error);
-          Toast('网络不给力 ! 请稍后再试');
-        })
+        }), (failure) => {
+          Indicator.close();
+          console.log(failure);
+        }
       },
-
 
       // 电话咨询开
       teleConsultOpen () {
         Indicator.open();
-        axios.post('/wx/baochuan_d/mobileonoff', {
-          authentication: this.authentication,
+        let that = this;
+        var params = {
+          authentication: that.authentication,
           open_telephone_counseling: 1
-        }).then((result) => {
+        };
+        netWrokUtils.post('/wx/baochuan_d/mobileonoff', params, (success) => {
           Indicator.close();
-          console.log(result);
-        }).catch((error) => {
+          console.log(success);
+        }), (failure) => {
           Indicator.close();
-          console.log(error);
-        })
+          console.log(failure);
+        }
       },
       // 电话咨询关
       teleConsultDown () {
         Indicator.open();
-        axios.post('/wx/baochuan_d/mobileonoff', {
-          authentication: this.authentication,
+        let that = this;
+        var params = {
+          authentication: that.authentication,
           open_telephone_counseling: 0
-        }).then((result) => {
+        };
+        netWrokUtils.post('/wx/baochuan_d/mobileonoff', params, (success) => {
           Indicator.close();
-          console.log(result);
-        }).catch((error) => {
+          console.log(success);
+        }), (failure) => {
           Indicator.close();
-          console.log(error);
-        })
+          console.log(failure);
+        }
       },
 
 

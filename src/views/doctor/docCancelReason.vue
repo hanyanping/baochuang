@@ -40,6 +40,7 @@
 //        this.orderId = thing;
 //        console.log(this.orderId);
 //      })
+      document.getElementsByTagName('title')[0].innerHTML = '取消原因';
     },
 
 //    destroyed () {

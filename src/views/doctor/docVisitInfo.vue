@@ -2,40 +2,130 @@
 <template>
   <div class="doc-visi-container-box device-height">
 
-    <div class="doc-visi-header-box pos-relate">
-      <span v-show="isSetting === true" class="doc-visi-title">下次复诊时间</span>
-      <span v-show="isSetting === true" class="doc-visi-title">2014-02-02</span>
-      <i v-show="isSetting === true" class="iconfont icon-jiantou pos-absolute color-white doc-visi-youjiantou"></i>
+    <div class="doc-visi-header-box pos-relate" @click="openPicker">
 
-      <span v-show="isSetting === false" class="doc-visit-noset-title">还未设置下次复诊时间</span>
-      <button v-show="isSetting === false" class="doc-visit-noset-button">设置</button>
+      <i v-show="content.revisit_time != ''" class="iconfont icon-jiantou pos-absolute color-white doc-visi-youjiantou"></i>
+      <span v-show="content.revisit_time != ''" class="doc-visi-title">下次复诊时间</span>
+      <span v-show="content.revisit_time != ''" class="doc-visi-title">{{content.revisit_time}}</span>
+
+      <span v-show="content.revisit_time === ''" class="doc-visit-noset-title">还未设置下次复诊时间</span>
+      <button v-show="content.revisit_time === ''" class="doc-visit-noset-button">设置</button>
+
     </div>
 
-    <div class="doc-visi-list-box">
+    <mt-datetime-picker
+      v-model="pickerValue"
+      type="date"
+      ref="datePicker"
+      @confirm="handleChange"
+      :startDate="now"
+      year-format="{value} 年"
+      month-format="{value} 月"
+      date-format="{value} 日">
+    </mt-datetime-picker>
+
+    <div class="doc-visi-list-box" v-if="time_list.length !=0 ">
       <div class="doc-visi-list-title-box">
         <i class="iconfont icon-jilu"></i>
         <span class="fs17">复诊记录</span>
       </div>
-      <b></b>
-      <b></b>
 
-      <div class="doc-visi-list-cell" v-for="item in items">
-        <span class="fl fs16">第一次复诊</span>
-        <span class="fr fs16">2017.3.11</span>
+      <div class="doc-visi-list-cell" v-for="item in time_list">
+        <span class="fl fs16">{{item.desc}}</span>
+        <span class="fr fs16">{{item.date}}</span>
       </div>
+
+      <b></b>
+      <b></b>
     </div>
+
+    <div v-else style="text-align: center">
+      <img src="../../assets/img/nodatatips.png" style="margin-top: 25vh; width: 150px; height: 180px; line-height: 50%">
+      <p style="color: #939393">暂无记录</p>
+    </div>
+
 
   </div>
 </template>
 
 <script>
+  import {Indicator,Toast, DatetimePicker} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils';
+  import moment from 'moment/moment.js';
+
   export default {
     name: 'docVisitInfo',
     data () {
       return {
-        items: [1,2,3],
-        isSetting: true,
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
+        patientId: 2,
+        content: {},
+        time_list: [],
+        pickerValue: '',
+//        startDateValue: new Date('2017-05-01'),
+        now: new Date('')
       }
+    },
+
+    created () {
+      eventBus.$on('some', (thing) => {
+        this.patientId = thing;
+      })
+    },
+
+    mounted () {
+      this.getVisitInfo();
+    },
+
+    methods: {
+      // 获取复诊记录列表数据
+      getVisitInfo () {
+        Indicator.open();
+        let that = this;
+        var params = {
+          authentication: that.authentication,
+          patientId: that.patientId
+        };
+        netWrokUtils.post('/wx/baochuan_d/showrevisit', params, (success) => {
+          console.log(success);
+          that.content = success.data.content;
+          that.time_list = success.data.content.time_list;
+          that.now = new Date(success.data.content.now);
+        }), (failure) => {
+          console.log(failure);
+        };
+      },
+
+      // 弹出时间选择器
+      openPicker() {
+        this.$refs.datePicker.open();
+      },
+
+      // 选择完成
+      handleChange(value) {
+        console.log('value===' + moment(value).format('YYYY-MM-DD'));
+        this.settingVisitTime(moment(value).format('YYYY-MM-DD'));
+      },
+
+      // 设置复诊信息
+      settingVisitTime(timeValue) {
+        Indicator.open();
+        let that = this;
+        var params = {
+          authentication: that.authentication,
+          patientId: that.patientId,
+          revisitTime: timeValue
+        };
+        netWrokUtils.post('/wx/baochuan_d/setrevisit', params, (success) => {
+          Indicator.close();
+          console.log(success);
+          that.getVisitInfo();
+        }), (failure) => {
+          Indicator.close();
+          console.log(failure);
+        };
+      },
+
     }
   }
 </script>

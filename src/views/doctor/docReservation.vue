@@ -2,6 +2,13 @@
 <template>
   <div class="doc-reservation-box">
     <div v-if="content.length != 0" style="padding:10px 15px;">
+      <mt-loadmore
+        ref="loadmore"
+        :top-method="loadTop"
+        :bottom-method="loadBottom"
+        :bottom-all-loaded="allLoaded"
+        :autoFill="true">
+
       <div v-for="item in content" class="doc-reservation-list-box" @click="pushReservationDetail(item.order_id)">
         <div class="doc-reservation-list-content-top">
           <div class="doc-reservation-list-content-top-left">
@@ -29,6 +36,8 @@
         </div>
         <div class="doc-reservation-list-content-bottom">{{item.order_ctime}}</div>
       </div>
+
+      </mt-loadmore>
     </div>
     <div v-else class="doc-reservation-empty-box" style="text-align: center">
       <img src="../../assets/img/nodatatips.png" style="margin-top: 30vh; width: 150px; height: 180px; line-height: 50%">
@@ -41,17 +50,24 @@
   import axios from 'axios'
   import {Toast} from 'mint-ui';
   import {Indicator} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils';
 
   export default {
     name : 'docReservation',
     data () {
       return {
+        allLoaded: false,
         authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
         data: {},
         content: [],
         order_id:'',
       }
     },
+
+    created () {
+      document.getElementsByTagName('title')[0].innerHTML = '预约';
+    },
+
     mounted () {
       this.getReservationList();
     },
@@ -64,17 +80,19 @@
       // 获取预约列表数据
       getReservationList () {
         Indicator.open();
-        axios.post('/wx/baochuan_d/getappointmentrecordlist', {
-            authentication: this.authentication
-        }).then((result) => {
+        let that = this;
+        var params = {
+          authentication: that.authentication
+        };
+        netWrokUtils.post('/wx/baochuan_d/getappointmentrecordlist', params, (success) => {
           Indicator.close();
-          console.log(result);
-          this.data = result.data;
-          this.content = result.data.content;
-        }).catch((error) => {
+          console.log(success);
+          that.data = success.data;
+          that.content = success.data.content;
+        }), (failure) => {
           Indicator.close();
-          console.log(error);
-        })
+          console.log(failure);
+        };
       },
 
       // 跳转预约详情页
@@ -84,7 +102,17 @@
         window.localStorage.setItem('order_id', this.order_id);
         this.$router.push({ path:"/baochuan_d/docReservationDetail"});
 //        window.location.href="docReservationDetail";
-      }
+      },
+
+      loadTop () {
+        this.$refs.loadmore.onTopLoaded();
+      },
+
+      loadBottom () {
+//        this.allLoaded = true;
+        this.$refs.loadmore.onBottomLoaded();
+      },
+
 
     }
   }

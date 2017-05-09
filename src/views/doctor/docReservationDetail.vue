@@ -83,15 +83,13 @@
 //      eventBus.$on('some', (thing) => {
 //        this.order_id = thing;
 //      })
+      document.getElementsByTagName('title')[0].innerHTML = '预约详情';
     },
 
     mounted () {
       this.getReservationDetail();
     },
 
-//    destroyed () {
-//      eventBus.$emit('some', this.order_id);
-//    },
 
     methods: {
       // 获取预约详情数据
@@ -106,7 +104,7 @@
           Indicator.close();
           console.log(success);
           that.content = success.data.content;
-          if (that.content.status_value == '未确认') {
+          if (that.content.status_value == '待确认') {
             that.show = true;
           }
         }, function (failure) {
