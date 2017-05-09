@@ -54,7 +54,7 @@
             <b></b>
           </div>
           <div v-if="perInfo.status == 2" class="futher-info">
-            <a class="personal-info-flex">
+            <a class="personal-info-flex" @click="toFuzhen">
               <div>复诊信息</div>
               <div class="iconfont icon-jiantou"></div>
             </a>
@@ -72,16 +72,6 @@
               month-format="{value} 月"
               date-format="{value} 日">
             </mt-datetime-picker>
-            <!--<mt-datetime-picker-->
-              <!--v-model="pickerValue"-->
-              <!--type="date"-->
-              <!--ref="picker"-->
-              <!--@confirm="handleChange"-->
-              <!--:startDate="now"-->
-              <!--year-format="{value} 年"-->
-              <!--month-format="{value} 月"-->
-              <!--date-format="{value} 日">-->
-            <!--</mt-datetime-picker>-->
             <b></b>
             <b></b>
           </div>
@@ -144,7 +134,6 @@
             <b></b>
             <b></b>
           </div>
-
           </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="talk">
@@ -155,13 +144,14 @@
                 <div class="record clearfix" v-for="(item, key) in message">
                   <div class="talkTime" v-if="item.ctime!==''">{{item.ctime}}</div>
                   <div class="avatar left" v-if="item.from_id == item.patient_user_id">
-                    <img :src="item.logo" alt="" width="45" height="45">
-                    <span v-if="item.content!= ''">{{item.message}}</span>
-                    <img v-if="item.content == ''" src="../../assets/img/paizhao.png" width="45" height="45"/>
+                    <img class="imgLogo" :src="item.logo" alt="" width="45" height="45">
+                    <span v-if="item.message!= ''">{{item.message}}</span>
+                    <img class="imgbox" v-else :src="item.picture_url" width="45" height="45"/>
                   </div>
                   <div class="avatar right" v-if="item.from_id != item.patient_user_id">
-                    <img :src="item.logo" alt="" width="45" height="45">
-                    <span >{{item.message}}</span>
+                    <img class="imgLogo" :src="item.logo" alt="" width="45" height="45">
+                    <span v-if="item.message!= ''">{{item.message}}</span>
+                    <img class="imgbox" v-if="item.message == ''" :src="item.picture_url" width="40%" height="40%"/>
                   </div>
                 </div>
               </mt-loadmore>
@@ -186,9 +176,9 @@
                   <p class="text">电话随访</p>
                 </div>
                 <div style="position:relative;">
-                  <span class="file">
-                    <input type="file" @change="uploadFile" class="uploadinput" accept="image/*"/>
-                  </span>
+                  <form class="file" id="form1" enctype="multipart/form-data" method="post">
+                    <input name="imgLocal" id="img"  type="file" @change="uploadFile" class="uploadinput" accept="image/*"/>
+                  </form>
                   <img src="../../assets/img/paizhao.png"/>
                   <p class="text">照片</p>
                 </div>
@@ -249,10 +239,13 @@
       return {
         authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
         patientId:2,
-        pageIndex:1,
-        number:2,
+        postId:0,
+        maxId:'',
+        minId:'',
+        number:10,
         talkData:{},
         threadId:'',
+        baseImg:'',
         contentType:'',
         content:'',
         pageAll: 6,
@@ -265,7 +258,6 @@
         More:false,
         bottomShow:false,
         message:[],
-        objSome:{},
         pickerValue:'',
         revisit_time:'',
         now: new Date(''),
@@ -292,38 +284,42 @@
         })
     },
     mounted(){
-        this.consultList(1);
-//      setTimeout("this.consultList(1)",1000);
+      this.consultList(this.postId,-5);
       this.personalInfo()
+      setInterval(() => {
+        this.consultList(this.maxId,10)
+      },10000)
+    },
+    updated() {
     },
     destroyed () {
-      this.objSome = {
-          patientId: this.patientId,
-          patientName: this.patientName
-      }
-      eventBus.$emit('some',this.objSome);
+      eventBus.$emit('some',this.patientId);
     },
     methods: {
-//        聊天窗口
-      consultList(page) {
-        var than = this
-        this.pageIndex = page;
+  //        聊天窗口
+      consultList(postId, number) {
         var params = {
           authentication: this.authentication,
           patientId: this.patientId,
-          pageIndex:this.pageIndex,
-          number:this.number,
+          postId:postId,
+          number:number,
         }
         var that = this;
-        netWrokUtils.post('/wx/baochuan_d/getconsultrecordlist', params, function (result) {
-          that.talkData = result.data.content
-          for (var i = 0; i <that.talkData.length / 2; i++) {
-            var temp = that.talkData[i]; //交换变量
-            that.talkData[i] = that.talkData[that.talkData.length - i - 1];
-            that.talkData[that.talkData.length-i-1]=temp;
-          }
-          for (let i in that.talkData) {
-            that.message.push(that.talkData[i])
+        console.log(postId,number)
+        netWrokUtils.postConsult('/wx/baochuan_d/getconsultrecordlist', params, function (result) {
+        console.log(postId,number)
+          that.talkData = result.data.content;
+//        判断是获取已有数据还是最新数据
+          if(number>0){
+            for (let i in that.talkData) {
+              that.maxId = that.talkData[that.talkData.length-1].postId;
+              that.message.push(that.talkData[i])
+            }
+          }else{
+            for (let i in that.talkData) {
+              that.minId = that.talkData[0].postId;
+              that.message.unshift(that.talkData[i])
+            }
           }
         }, function (error_result) {
 //          Indicator.close();
@@ -332,22 +328,21 @@
       },
 //      上拉刷新加载更多数据
       loadTop() {
-        var pageIndex = this.pageIndex
-        pageIndex++
-        console.log(121)
+        var postId = this.postId
+        postId++
         console.log(this.talkData)
         if (this.talkData == "") {
             Toast('没有更多数据了')
-
         } else {
-            console.log(12)
-          this.consultList(pageIndex)
+          this.consultList(this.minId,-5)
         }
         this.$refs.loadmore.onTopLoaded();
       },
       //  上传图片
       uploadFile (el) {
         console.log(el)
+        var form=document.getElementById("form1");
+        var formdata=new FormData(form);
         var file = el.target.files[0]
         var type = file.type.indexOf('image')
         var size = file.size / 1024 / 1024
@@ -355,11 +350,27 @@
         var k = filename.substr(filename.lastIndexOf('.'))
         var fd = new FormData()
         fd.append("file", file)
-        axios.post(URL, fd)
-          .then((result) => {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(file);
+        var that = this;
+        oFReader.onload = function (oFREvent) {
+          that.baseImg = oFREvent.target.result
+          var params = {
+            authentication:that.authentication,
+            patientId: that.patientId,
+            contentType:2,
+            imgBase64:that.baseImg,
+          }
+          console.log(params)
+          netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, function (result) {
+            console.log(result)
+          }, function (error_result) {
+//          Indicator.close();
+//          Toast(error_result);
           })
-          .catch((err) => {
-          })
+        };
+console.log(this.baseImg)
+
       },
 //      点击加号
       tangchu() {
@@ -374,7 +385,7 @@
              patientId: this.patientId
         }
         var that = this;
-        netWrokUtils.post('/wx/baochuan_d/getconsultmenushow', params, function (result) {
+        netWrokUtils.postConsult('/wx/baochuan_d/getconsultmenushow', params, function (result) {
           that.jiaStatius =  result.data.content.is_show
         }, function (error_result) {
 //          Indicator.close();
@@ -387,8 +398,8 @@
             authentication: this.authentication,
             patientId:2
         }
-        netWrokUtils.post('/wx/baochuan_d/revisitremind', params, function (result) {
-          var _this = this;
+        var _this = this;
+        netWrokUtils.postConsult('/wx/baochuan_d/revisitremind', params, function (result) {
           var outpatientContent = [];
           outpatientContent = result.data.content;
           if(outpatientContent == ''){
@@ -412,6 +423,17 @@
             }).then((result) => {
               if(result == "confirm"){
 //                  调取发送信息接口
+                var paramsFuzhen = {
+                  authentication:_this.authentication,
+                  patientId: _this.patientId,
+                  contentType:1,
+                  content:outpatientContent,
+                }
+                console.log(paramsFuzhen)
+                netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', paramsFuzhen, (result) => {
+                }, (error_result) => {
+                  Toast(error_result.data.msg);
+                })
               }
             });
           }
@@ -426,7 +448,7 @@
         var params = {
           authentication: '9abada2c209a05e2ebd462f7bf68c5cf'
         }
-        netWrokUtils.post('/wx/baochuan_d/clinicremind', params, (result) => {
+        netWrokUtils.postConsult('/wx/baochuan_d/clinicremind', params, (result) => {
           var outpatientContent = result.data.content;
           if(outpatientContent == ''){
             var str = '<h3>您还未设置门诊时间，请去设置</h3>'
@@ -442,9 +464,9 @@
               }
             });
           }else{
-            var str = '<h3>您好,我的门诊时间是:</h3>'
+            var str = '<h3 style="text-align: center;">您好,我的门诊时间是:</h3>'
             for (let i in outpatientContent) {
-              str += '<div>'+ outpatientContent[i] +'</div>'
+              str += '<div style="text-align: center;">'+ outpatientContent[i] +'</div>'
             }
             MessageBox({
               title: '您即将发送消息',
@@ -452,7 +474,18 @@
               showCancelButton: true
             }).then((result) => {
               if(result=="confirm"){
-//                  发送接口
+                outpatientContent = "您好,我的门诊时间是:"+outpatientContent;
+                var params = {
+                  authentication:this.authentication,
+                  patientId: that.patientId,
+                  contentType:1,
+                  content:outpatientContent,
+                  img:'',
+                }
+                netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
+                }, (error_result) => {
+                  Toast(error_result.data.msg);
+                })
               }
             });
           }
@@ -470,14 +503,13 @@
       messages() {
           var that = this;
         var params = {
-          authentication: this.authentication,
+          authentication:this.authentication,
           patientId: this.patientId,
+          contentType:1,
+          content:this.form.content,
         }
-        netWrokUtils.post('/wx/baochuan_d/sendconsultpost', params, (result) => {
-          that.perInfo = result.data.content
-          that.patient_name = result.data.content.name
-          that.perStatus = result.data.content.status
-          document.getElementsByTagName('title')[0].innerHTML = that.patient_name
+        netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
+          that.consultList(1)
         }, (error_result) => {
           Toast(error_result.data.msg);
         })
@@ -490,7 +522,7 @@
           authentication: this.authentication,
           patientId: 2,
         }
-        netWrokUtils.post('/wx/baochuan_d/patientcase', params, (result) => {
+        netWrokUtils.postConsult('/wx/baochuan_d/patientcase', params, (result) => {
           that.perInfo = result.data.content
           that.patientName = result.data.content.name
           that.perStatus = result.data.content.status
@@ -501,6 +533,9 @@
         })
       },
 //      复诊提醒
+      toFuzhen(id) {
+        this.$router.push({ path:'/baochuan_d/docVisitInfo'});
+      },
       openPicker() {
         this.$refs.picker.open();
       },
@@ -516,7 +551,7 @@
           patientId: 2,
           revisitTime: timeValue
         }
-        netWrokUtils.post('/wx/baochuan_d/setrevisit', params, (result) => {
+        netWrokUtils.postConsult('/wx/baochuan_d/setrevisit', params, (result) => {
           this.$refs.picker.close();
           Toast(result.data.msg);
           that.revisit_time = timeValue;
@@ -592,7 +627,7 @@
                 img, span{
                   float: right;
                 }
-                img{
+               .imgLogo{
                   border-radius:50%;
                   margin-right:10px;
                 }
@@ -656,7 +691,7 @@
                   left:-20px;
                 }
               }
-              img {
+              .imgLogo {
                 border-radius: 50%;
                 display: inline-block;
                 margin-right:6px;

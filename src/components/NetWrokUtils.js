@@ -16,7 +16,7 @@ function post(url, params, success, error) {
   Indicator.open();
   axios.post(url, params).then(function (result) {
     Indicator.close();
-    console.log(result);
+    // console.log(result)
     if (result.data.code == 0) {
       success(result);
     }
@@ -34,8 +34,32 @@ function post(url, params, success, error) {
     console.log(network_error);
     Toast('网络不给力 ! 请稍后再试!' + network_error);
   })
-}
+};
+function postConsult(url, params, success, error) {
+  if (url[0]=='/')
+    url = process.env.API_HOST + url;
+  // console.log('---',url);
 
+  axios.post(url, params).then(function (result) {
+    // console.log(result)
+    if (result.data.code == 0) {
+      success(result);
+    }
+    else if (result.data.code == 2) { // 参数错误
+      error(result);
+    }
+    else if (result.data.code == -1) {
+      error(result);
+      setAuthForNull(); // 清空当前公众号auth
+    } else {
+      error(result);
+    }
+  }).catch(function (network_error) {
+    Indicator.close();
+    console.log(network_error);
+    Toast('网络不给力 ! 请稍后再试!' + network_error);
+  })
+};
 function get(url, params, success, error) {
   Indicator.open();
   axios.get(url, params).then(function (result) {
@@ -68,7 +92,8 @@ function setAuthForNull() {
 //导出自定义函数和对象
 export default {
   post,
-  get
+  get,
+  postConsult
 }
 
 

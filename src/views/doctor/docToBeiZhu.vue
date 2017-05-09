@@ -29,9 +29,7 @@
     created() {
       var that = this;
       eventBus.$on('some', (thing) => {
-        that.patientId = thing.patientId;
-        that.patientName = thing.patientName
-        console.log(that.patientName)
+        that.patientId = thing;
      })
       document.getElementsByTagName('title')[0].innerHTML = this.patientName;
     },
