@@ -24,6 +24,7 @@ rootRouter.beforeEach(function (to, from, next) {
   var auth = '4d89652b270cc60c30365868b229ca15'; // 测试使用
   global.auth = auth;
 
+  // var auth = '4d89652b270cc60c30365868b229ca15'; // 测试使用
   // localStorage.clear();
   // alert('auth==='+auth);
 

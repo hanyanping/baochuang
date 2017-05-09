@@ -175,7 +175,6 @@
               }else{
                 this.requestJson.sex = 0;
               }
-//              console.log(this.requestJson.sex);
               console.log(value);
           },
           submitInfo(){
@@ -197,6 +196,8 @@
                       disease_id: this.requestJson.disease,
                 }).then((resp) => {
                     console.log(resp);
+                    Toast('保存成功!');
+                    window.location.href='http://testaiganneo.aiganyisheng.com/baochuan_p/index/redirect';
                 }).catch((error) => {
                   Toast('网路不给力哦');
                 })

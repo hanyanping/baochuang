@@ -1,7 +1,8 @@
 <style lang="scss" scoped>
-  .bg-hospital{
-    background: url(../../assets/img/bg-hospital-info.png)no-repeat 0px center/cover;
-    overflow: hidden;
+  .hospital{
+    background-size: 100%;
+    background-image: url(../../assets/img/bg-hospital-info.png);
+    background-repeat: no-repeat;
   }
   .hospital-info {
     width: 92%;
@@ -54,14 +55,23 @@
     top: 26px;
     right: 0;
   }
-  .hospital-intro{
+  .hospitalIntro{
     text-indent: 1em;
+    height:138px;
+    overflow: hidden;
     line-height: 22px;
     padding: 20px 22px;
     display: inline-block;
+    border-radius: 0 0 8px 8px;
+  }
+  .showAll{
+    min-height:138px;
+    height:auto;
+    text-indent: 1em;
+    line-height: 22px;
+    padding: 20px 22px;
   }
   .hospital-address{
-    width: 100%;
     height:52px;
     line-height:50px;
     margin-top: 20px;
@@ -71,10 +81,24 @@
   .address-logo{
     padding-left:15px;
   }
+  .open:before{
+    content: "\e602";
+  }
+  .close:before{
+    content: "\e633";
+  }
+  .getMore{
+    text-align:center;
+    width:100%;
+  }
+  .getMore i{
+    width:100%;
+    padding:4px 0;
+  }
 </style>
 
 <template>
-    <div class="bg-hospital">
+    <div class="hospital device-height bg-grey over-hidden">
       <div class="hospital-info box-shade  circular-bead">
         <div class="bg-white pos-relate">
           <span class="info-header border-bot-dash fs15">服务内容</span>
@@ -83,16 +107,16 @@
         </div>
         <div class="disease-label">
           <span class="item-box">
-            <router-link to="javascript:void(0)" class="disease-item marginB15 bg-button">查化验单</router-link>
-            <router-link to="javascript:void(0)" class="disease-item bg-disable">咨询医生</router-link>
+            <a class="disease-item marginB15 bg-disable">查化验单</a>
+            <a class="disease-item bg-disable">咨询医生</a>
           </span>
           <div class="item-box">
-            <router-link to="javascript:void(0)" class="disease-item marginB15 bg-disable">预约医生</router-link>
-            <router-link to="javascript:void(0)" class="disease-item bg-disable">电话咨询</router-link>
+            <a class="disease-item marginB15 bg-disable">预约医生</a>
+            <a class="disease-item bg-disable">电话咨询</a>
           </div>
           <div class="item-box">
-            <router-link to="javascript:void(0)" class="disease-item marginB15 bg-disable">复诊提醒</router-link>
-            <router-link to="javascript:void(0)" class="disease-item bg-disable">就诊记录</router-link>
+            <a class="disease-item marginB15 bg-disable">复诊提醒</a>
+            <a class="disease-item bg-disable">就诊记录</a>
           </div>
         </div>
         <div class="bg-white pos-relate">
@@ -101,23 +125,50 @@
           <span class="half-circle-right circle-right-second pos-absolute bg-grey"></span>
         </div>
         <div class="bg-white">
-          <span class="fs15 hospital-intro ">保定市传染病医院占地面积53360平米，可开放床位350张。医院是“全国著名传染病专家会诊基地”、“市肝病研究所”、河北省传染病医疗集团成员单位、北京佑安医院联盟成员、市医保及新农合定点医院。</span>
+          <div class="fs15" :class="{hospitalIntro: showAll==false, showAll: showAll==true}" v-html="hospitalInfo.intro"></div>
         </div>
-        <div class="hospital-address fs15">
-          <i class="iconfont icon-icon fs30 color-warn address-logo"></i>
-          <span>医院地址：河北省保定市南市区卫生路11号</span>
+        <div class="getMore bg-white">
+          <i @click="openOrClose" class="iconfont fs22" :class="{open: isActive==true, 'close': isActive == false}"></i>
         </div>
+      </div>
+      <div class="hospital-address fs15 parent-margin parent-width circular-bead">
+        <i class="iconfont icon-icon fs30 color-warn address-logo"></i>
+        <span>医院地址：{{hospitalInfo.address}}</span>
       </div>
     </div>
 </template>
 
 
 <script>
+  import NewWorkUtil from '../../components/NetWrokUtils';
+  import {Toast} from 'mint-ui';
     export default{
-        data(){
-            return {
-
-            }
+      data(){
+          return {
+              params: '',
+              hospitalInfo : '',
+              isActive: true,
+              showAll: false
+          }
+      },
+      mounted(){
+        this.getHospitalInfo();
+      },
+      methods: {
+        getHospitalInfo(){
+            console.log(1);
+            NewWorkUtil.post('/wx/baochuan_p/hospitalinfo', this.params, (resp)=>{
+                console.log(resp);
+                this.hospitalInfo = resp.data.content;
+                console.log(this.hospitalInfo.intro);
+            }, (error)=>{
+                Toast('网络不给力');
+            })
+        },
+        openOrClose(){
+            this.isActive = !this.isActive;
+            this.showAll  = !this.showAll;
         }
+      }
     }
 </script>

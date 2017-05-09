@@ -90,7 +90,7 @@ export default new Router({
         {path: 'integralAccount',component: integralAccount},
         {path: 'subscribeList',component: subscribeList},
         {path: 'hospitalInfo',component: hospitalInfo},
-        {path: 'doctorInfo',component: doctorInfo},
+        {path: 'doctorInfo/:id',component: doctorInfo},
         {path: 'selectTestReportCheck',component: selectTestReportCheck},
         {path: 'checkRecord',component: checkRecord},
         {path: 'clinicRecord',component: clinicRecord},

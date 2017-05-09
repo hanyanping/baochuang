@@ -7,9 +7,9 @@
       padding-left:4px;
     }
     p{
-      padding-top:8px;
-      padding-left:4px;
-      width:65%;
+      padding-top: 8px;
+      padding-left: 4px;
+      width: 65%;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -60,15 +60,23 @@
   .doctor-list-height{
     height:16vh;
   }
+  .btn-submit{
+    display:inline-block;
+    height:44px;
+    line-height:44px;
+    text-align: center;
+    border-radius: 20px;
+  }
+
 </style>
 
 <template>
     <div class="device-height bg-grey over-hidden">
       <div class="doctor-list-height parent-width parent-margin circular-bead box-shade bg-white over-hidden">
         <div class="box-left fl">
-          <img src="../../assets/img/second.png" class="head-logo fl" alt="加载中">
-          <span class="fl fs15 color-black">张大帅</span><br>
-          <p class="fs15 fl">肝病移库 主任医师</p>
+          <img :src="mainDoctor.doctor_img" class="head-logo fl" alt="加载中">
+          <span class="fl fs15 color-black">{{mainDoctor.name}}</span><br>
+          <p class="fs15 fl">{{mainDoctor.department}} {{mainDoctor.grade}}</p>
         </div>
         <div class="box-right fr">
           <span class="heart pos-absolute bg-button">
@@ -77,40 +85,80 @@
           <span class="main-tip fs14 bg-button color-white">现签约医生</span>
         </div>
       </div>
-      <div class="doctor-list-height parent-width parent-margin circular-bead box-shade bg-white over-hidden">
+      <div @click="isSelected(index,item.id,item.name)"   v-for="(item,index) in doctorList" class="doctor-list-height parent-width parent-margin circular-bead box-shade bg-white over-hidden">
         <div class="check-box fl pos-relate">
-          <label for="111"  class="radio-doctor bg-button"></label>
+          <label  :class="{bgButton: isActive==index}" class="radio-doctor"></label>
           <!--<input type="radio" name="doctor" id="111" class="doctor-radio pos-absolute">-->
         </div>
         <div class="box-left fl">
-          <img src="../../assets/img/second.png" class="head-logo fl" alt="加载中">
-          <span class="fl fs15 color-black">张大帅</span><br>
-          <p class="fs15 fl">肝病移库 主任医师</p>
+          <img :src="item.doctor_img" class="head-logo fl" alt="加载中"/>
+          <span class="fl fs15 color-black">{{item.name}}</span><br>
+          <p class="fs15 fl">{{item.departmentName}} {{item.grade}}</p>
         </div>
       </div>
-      <div class="doctor-list-height parent-width parent-margin circular-bead box-shade bg-white over-hidden">
-        <div class="check-box fl pos-relate">
-          <label for="doctorId" class="radio-doctor"></label>
-          <!--<input type="radio" name="doctor" id="doctorId" class="doctor-radio pos-absolute">-->
-        </div>
-        <div class="box-left fl">
-          <img src="../../assets/img/second.png" class="head-logo fl" alt="加载中">
-          <span class="fl fs15 color-black">张大帅</span><br>
-          <p class="fs15 fl">肝病移库 主任医师</p>
-        </div>
-      </div>
+      <a @click="changeDoctor" class="parent-width parent-margin color-white box-shade  bg-button btn-submit">更换签约医生</a>
     </div>
 </template>
 
 <script>
+  import axios from 'axios';
+  import {MessageBox} from 'mint-ui';
     export default{
-        data() {
-            return {
-              isActive: false,
-            }
-        },
-        methods: {
-
+      data() {
+        return {
+          isActive: -1,
+          doctorList: [],
+          authentication: 'd265ee3c594c3364cad5b89c7c8e8b80',
+          mainDoctor: '',
+          requestJson: {
+            id: '',
+            name: ''
+          }
         }
+      },
+      mounted() {
+        this.getDoctorList()
+      },
+      methods: {
+        isSelected(i,id,name){
+          this.isActive = i;
+          this.requestJson.id = id;
+          this.requestJson.name = name;
+        },
+        getDoctorList(){
+          axios.post('/wx/baochuan_p/doctorlist', {
+            authentication: this.authentication
+          }).then((resp) => {
+            this.mainDoctor = resp.data.content;
+            this.doctorList = resp.data.content.list;
+          }).catch((error) => {
+            console.log(error);
+          })
+        },
+        changeDoctor(){
+          MessageBox.confirm('更换后，您只能接收'+this.requestJson.name+'医生的检查报告解读和复诊提醒服务；更换签约医生是付费服务，需要支付10元（1000积分）。').then(
+             //确定操作
+              action => {
+                axios.post('/wx/baochuan_p/changedoctor',{
+                    authentication: this.authentication,
+                    doctorId: this.requestJson.id
+                }).then((resp) => {
+                    if(resp.data.content.paymentStatus ==1){
+
+                    }else{
+                        this.$route.push();
+                    }
+                  console.log(resp.data.content.paymentStatus);
+                }).catch((error) => {
+                  console.log(error);
+                })
+              },
+              //取消操作
+              action => {
+                  console.log("取消");
+            }
+          );
+        }
+      }
     }
 </script>

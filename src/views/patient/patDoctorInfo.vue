@@ -23,8 +23,12 @@
     }
     .doctor-profession{
       width:100%;
-      padding:28px 0;
+      padding:28px 0 14px;
       text-align:center;
+    }
+    .btn-guarantee{
+      padding:2px 8px;
+      background:#68D5FE;
     }
   }
     .instruction-title{
@@ -39,11 +43,19 @@
         line-height:50px;
       }
     }
-    .instruction-content{
+    .instructionCcontent{
       padding:15px;
       line-height:22px;
+      height:80px;
+      overflow: hidden;
       /*word-spacing: 0.5em;*/
-
+    }
+    .activeShow{
+      padding:15px;
+      line-height:22px;
+      min-height:80px;
+      height:auto;
+      /*word-spacing: 0.5em;*/
     }
   .visit-content{
     table{
@@ -74,20 +86,34 @@
   display:inline-block;
   padding-right:5px;
 }
+.bgSelected{
+  background:#daf4fa;
+}
+.colorSelectd{
+  color:#5ac4b2;
+}
 
-
-
+  .open:before{
+    content: "\e602";
+  }
+  .close:before{
+    content: "\e633";
+  }
 </style>
 
 <template>
     <div class="device-height bg-grey">
       <div class="doctorIcon pos-relate">
-        <img src="../../assets/img/second.png" alt="">
-        <span class="logo-signed pos-absolute color-white fs14">签约医生</span>
+        <img :src="doctorInfo.doctor_img" alt="">
+        <span v-if="doctorInfo.relation == 2" class="logo-signed pos-absolute color-white fs14">签约医生</span>
+        <span v-else="doctorInfo.relation == 1" class="logo-signed pos-absolute color-white fs14">关注医生</span>
         <p class="doctor-profession">
-          <span class="color-white fs17">张大帅</span>
-          <span class="color-white fs17 paddingL10">副主任医师</span>
+          <span class="color-white fs17">{{doctorInfo.name}}</span>
+          <span class="color-white fs17 paddingL10">{{doctorInfo.grade}}</span>
         </p>
+        <div class="text-center" v-show="doctorInfo.relation == 0">
+          <span class="color-white circular-bead btn-guarantee" @click="guarantee">关注</span>
+        </div>
       </div>
       <div class="doctor-instruction bg-white">
         <div class="instruction-title paddingL15 paddingR15">
@@ -95,11 +121,10 @@
             <span class="title-badge bg-cure"></span>
             <span class="fs18">医生介绍</span>
           </div>
-          <i class="up-forward iconfont icon-zhankai1 "></i>
+          <i @click="openOrClose" class="up-forward iconfont" :class="{open: isActive == false, close: isActive == true}"></i>
         </div>
-        <div class="instruction-content fs16 color-shallow">
-          从事传染病工作30年，撰写了多篇论文发表在国际、国家级、省级核心期刊，参加第二节国际消化学大会，
-          美国科尔比科学文化信息文化中心授予优秀医药学整数，保定市撒菊花菊花进步一等奖。
+        <div class="fs16 color-shallow" :class="{activeShow: showAll,instructionCcontent: !showAll}" v-html="doctorInfo.intro">
+
         </div>
       </div>
       <div class="doctor-visit bg-white marginT10">
@@ -117,46 +142,67 @@
             <td>上午</td>
             <td>下午</td>
           </tr>
-          <tr>
-            <td>星期一</td>
-            <td></td>
-            <td></td>
+          <tr v-for="(item,index) in doctorInfo.clinic">
+            <td>{{item.day_name}}</td>
+            <td class="iconfont icon-duihao1 fs22 color-white" :class="{bgSelected: item.am == '1', colorSelectd:item.am == '1'}"></td>
+            <td class="iconfont icon-duihao1 fs22 color-white" :class="{bgSelected: item.pm == '1', colorSelectd:item.pm == '1'}"></td>
           </tr>
-          <tr>
-            <td>星期二</td>
-            <td class="bg-selected">
-              <i class="iconfont icon-duihao1 fs22 color-selected"></i>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>星期三</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>星期四</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>星期五</td>
-            <td></td>
-            <td></td>
-          </tr>
+          <!--<tr>-->
+            <!--<td>星期二</td>-->
+            <!--<td class="bg-selected">-->
+              <!--<i class="iconfont icon-duihao1 fs22 color-selected" ></i>-->
+            <!--</td>-->
+            <!--<td></td>-->
+          <!--</tr>-->
         </table>
       </div>
       <div class="btn-menu">
-        <router-link to="javascript:void(0)" class=" btn-option bg-button color-white fl">发消息</router-link>
-        <router-link to="javascript:void(0)" class=" btn-option bg-disable color-white fl">预约（未开启）</router-link>
+        <router-link v-show="doctorInfo.open_consult == 1" to="javascript:void(0)" class="bg-button btn-option color-white fl">发消息</router-link>
+        <a v-show="doctorInfo.open_consult == 0" class=" btn-option color-white fl bg-disable">发消息(未开启)</a>
+        <router-link v-show="doctorInfo.open_subscribe == 1" to="javascript:void(0)" class="bg-button btn-option color-white fl">预约</router-link>
+        <a v-show="doctorInfo.open_subscribe == 0" class=" btn-option color-white fl bg-disable">预约(未开启)</a>
       </div>
     </div>
 </template>
 
 <script>
+  import NewWorkUtils from '../../components/NetWrokUtils';
+  import {Toast} from 'mint-ui';
     export default{
-        data(){
-            return {}
+      data(){
+          return {
+              params: {
+                authentication: 'e5edd65e69e6a1b3f25782357908284c',
+                doctorId: this.$route.params.id
+              },
+            doctorInfo: '',
+            isActive: true,
+            showAll:　false,
+          }
+      },
+      mounted(){
+        this.getDoctorInfo();
+      },
+      methods: {
+        getDoctorInfo(){
+          NewWorkUtils.post('/wx/baochuan_p/doctorinfo',this.params, (resp)=>{
+              this.doctorInfo = resp.data.content;
+          }, (error)=>{})
+//            console.log(this.$route.params.id);
+        },
+        guarantee(){
+            console.log(1);
+            NewWorkUtils.post('/wx/baochuan_p/followdoctor',this.params, (resp)=>{
+              console.log(resp);
+              Toast('关注成功');
+            }, (error)=>{
+                console.log(error);
+            })
+        },
+        openOrClose(){
+            this.isActive = !this.isActive;
+            this.showAll = !this.showAll;
         }
+      }
     }
 </script>

@@ -16,7 +16,7 @@ function post(url, params, success, error) {
   Indicator.open();
   axios.post(url, params).then(function (result) {
     Indicator.close();
-    console.log(result)
+    console.log(result);
     if (result.data.code == 0) {
       success(result);
     }
