@@ -86,7 +86,7 @@
   }
   }
 
-  .mint-msgbox-message{
+  .mint-msgbox-message {
     text-align: left;
   }
 
@@ -102,7 +102,8 @@
       :autoFill="false">
       <div class="mydoctorlist-message-box">
         <div v-show="myDoctorList.length > 0">
-          <div class="parent-width marginL15 marginR15 marginT15 marginB15" style="text-align: left" @click="showMessageBox">
+          <div class="parent-width marginL15 marginR15 marginT15 marginB15" style="text-align: left"
+               @click="showMessageBox">
             <i class="iconfont icon-wenhao1 color-grey fs20 paddingL10"></i>
             <span class="color-grey fs16">什么是主管医生</span>
           </div>
@@ -125,7 +126,7 @@
                  :class="{'btn-consult':consult_active, 'btn-consult_disable':!consult_active} "
                  class="color-white">发消息
               </a>
-              <a @click="toSubscribe()"
+              <a @click="toSubscribe(item.id)"
                  :class="{'btn-reserve':subscribe_active, 'btn-reserve_disable':!subscribe_active} "
                  class="color-white">预约
               </a>
@@ -161,13 +162,17 @@
         subscribe_active: false,
         isPerfect: false,
         authentication: auth,
-        aa: 'http://sucai.qqjay.com/qqjayxiaowo/201210/26/1.jpg'
+        aa: 'http://sucai.qqjay.com/qqjayxiaowo/201210/26/1.jpg',
+        doctor_id: ''
       }
     },
     mounted() {
       this.getMyDoctorList();
     },
     created(){
+    },
+    destroyed () {
+      eventBus.$emit('doctor_id', this.doctor_id);
     },
     methods: {
       showMessageBox(){
@@ -181,15 +186,17 @@
       toSelectDoc(){
         this.$router.push({path: 'visitRecord'}) //跳转选择医生
       },
-      toSendMsg(){ //发送消息
+      toSendMsg(doctor_id){ //发送消息
         if (this.isPerfect) {
           this.$router.push({path: 'visitRecord'}) //跳转咨询列表
         } else {
           this.$router.push({path: 'completeInfo'}) //跳转完善信息
         }
       },
-      toSubscribe(){ //预约
+      toSubscribe(doctor_id){ //预约
         if (this.isPerfect) {
+          console.log('doctor_id====' + doctor_id);
+          this.doctor_id = doctor_id;
           this.$router.push({path: 'subscribeList'}) //跳转预约列表
         } else {
           this.$router.push({path: 'completeInfo'}) //跳转完善信息
@@ -202,6 +209,7 @@
         }
         netWrokUtils.post('/wx/baochuan_p/mydoctor', params, (result) => {
           that.myDoctorList = result.data.content.list;
+          that.isPerfect = result.data.content.isPerfect;
           for (var i in that.myDoctorList) {
             if (that.myDoctorList[i].open_consult == 0) {
               that.consult_active = false;
@@ -225,7 +233,8 @@
       },
       loadBottom()
       {
-      }
+      },
+
     }
   }
 </script>
