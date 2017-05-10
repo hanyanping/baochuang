@@ -18,6 +18,7 @@ Vue.prototype.util = util;
 
 rootRouter.beforeEach(function (to, from, next) {
 
+
   var path = window.location.href;
   // 从localStorage中获取不同平台的auth
   var auth = getAuthFromLS(path);
