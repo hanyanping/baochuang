@@ -9,7 +9,7 @@
       </div>
       <div class="testReportIdentityCard-bottom-box">
         <p class="testReportIdentityCard-bottom-txt">请输入身份证号,获取您在保定市传染病医院的检查报告</p>
-        <button v-if="isClick == true" @click="setReportIdentityCard()" :disabled="isClick" class="toInfo">确 定</button>
+        <button v-if="isClick == true" @click="setReportIdentityCard()" class="toInfo">确 定</button>
         <button v-else disabled class="un-toInfo" style="">确 定</button>
       </div>
     </div>
@@ -26,6 +26,17 @@
   import comConstant from '../../components/comConstant.js';
 
   export default {
+//    beforeRouteEnter (to, from, next) {
+//      let isLocation = false;
+//      console.log('----', auth)
+//      if (isLocation)
+//        next(vm=> {
+//          vm.$router.push('/');
+//          return false;
+//        });
+//      else
+//        next(true);
+//    },
     data () {
       return {
         myDoctorList: [],
@@ -39,7 +50,8 @@
         doctor_id: '',
         isFirstSelect: false,
         idCard: '',
-        isClick: false
+        isClick: false,
+        mobile: ''
       }
     },
     created(){
@@ -51,6 +63,7 @@
     },
     destroyed () {
       eventBus.$emit('page_flag', comConstant.flag_testReportIdentityCard);
+      eventBus.$emit('mobile', this.mobile);
     },
     methods: {
       setReportIdentityCard(){
@@ -60,6 +73,7 @@
           idcard: that.idCard
         }
         netWrokUtils.post('/wx/baochuan_p/gethismobile', params, (result) => {
+          this.mobile = result.data.content.mobile;
           this.$router.push({path: 'patientLogin'}) //跳转填写手机验证码页面
           Toast(result.data.msg);
         }, (error_result) => {

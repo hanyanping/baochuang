@@ -23,7 +23,7 @@ import reserveList from  '../views/patient/patReserveList';
 import completeInfo from '../views/patient/patCompleteInfo';
 import visitRecord from '../views/patient/patVisitRecord';
 import personalCenter from '../views/patient/patPersonalCenter';
-import selectTestReport from '../views/patient/patSelectTestReport';
+import selectTestReport from '../views/patient/patSelectTestReport'; // 检查化验单列表页
 import integralAccount from '../views/patient/patIntegralAccount';
 import subscribeList from '../views/patient/patSubscribeList';
 import hospitalInfo from '../views/patient/patHospitalInfo';
@@ -33,7 +33,7 @@ import checkRecord from '../views/patient/patCheckRecord';
 import clinicRecord from '../views/patient/patClinicRecord';
 import changeMainDoctor from '../views/patient/patChangeMainDoctor';
 import payConfirm from '../views/patient/patPayConfirm';
-import patientLogin from '../views/patient/patPatientLogin';
+import patientLogin from '../views/patient/patPatientLogin';  //登录页, 检查报告验证码页
 import patEmptyForMenu from '../views/patient/patEmptyForMenu';
 
 
@@ -174,7 +174,7 @@ export default new Router({
         },
         {
           path: 'docChoosePatient',
-            name: 'docChoosePatient',
+          name: 'docChoosePatient',
           component: docChoosePatient
         },
         {

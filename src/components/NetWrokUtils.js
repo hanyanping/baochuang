@@ -9,14 +9,14 @@ import {Indicator} from 'mint-ui';
 
 // post 请求
 function post(url, params, success, error) {
-  if (url[0]=='/')
+  if (url[0] == '/')
     url = process.env.API_HOST + url;
-    // console.log('---',url);
+  // console.log('---',url);
 
   Indicator.open();
   axios.post(url, params).then(function (result) {
     Indicator.close();
-    // console.log(result)
+    console.log(result)
     if (result.data.code == 0) {
       success(result);
     }
@@ -36,7 +36,7 @@ function post(url, params, success, error) {
   })
 };
 function postConsult(url, params, success, error) {
-  if (url[0]=='/')
+  if (url[0] == '/')
     url = process.env.API_HOST + url;
   // console.log('---',url);
 

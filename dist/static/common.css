@@ -44,6 +44,8 @@
 .color-black{color:#232323;}
 .color-profession{color:#b5b5b5;}
 
+.font-bold{font-weight:bold;}
+
 .device-height{min-height:100vh;}
 .item-height{height:50px;}
 
@@ -92,6 +94,6 @@
 .paddingT15{padding-top:15px;}
 .paddingB15{padding-bottom:15px;}
 
-.mint-msgbox-message{
-  text-align:left!important;
-}
+/*.mint-msgbox-message{*/
+  /*text-align:left!important;*/
+/*}*/

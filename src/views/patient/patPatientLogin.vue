@@ -1,3 +1,4 @@
+<!-- 登录页, 检查报告验证码页-->
 <style scoped>
   html {
     height: 100%;
@@ -141,7 +142,10 @@
       <div class="fontBox">
         <i class="icon iconfont icon-shouji"></i>
       </div>
-      <input type="tel" maxlength="11" v-model="requestJson.phone" @focus="chn" placeholder="请输入手机号"/>
+      <input v-if="requestJson.isCompile == true" type="tel" maxlength="11" v-model="requestJson.phone" @focus="chn"
+             placeholder="请输入手机号"/>
+      <input v-else type="tel" maxlength="11" v-model="requestJson.tempPhone" placeholder="无手机号可用"
+             readonly="readonly"/>
     </div>
     <div class="lineBox">
       <div class="line"></div>
@@ -159,10 +163,14 @@
     <div class="lineBox">
       <div class="line"></div>
     </div>
-    <button class="toInfo" :class="{'isButton': active}" @click="login">
-      <label class="mint-button-text">登录</label>
+    <button v-show="requestJson.isCompile == true" class="toInfo" :class="{'isButton': active}" @click="login">
+      <label class="mint-button-text">{{button_name}}</label>
     </button>
-    <div style="margin-top:10px;margin-left:5%;">
+    <button v-show="requestJson.isCompile == false" class="toInfo" :class="{'isButton': active}"
+            @click="checkhismobile">
+      <label class="mint-button-text">{{button_name}}</label>
+    </button>
+    <div v-show="requestJson.isCompile == true" style="margin-top:10px;margin-left:5%;">
       <p class="loginXie">
         <a href="#" class="loginXiyi" style="color:#46FDE4;font-size:14px; padding-left:5px;">
           <span style="color:#D7E7E2;">点击登录即代表同意</span>
@@ -174,8 +182,10 @@
 </template>
 
 <script>
-  import {Toast} from 'mint-ui';
   import axios from 'axios';
+  import {Toast} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
+  import moment from 'moment/moment.js';
   import comConstant from '../../components/comConstant.js';
 
   export default {
@@ -190,16 +200,31 @@
         flag_testReportIdentityCard: false,
         requestJson: {
           phone: '',
-          code: ''
-        }
+          code: '',
+          isCompile: true, // 是否可以编辑
+          tempPhone: ''
+        },
+        button_name: '登  录',
       }
     },
     created(){
       eventBus.$on('page_flag', (thing) => {
-        //console.log('comConstant.flag_testReportIdentityCard==' + this.comConstant.flag_testReportIdentityCard);
-        //if(comConstant.flag_testReportIdentityCard)
-//        this.doctor_id = thing;
+        console.log('comConstant.flag_testReportIdentityCard==' + comConstant.flag_testReportIdentityCard);
+        if (comConstant.flag_testReportIdentityCard == thing) {
+          // 从检查报告输入身份证页来的
+          this.button_name = '身份核实';
+          this.requestJson.isCompile = false;
+        }
       })
+      eventBus.$on('mobile', (thing) => {
+        var temp_1 = thing.substring(0, 3);
+        var temp_2 = thing.substring(7, 11);
+        var new_mobile = temp_1 + "****" + temp_2;
+        this.requestJson.phone = thing;
+        this.requestJson.tempPhone = new_mobile;
+      })
+    },
+    mounted() {
     },
     watch: {
       'requestJson.phone' () {
@@ -224,10 +249,9 @@
           this.active = false
         }
       },
-
       //  获取验证码
       getCodes(el) {
-        if (!(/^1[34578]\d{9}$/.test(this.requestJson.phone))) {
+        if (!(/^1[34578]\d{9}$/.test(this.requestJson.phone)) && this.requestJson.isCompile) {
           Toast('请输入正确手机号！');
           return false
         } else {
@@ -236,13 +260,15 @@
             return false
           } else {
             this.isCode = true;
-            axios.get('/api/wx/mobile/sendcode', {
-              params: {
-                mobile: this.requestJson.phone
-              }
-            }).then((result) => {
-//              console.log(result)
-            });
+            var params = {
+              mobile: this.requestJson.phone
+            }
+            netWrokUtils.post('/wx/mobile/sendcode', params, (result) => {
+              Toast(result.data.msg);
+            }, (error_result) => {
+              Toast(error_result.data.msg);
+            })
+
             clearInterval(t);       //停止计时器
             var t = setInterval(function () {
               if (_that.time >= 0) {
@@ -288,6 +314,23 @@
       //清空已有手机号
       chn() {
         this.requestJson.phone = ''
+      },
+
+      // 验证手机号和身份证号去拿His数据
+      checkhismobile(){
+        let that = this;
+        var params = {
+          authentication: auth,
+          idcard: that.idCard,
+          mobile: that.requestJson.phone,
+          vercode: that.requestJson.code
+        }
+        netWrokUtils.post('/wx/baochuan_p/checkhismobile', params, (result) => {
+          this.$router.push({path: 'selectTestReport'}) //跳转填写手机验证码页面
+          Toast(result.data.msg);
+        }, (error_result) => {
+          Toast(error_result.data.msg);
+        })
       }
     }
   }
