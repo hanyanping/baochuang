@@ -23,6 +23,7 @@
   import {Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
   import moment from 'moment/moment.js';
+  import comConstant from '../../components/comConstant.js';
 
   export default {
     data () {
@@ -48,6 +49,9 @@
     },
     mounted() {
     },
+    destroyed () {
+      eventBus.$emit('page_flag', comConstant.flag_testReportIdentityCard);
+    },
     methods: {
       setReportIdentityCard(){
         let that = this;
@@ -56,7 +60,7 @@
           idcard: that.idCard
         }
         netWrokUtils.post('/wx/baochuan_p/gethismobile', params, (result) => {
-          this.$router.push({path: 'subscribeList'}) //跳转填写手机验证码页面
+          this.$router.push({path: 'patientLogin'}) //跳转填写手机验证码页面
           Toast(result.data.msg);
         }, (error_result) => {
           Toast(error_result.data.msg);
