@@ -193,6 +193,7 @@
     mounted(){
       this.getType();
     },
+
     methods: {
       getType(){
         this.payType = this.$route.params.type;
