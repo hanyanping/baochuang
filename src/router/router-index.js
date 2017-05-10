@@ -8,6 +8,7 @@ import Router from 'vue-router'
 import router_index from '../views/router_index'
 import baochuan_d_rootRouter from '../components/doctorIndex'
 import baochuan_p_rootRouter from '../components/patientIndex'
+import payCommon from '../components/payCommon.vue'
 
 // 具体页面
 // 公共页面
@@ -73,6 +74,10 @@ export default new Router({
       component: router_index,
     },
     {
+      path: '/common_p/payment',
+      component: payCommon,
+    },
+    {
       path: '/baochuan_p',
       component: baochuan_p_rootRouter,
       children: [
@@ -94,7 +99,7 @@ export default new Router({
         {path: 'checkRecord', component: checkRecord},
         {path: 'clinicRecord', component: clinicRecord},
         {path: 'changeMainDoctor', component: changeMainDoctor},
-        {path: 'payConfirm', component: payConfirm},
+        {path: 'payConfirm/:type', component: payConfirm},
         {path: 'patientLogin', component: patientLogin},
         {path: 'patEmptyForMenu', component: patEmptyForMenu}
       ],

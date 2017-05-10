@@ -162,13 +162,18 @@
             payType: '',
             params: {
               doctorId: '',
-              authentication: 'd265ee3c594c3364cad5b89c7c8e8b80'
+              authentication: ''
             },
             payInfo: '',
             point: null,
             isChecked: true,
             shouldPay: null,
-            costScore: null
+            costScore: null,
+            requestJson: {
+              authentication: '',
+              orderid: '',
+              cost: null
+            }
           }
       },
       created(){
@@ -179,6 +184,8 @@
       methods: {
         getType(){
           this.payType = this.$route.params.type;
+          console.log(this.$route.params.type);
+          this.params.authentication = window.localStorage.getItem('auth');
           this.params.doctorId = window.location.search.slice(10);
           if(this.payType == 1){
             NetWorkUtils.post('/wx/baochuan_p/getchangeorder', this.params, (resp)=>{
@@ -186,7 +193,8 @@
               if(this.isChecked){
                   this.point = parseInt(this.payInfo.integral);
                   if((this.payInfo.change_money - parseInt(this.point/100)) > 0){
-                      this.shouldPay = this.payInfo.change_money - this.point/100
+                      this.shouldPay = this.payInfo.change_money - this.point/100;
+                      this.costScore = this.point;
                   }else{
                     this.shouldPay = 0;
                     this.costScore = this.payInfo.change_money*100;
@@ -205,22 +213,22 @@
           }
         },
         getValue(val){
-            this.isChecked = !this.isChecked;
-            if(!this.isChecked){
-              this.shouldPay = this.payInfo.change_money;
-              this.costScore = 0;
+          this.isChecked = !this.isChecked;
+          if(!this.isChecked){
+            this.shouldPay = this.payInfo.change_money;
+            this.costScore = 0;
+          }else{
+            this.point = parseInt(val);
+            if((this.payInfo.change_money - this.point/100) > 0){
+              this.shouldPay = this.payInfo.change_money - this.point/100;
+              this.costScore = this.point;
             }else{
-              this.point = parseInt(val);
-              if((this.payInfo.change_money - this.point/100) > 0){
-                this.shouldPay = this.payInfo.change_money - this.point/100
-              }else{
-                this.shouldPay = 0;
-                this.costScore = this.payInfo.change_money*100;
-              }
+              this.shouldPay = 0;
+              this.costScore = this.payInfo.change_money*100;
             }
+          }
         },
         goToPay(){
-          console.log(this.shouldPay);
           let param = {
             authentication: this.params.authentication,
             doctorId: this.params.doctorId,
@@ -228,13 +236,15 @@
             score: this.costScore,
             cost: this.shouldPay
           };
-          console.log(param.score);
           NetWorkUtils.post('/wx/baochuan_p/createchangeorder', param, (resp)=>{
             if(resp.data.content.order_id){
               if(this.shouldPay == 0){
                 MessageBox.alert('支付成功!');
               }else{
-
+                this.requestJson.orderid = resp.data.content.order_id;
+                this.requestJson.cost = this.shouldPay;
+                this.requestJson.authentication = this.params.authentication;
+                this.$router.push('/common_p/payMent');
               }
             }
           }, (error)=>{})
@@ -246,6 +256,8 @@
 
         }
       },
-
+      destroyed(){
+          eventBus.$emit('requestJson', this.requestJson);
+      }
     }
 </script>

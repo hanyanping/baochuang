@@ -149,18 +149,17 @@
                     Toast('请选择医生');
                     return false;
                   }else{
-                    wx.closeWindow();
-//                    axios.post('/wx/baochuan_p/changedoctor',{
-//                      authentication: this.authentication,
-//                      doctorId: this.requestJson.id
-//                    }).then((resp) => {
-//                      if(resp.data.content.paymentStatus ==1){
-//                        this.$router.push('payConfirm/1?doctorId='+this.requestJson.id);
-//                      }else{
-//                      }
-//                    }).catch((error) => {
-//                      console.log(error);
-//                    })
+                    axios.post('/wx/baochuan_p/changedoctor',{
+                      authentication: this.authentication,
+                      doctorId: this.requestJson.id
+                    }).then((resp) => {
+                      if(resp.data.content.paymentStatus ==1){
+                        this.$router.push('payConfirm/1?doctorId='+this.requestJson.id);
+                      }else{
+                      }
+                    }).catch((error) => {
+                      console.log(error);
+                    })
                   }
               },
               //取消操作
