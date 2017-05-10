@@ -16,16 +16,16 @@ import payCommon from '../components/payCommon.vue'
 // 患者端页面
 import patientMenu from '../views/patient/patPatientMenu';
 import userSignDeal from '../views/patient/patUserSignDeal';
-import myDoctorList from '../views/patient/patMyDoctorList';
+import myDoctorList from '../views/patient/patMyDoctorList';  //我的医生列表
 import testReportIdentityCard from '../views/patient/patTestReportIdentityCard';
-import settingVisitTime from '../views/patient/patSettingVisitTime';
-import reserveList from  '../views/patient/patReserveList';
+import settingVisitTime from '../views/patient/patSettingVisitTime'; // 设置复诊时间页面
+import reserveList from  '../views/patient/patReserveList';  //
 import completeInfo from '../views/patient/patCompleteInfo';
-import visitRecord from '../views/patient/patVisitRecord';
-import personalCenter from '../views/patient/patPersonalCenter';
+import visitRecord from '../views/patient/patVisitRecord';  // 复诊记录页面
+import personalCenter from '../views/patient/patPersonalCenter';  // 个人中心页面
 import selectTestReport from '../views/patient/patSelectTestReport'; // 检查化验单列表页
-import integralAccount from '../views/patient/patIntegralAccount';
-import subscribeList from '../views/patient/patSubscribeList';
+import integralAccount from '../views/patient/patIntegralAccount'; // 积分账户
+import subscribeList from '../views/patient/patSubscribeList';  // 预约列表页面
 import hospitalInfo from '../views/patient/patHospitalInfo';
 import doctorInfo from '../views/patient/patDoctorInfo';
 import selectTestReportCheck from '../views/patient/patSelectTestReportCheck';

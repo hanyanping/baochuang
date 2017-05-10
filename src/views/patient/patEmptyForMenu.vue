@@ -25,12 +25,12 @@
       }
       netWrokUtils.post('/wx/baochuan_p/getuseridcard', params, (result) => {
         this.idCard = result.data.content.idCard;
-        this.is_show_his = result.data.content.is_show_his;
-        console.log('is_show_his====' + this.is_show_his);
-        if (this.is_show_his == 0) {
+        this.isShowHis = result.data.content.isShowHis;
+        console.log('isShowHis====' + this.isShowHis);
+        if (this.isShowHis == 0) {
           this.$router.push({path: 'testReportIdentityCard'}) //跳转检查报告身份证页面
         } else {
-          this.$router.push({path: 'selectTestReportCheck'}) //跳转完善信息
+          this.$router.push({path: 'selectTestReport'}) //跳转完善信息
         }
       }, (error_result) => {
         Toast(error_result.data.msg);

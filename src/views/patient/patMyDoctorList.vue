@@ -175,7 +175,7 @@
     },
     methods: {
       showMessageBox(){
-        var str = '<div>签约医生在慢病管理期间，一对一为您提供检查报告解读、复诊提醒、咨询和预约服务。</div>';
+        var str = '<div style="text-align: left">签约医生在慢病管理期间，一对一为您提供检查报告解读、复诊提醒、咨询和预约服务。</div>';
         MessageBox({
           title: '',
           message: str,

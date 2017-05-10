@@ -9,24 +9,69 @@
       <span class="bg-grey half-circle-left circleleft pos-absolute"></span>
       <span class="bg-grey half-circle-right circleright pos-absolute"></span>
 
-      <div class="selectTestReport-listcontent-box">
-        <span class="selectTestReport-listitem-left-text fl fs14">HCV基因分型</span>
+      <!--<mt-loadmore-->
+      <!--:top-method="loadTop" ref="loadmore"-->
+      <!--:bottom-method="loadBottom"-->
+      <!--:bottom-all-loaded="allLoaded"-->
+      <!--:autoFill="false">-->
+      <div class="selectTestReport-listcontent-box" v-for="item in reportList" @click="toReportDetail(item)">
+        <span class="selectTestReport-listitem-left-text fl fs14">{{item.reportTitle}}</span>
         <div class="selectTestReport-listitem-right-box fr">
-          <span class="selectTestReport-listitem-right-text fs14">{{visitTime}}</span>
+          <span class="selectTestReport-listitem-right-text fs14">{{item.reportDate}}</span>
           <i class="iconfont selectTestReport-listitem-right-icon icon-jiantou"></i>
         </div>
       </div>
+      <!--</mt-loadmore>-->
 
     </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
+  import {Toast} from 'mint-ui';
+  import {MessageBox} from 'mint-ui';
+  import {Indicator} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
+  import moment from 'moment/moment.js';
+
   export default {
     data () {
       return {
-        visitTime: '2017-01-01',
+        reportList: [],
+        allLoaded: false,
+        item: ''
       }
+    },
+    mounted() {
+      this.getReportList();
+    },
+    created(){
+    },
+    destroyed () {
+      eventBus.$emit('report_item', this.item);
+    },
+    methods: {
+      getReportList(){
+        let that = this;
+        var params = {
+          authentication: auth
+        }
+        netWrokUtils.post('/wx/baochuan_p/reportlist', params, (result) => {
+          that.reportList = result.data.content;
+        }, (error_result) => {
+          Toast(error_result.data.msg);
+        })
+      },
+      toReportDetail(item){
+//        this.$router.push({path: 'subscribeList'}) //跳转预约列表
+      },
+      loadTop()
+      {
+      },
+      loadBottom()
+      {
+      },
     }
   }
 </script>

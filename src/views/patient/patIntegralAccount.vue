@@ -70,7 +70,7 @@
       },
       methods: {
         showMessageBox(){
-          var str='<div>1、积分如何获得？在医院就诊时，与门诊医生签约慢病管理服务即可获得相应积分。</div>'+'<div>2、积分如何使用？积分可代替现金（兑换比例100:1），购买咨询、预约等医生服务</div>'
+          var str='<div style="text-align: left;">1、积分如何获得？在医院就诊时，与门诊医生签约慢病管理服务即可获得相应积分。</div>'+'<div style="text-align: left;">2、积分如何使用？积分可代替现金（兑换比例100:1），购买咨询、预约等医生服务</div>'
           MessageBox({
             title: '关于积分',
             message: str,
@@ -136,10 +136,6 @@
       padding-top:30px;
 
       .visitRrecord-titletop-box{
-
-        .mint-msgbox-message{
-          text-align: left;
-        }
 
         .visitRrecord-title-icon{
           color: white;
