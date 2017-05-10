@@ -253,6 +253,7 @@
           if (resp.data.content.order_id) {
             if (this.shouldPay == 0) {
               MessageBox.alert('支付成功!');
+              wx.closeWindow();
             } else {
               this.requestJson.orderid = resp.data.content.order_id;
               this.requestJson.cost = this.shouldPay;

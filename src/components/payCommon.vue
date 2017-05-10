@@ -34,7 +34,7 @@
         <span class="half-circle-right circle-right pos-absolute bg-grey"></span>
       </div>
       <div class="parent-width parent-margin">
-        <a @click="pay"  class=" fs20 bg-button color-white btn_pay">确认支付</a>
+        <a @click="pay"  class="fs20 bg-button color-white btn_pay">确认支付</a>
       </div>
     </div>
 </template>
@@ -62,7 +62,7 @@
       methods: {
         getPayInfo(){
           NewWorkUtils.post('/wx/baochuan_p/paymentorder',this.params, (resp)=>{
-              console.log(resp);
+//              console.log(resp);
               this.paymentId = resp.data.content.paymentid;
           }, (error)=> {})
         },
