@@ -39,29 +39,29 @@ import patEmptyForMenu from '../views/patient/patEmptyForMenu';
 
 // 医生端页面
 import doctorMain from '../views/doctor/doctorMain'
-import docLogin from '../views/doctor/docLogin'
-import docMoney from '../views/doctor/docMoney'
-import docPatient from '../views/doctor/docPatient'
-import docConsult from '../views/doctor/docConsult'
-import doctorPerfectInfo from '../views/doctor/doctorPerfectInfo'
-import doctorMenu from '../views/doctor/doctorMenu'
-import docInfo from '../views/doctor/docInfo'
-import docReservation from '../views/doctor/docReservation'
-import docToBeiZhu from '../views/doctor/docToBeiZhu'
-import docMyInfo from '../views/doctor/docMyInfo'
-import docReservationDetail from '../views/doctor/docReservationDetail'
-import docCancelReason from '../views/doctor/docCancelReason'
-import docApplyForCash from '../views/doctor/docApplyForCash'
-import docAddBankCard from '../views/doctor/docAddBankCard'
-import docConsultSetting from '../views/doctor/docConsultSetting'
-import docFaTongzhi from '../views/doctor/docFaTongzhi'
-import docChoosePatient from '../views/doctor/docChoosePatient'
-import docReportDetail from '../views/doctor/docReportDetail'
-import docWorkHome from '../views/doctor/docWorkHome'
-import docAppointmentSetting from '../views/doctor/docAppointmentSetting'
-import docVisitInfo from '../views/doctor/docVisitInfo'
-import docVisitDetail from '../views/doctor/docVisitDetail'
-import docErweima from '../views/doctor/docErweima'
+import docLogin from '../views/doctor/docLogin'//登录
+import docMoney from '../views/doctor/docMoney'//我的钱包
+import docPatient from '../views/doctor/docPatient'//我的患者
+import docConsult from '../views/doctor/docConsult'//咨询 聊天室
+import doctorPerfectInfo from '../views/doctor/doctorPerfectInfo'//完善个人信息
+import doctorMenu from '../views/doctor/doctorMenu'//菜单
+import docInfo from '../views/doctor/docInfo'//我的信息
+import docReservation from '../views/doctor/docReservation'//预约列表
+import docToBeiZhu from '../views/doctor/docToBeiZhu'//填写备注信息
+import docMyInfo from '../views/doctor/docMyInfo'//个人信息
+import docReservationDetail from '../views/doctor/docReservationDetail'//预约详情
+import docCancelReason from '../views/doctor/docCancelReason'//预约取消理由
+import docApplyForCash from '../views/doctor/docApplyForCash'//申请提现
+import docAddBankCard from '../views/doctor/docAddBankCard'//添加银行卡
+import docConsultSetting from '../views/doctor/docConsultSetting'//咨询设置
+import docFaTongzhi from '../views/doctor/docFaTongzhi'//发送通知
+import docChoosePatient from '../views/doctor/docChoosePatient'//选择患者
+import docReportDetail from '../views/doctor/docReportDetail'//化验单详情
+import docWorkHome from '../views/doctor/docWorkHome'//工作室
+import docAppointmentSetting from '../views/doctor/docAppointmentSetting'//预约设置
+import docVisitInfo from '../views/doctor/docVisitInfo'//复诊信息
+import docVisitDetail from '../views/doctor/docVisitDetail'//就诊信息
+import docErweima from '../views/doctor/docErweima'//医生二维码
 
 
 Vue.use(Router);

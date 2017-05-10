@@ -159,7 +159,7 @@
             <div class="reply" ref="reply">
               <div class="input-box">
                 <input type="text" v-model="form.content" @focus="shouqi"/>
-                <span v-if="fasong" @click="messages($event)" >发送</span>
+                <span v-if="fasong" @click="messages(form.content)" >发送</span>
                 <span v-else @click="tangchu($event)" ref="messageSpan" class="iconfont icon-jiahao"></span>
               </div>
               <div class="foot-box">
@@ -281,14 +281,15 @@
     created() {
         eventBus.$on('some', (thing) => {
           this.patientId = thing;
+          console.log(this.patientId)
         })
     },
     mounted(){
       this.consultList(this.postId,-5);
       this.personalInfo()
-      setInterval(() => {
-        this.consultList(this.maxId,10)
-      },10000)
+//      setInterval(() => {
+//        this.consultList(this.maxId,10)
+//      },3000)
     },
     updated() {
     },
@@ -305,42 +306,51 @@
           number:number,
         }
         var that = this;
-        console.log(postId,number)
         netWrokUtils.postConsult('/wx/baochuan_d/getconsultrecordlist', params, function (result) {
-        console.log(postId,number)
           that.talkData = result.data.content;
 //        判断是获取已有数据还是最新数据
           if(number>0){
-            for (let i in that.talkData) {
-              that.maxId = that.talkData[that.talkData.length-1].postId;
-              that.message.push(that.talkData[i])
+              if(that.talkData.length!= 0){
+                for (let i in that.talkData) {
+                  that.maxId = that.talkData[that.talkData.length-1].post_id;
+                  that.message.push(that.talkData[i])
+                }
+              }
+          }else if(number<0 && postId == 0){
+            if(that.talkData.length!= 0) {
+              for (let i in that.talkData) {
+                that.maxId = that.talkData[that.talkData.length - 1].post_id;
+                that.postId = that.talkData[0].post_id;
+                that.message.push(that.talkData[i])
+              }
             }
-          }else{
+          }else if(number<0 ){
+            for (var i = 0; i < that.talkData.length / 2; i++) {
+              var temp = that.talkData[i]; //交换变量
+              that.talkData[i] = that.talkData[that.talkData.length - i - 1];
+              that.talkData[that.talkData.length-i-1]=temp;
+            }
             for (let i in that.talkData) {
-              that.minId = that.talkData[0].postId;
+              that.postId = that.talkData[0].post_id;
               that.message.unshift(that.talkData[i])
             }
-          }
-        }, function (error_result) {
+        }
+      }, function (error_result) {
 //          Indicator.close();
 //          Toast(error_result);
         })
       },
 //      上拉刷新加载更多数据
       loadTop() {
-        var postId = this.postId
-        postId++
-        console.log(this.talkData)
-        if (this.talkData == "") {
+        if (this.talkData.logo == '' && this.talkData.post_id=='') {
             Toast('没有更多数据了')
         } else {
-          this.consultList(this.minId,-5)
+          this.consultList(this.postId,-5)
         }
         this.$refs.loadmore.onTopLoaded();
       },
       //  上传图片
       uploadFile (el) {
-        console.log(el)
         var form=document.getElementById("form1");
         var formdata=new FormData(form);
         var file = el.target.files[0]
@@ -398,7 +408,7 @@ console.log(this.baseImg)
             authentication: this.authentication,
             patientId:2
         }
-        var _this = this;
+        var that = this;
         netWrokUtils.postConsult('/wx/baochuan_d/revisitremind', params, function (result) {
           var outpatientContent = [];
           outpatientContent = result.data.content;
@@ -412,7 +422,7 @@ console.log(this.baseImg)
               showCancelButton: true
             }).then((result) => {
               if(result == "confirm"){
-                _this.$router.push({ path:'/baochuan_d/docVisitInfo'});
+                that.$router.push({ path:'/baochuan_d/docVisitInfo'});
               }
             });
           }else{
@@ -423,14 +433,16 @@ console.log(this.baseImg)
             }).then((result) => {
               if(result == "confirm"){
 //                  调取发送信息接口
-                var paramsFuzhen = {
-                  authentication:_this.authentication,
-                  patientId: _this.patientId,
+                var params = {
+                  authentication:that.authentication,
+                  patientId: that.patientId,
                   contentType:1,
                   content:outpatientContent,
+                  img:'',
                 }
-                console.log(paramsFuzhen)
-                netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', paramsFuzhen, (result) => {
+                netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
+                  that.consultList(that.maxId,2)
+                  that.shouqi()
                 }, (error_result) => {
                   Toast(error_result.data.msg);
                 })
@@ -475,14 +487,17 @@ console.log(this.baseImg)
             }).then((result) => {
               if(result=="confirm"){
                 outpatientContent = "您好,我的门诊时间是:"+outpatientContent;
+//                that.messages(outpatientContent)
                 var params = {
-                  authentication:this.authentication,
+                  authentication:that.authentication,
                   patientId: that.patientId,
                   contentType:1,
                   content:outpatientContent,
                   img:'',
                 }
                 netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
+                  that.consultList(that.maxId,2)
+                  that.shouqi()
                 }, (error_result) => {
                   Toast(error_result.data.msg);
                 })
@@ -500,16 +515,17 @@ console.log(this.baseImg)
         this.$refs.reply.className = 'reply'
       },
       //  回复消息
-      messages() {
+      messages(content) {
           var that = this;
         var params = {
           authentication:this.authentication,
           patientId: this.patientId,
           contentType:1,
-          content:this.form.content,
+          content:content,
         }
         netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
-          that.consultList(1)
+          that.form.content = ''
+          that.consultList(that.maxId,2)
         }, (error_result) => {
           Toast(error_result.data.msg);
         })
@@ -626,6 +642,7 @@ console.log(this.baseImg)
               &.right{
                 img, span{
                   float: right;
+                  margin-right:5px;
                 }
                .imgLogo{
                   border-radius:50%;
@@ -661,6 +678,7 @@ console.log(this.baseImg)
                &.left{
                  img, span{
                    float:left;
+                   margin-left:5px;
                  }
                 span{
                   background: #fff;
