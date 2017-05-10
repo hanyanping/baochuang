@@ -149,22 +149,22 @@
                     Toast('请选择医生');
                     return false;
                   }else{
-                    axios.post('/wx/baochuan_p/changedoctor',{
-                      authentication: this.authentication,
-                      doctorId: this.requestJson.id
-                    }).then((resp) => {
-                      if(resp.data.content.paymentStatus ==1){
-                        this.$router.push('payConfirm/1?doctorId='+this.requestJson.id);
-                      }else{
-                        WeixinJSBridge.invoke('closeWindow',{},function(res){
+                    WeixinJSBridge.invoke('closeWindow',{},function(res){
 
-                          //alert(res.err_msg);
+                      //alert(res.err_msg);
 
-                        });
-                      }
-                    }).catch((error) => {
-                      console.log(error);
-                    })
+                    });
+//                    axios.post('/wx/baochuan_p/changedoctor',{
+//                      authentication: this.authentication,
+//                      doctorId: this.requestJson.id
+//                    }).then((resp) => {
+//                      if(resp.data.content.paymentStatus ==1){
+//                        this.$router.push('payConfirm/1?doctorId='+this.requestJson.id);
+//                      }else{
+//                      }
+//                    }).catch((error) => {
+//                      console.log(error);
+//                    })
                   }
               },
               //取消操作

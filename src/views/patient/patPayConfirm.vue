@@ -189,7 +189,7 @@
                       this.shouldPay = this.payInfo.change_money - this.point/100
                   }else{
                     this.shouldPay = 0;
-                    this.costScore = (this.point/100 - this.payInfo.change_money)*100;
+                    this.costScore = this.payInfo.change_money*100;
                   }
               }else{
                 this.shouldPay = this.payInfo.change_money;
@@ -215,7 +215,7 @@
                 this.shouldPay = this.payInfo.change_money - this.point/100
               }else{
                 this.shouldPay = 0;
-                this.costScore = (this.point/100 - this.payInfo.change_money)*100;
+                this.costScore = this.payInfo.change_money*100;
               }
             }
         },
@@ -229,19 +229,22 @@
             cost: this.shouldPay
           };
           console.log(param.score);
-//          NetWorkUtils.post('/wx/baochuan_p/createchangeorder', param, (resp)=>{
-//            if(resp.data.content.order_id){
-//              if(this.shouldPay == 0){
-//                MessageBox.alert('支付成功!');
-//              }else{
-//
-//              }
-//            }
-//          }, (error)=>{})
+          NetWorkUtils.post('/wx/baochuan_p/createchangeorder', param, (resp)=>{
+            if(resp.data.content.order_id){
+              if(this.shouldPay == 0){
+                MessageBox.alert('支付成功!');
+              }else{
+
+              }
+            }
+          }, (error)=>{})
         },
         openMessage(){
           MessageBox.alert('1、积分如何获得？在医院就诊时，与门诊医生签约慢病管理服务即可获得相应积分。<br/>2、积分如何使用？积分可代替现金（兑换比例100:1），购买咨询、预约等医生服务。<br/>3、积分有效期积分不可提现，用户获得但未使用的积分，将在下一个自然月过期。', '关于积分');
         },
+        judgeMent: function(){
+
+        }
       },
 
     }
