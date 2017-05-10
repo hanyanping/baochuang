@@ -2,12 +2,12 @@
 <template>
   <div class="doc-reservation-box">
     <div v-if="content.length != 0" style="padding:10px 15px;">
-      <mt-loadmore
-        ref="loadmore"
-        :top-method="loadTop"
-        :bottom-method="loadBottom"
-        :bottom-all-loaded="allLoaded"
-        :autoFill="true">
+      <!--<mt-loadmore-->
+        <!--ref="loadmore"-->
+        <!--:top-method="loadTop"-->
+        <!--:bottom-method="loadBottom"-->
+        <!--:bottom-all-loaded="allLoaded"-->
+        <!--:autoFill="true">-->
 
       <div v-for="item in content" class="doc-reservation-list-box" @click="pushReservationDetail(item.order_id)">
         <div class="doc-reservation-list-content-top">
@@ -37,7 +37,7 @@
         <div class="doc-reservation-list-content-bottom">{{item.order_ctime}}</div>
       </div>
 
-      </mt-loadmore>
+      <!--</mt-loadmore>-->
     </div>
     <div v-else class="doc-reservation-empty-box" style="text-align: center">
       <img src="../../assets/img/nodatatips.png" style="margin-top: 30vh; width: 150px; height: 180px; line-height: 50%">

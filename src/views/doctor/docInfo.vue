@@ -119,9 +119,9 @@
       change (value) {
         console.log(value);
         if (value == false) { // 电话咨询关
-          Toast('手动关闭,调电话关接口');
+          this.teleConsultDown();
         } else { // 电话咨询开
-          Toast('手动开启,调电话开接口');
+          this.teleConsultOpen();
         }
       },
 
