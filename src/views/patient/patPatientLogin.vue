@@ -175,7 +175,8 @@
 
 <script>
   import {Toast} from 'mint-ui';
-  import axios from 'axios'
+  import axios from 'axios';
+  import comConstant from '../../components/comConstant.js';
 
   export default {
     data () {
@@ -185,7 +186,8 @@
         isCode: false,
         active: false,
         code: '',
-        authentication: '3437d5824a079a48da95ef2d5ab419b3',
+        authentication: auth,
+        flag_testReportIdentityCard: false,
         requestJson: {
           phone: '',
           code: ''
@@ -194,7 +196,8 @@
     },
     created(){
       eventBus.$on('page_flag', (thing) => {
-        console.log('comConstant.flag_testReportIdentityCard==' + comConstant.flag_testReportIdentityCard);
+        //console.log('comConstant.flag_testReportIdentityCard==' + this.comConstant.flag_testReportIdentityCard);
+        //if(comConstant.flag_testReportIdentityCard)
 //        this.doctor_id = thing;
       })
     },
