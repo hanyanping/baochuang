@@ -178,7 +178,7 @@
         },
         payInfo: '',
         point: null,
-        isChecked: true,
+        isChecked: false,
         shouldPay: null,
         costScore: null,
         requestJson: {

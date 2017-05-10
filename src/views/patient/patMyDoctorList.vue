@@ -234,7 +234,8 @@
       {
       },
       goDoctorInfo(doctorId){
-          wx. wx.closeWindow();
+          alert(1);
+          wx.closeWindow();
 //          this.$router.push('doctorInfo/'+doctorId);
       }
 
