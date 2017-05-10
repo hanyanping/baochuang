@@ -162,7 +162,6 @@
         subscribe_active: false,
         isPerfect: false,
         authentication: auth,
-        aa: 'http://sucai.qqjay.com/qqjayxiaowo/201210/26/1.jpg',
         doctor_id: ''
       }
     },

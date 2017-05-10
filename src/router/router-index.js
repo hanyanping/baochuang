@@ -33,8 +33,7 @@ import clinicRecord from '../views/patient/patClinicRecord';
 import changeMainDoctor from '../views/patient/patChangeMainDoctor';
 import payConfirm from '../views/patient/patPayConfirm';
 import patientLogin from '../views/patient/patPatientLogin';
-
-
+import patEmptyForMenu from '../views/patient/patEmptyForMenu';
 
 
 // 医生端页面
@@ -85,18 +84,19 @@ export default new Router({
         {path: 'reserveList', component: reserveList},
         {path: 'completeInfo', component: completeInfo},
         {path: 'visitRecord', component: visitRecord},
-        {path: 'personalCenter',component: personalCenter},
-        {path: 'selectTestReport',component: selectTestReport},
-        {path: 'integralAccount',component: integralAccount},
-        {path: 'subscribeList',component: subscribeList},
-        {path: 'hospitalInfo',component: hospitalInfo},
-        {path: 'doctorInfo/:id',component: doctorInfo},
-        {path: 'selectTestReportCheck',component: selectTestReportCheck},
-        {path: 'checkRecord',component: checkRecord},
-        {path: 'clinicRecord',component: clinicRecord},
-        {path: 'changeMainDoctor',component: changeMainDoctor},
-        {path: 'payConfirm/:type',component: payConfirm},
-        {path: 'patientLogin',component: patientLogin},
+        {path: 'personalCenter', component: personalCenter},
+        {path: 'selectTestReport', component: selectTestReport},
+        {path: 'integralAccount', component: integralAccount},
+        {path: 'subscribeList', component: subscribeList},
+        {path: 'hospitalInfo', component: hospitalInfo},
+        {path: 'doctorInfo/:id', component: doctorInfo},
+        {path: 'selectTestReportCheck', component: selectTestReportCheck},
+        {path: 'checkRecord', component: checkRecord},
+        {path: 'clinicRecord', component: clinicRecord},
+        {path: 'changeMainDoctor', component: changeMainDoctor},
+        {path: 'payConfirm', component: payConfirm},
+        {path: 'patientLogin', component: patientLogin},
+        {path: 'patEmptyForMenu', component: patEmptyForMenu}
       ],
     },
     {
