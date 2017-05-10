@@ -23,7 +23,7 @@
 
         <div v-show="value === true" class="doc-ConsultSetting-two-select-box">
           <div class="doc-ConsultSetting-two-select-smallbox">
-            <input type="tel" style="text-align: right; width: 100px" placeholder="0">
+            <input v-model="inputText" type="tel" style="text-align: right; width: 100px" placeholder="0">
           </div>
           <div style="display: flex">
             <span style="flex: 1">元</span>
@@ -37,7 +37,7 @@
     </div>
 
     <!-- 咨询开启或关闭 界面显示切换 -->
-    <button class="doc-ConsultSetting-button" :class="{'isClose':!value}">保存</button>
+    <button class="doc-ConsultSetting-button" @click="commitSett" :class="{'isClose':!value}">保存</button>
     <footer class="doc-ConsultSetting-tip" :class="{'isClose':!value}">
       <p>1、咨询功能开启后，患者将会向您发起咨询，每次咨询费用将按照您的设置进行付费。</p>
       <p>2、每次咨询有效期为24小时，如您未按时回复，服务费用将自动退回给患者句号</p>
@@ -47,40 +47,122 @@
 </template>
 
 <script>
-  import {Indicator} from 'mint-ui';
-  import {Toast} from 'mint-ui';
+  import {Indicator, MessageBox, Toast} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils';
 
   export default {
     name: 'docConsultSetting',
     data () {
       return {
         value: '',
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
+        inputText: '',
+        content: {}
       }
+    },
+
+    mounted () {
+      // 获取咨询设置信息
+      this.getConsultInfo();
     },
 
     created () {
       document.getElementsByTagName('title')[0].innerHTML = '咨询设置';
-      // 获取上个页面传递过来的值,是否开启了咨询设置
-      eventBus.$on('value', (thing) => {
-        if (thing == 1) {
-          this.value = true;
-        } else {
-          this.value = false;
-        }
-      });
+//      // 获取上个页面传递过来的值,是否开启了咨询设置
+//      eventBus.$on('value', (thing) => {
+//        console.log(thing);
+//        if (thing == 1) {
+//          this.value = true;
+//        } else {
+//          this.value = false;
+//        }
+//      });
     },
 
-    beforeDestroy () {
-      eventBus.$off('value');
-    },
+//    beforeDestroy () {
+//      eventBus.$off('value');
+//    },
 
     methods: {
-      change (value) {
-        console.log(value);
+      // 获取咨询设置信息
+      getConsultInfo () {
+        Indicator.open();
+        let that = this;
+        var params = {
+          authentication: that.authentication
+        };
+        netWrokUtils.post('/wx/baochuan_d/getconsultsettinginfo', params, (success) => {
+          console.log(success);
+          Indicator.close();
+          that.content = success.data.content;
+          if (that.content.open_consult == 1) { // 咨询开
+            that.value = true;
+          } else { // 咨询关
+            that.value = false;
+          }
+          that.inputText = that.content.consult_cost;
+        }), (failure) => {
+          console.log(failure);
+          Indicator.close();
+        };
       },
 
-    }
+      change (value) {
+        if (value == false) { // 咨询关
+          Indicator.open();
+          let that = this;
+          var params;
+          params = {
+            authentication: that.authentication,
+            openConsult: 0,
+            consultCost: 0
+          };
+          netWrokUtils.post('/wx/baochuan_d/setthread', params, (success) => {
+            Indicator.close();
+            var str = '<div style="text-align: center">咨询设置成功!</div>'
+            MessageBox.alert(str, ' ').then(action => {
+            this.$router.push({ path:"/baochuan_d/docInfo"});
+            });
+          }), (failure) => {
+            Indicator.close();
+            console.log(failure);
+          };
+        }
+      },
 
+      // 提交咨询设置
+      commitSett () {
+        let that = this;
+        if (parseInt(that.inputText) < 0) {
+          Toast('服务费不能小于0元');
+          return;
+        }
+        if (parseInt(that.inputText) > 200) {
+          Toast('服务费不能大于200元');
+          return;
+        }
+
+        if (that.value == true) {
+          Indicator.open();
+          var params = {
+            authentication: that.authentication,
+            openConsult: 1,
+            consultCost: that.inputText
+          };
+          netWrokUtils.post('/wx/baochuan_d/setthread', params, (success) => {
+            Indicator.close();
+            var str = '<div style="text-align: center">咨询设置成功</div>'
+            MessageBox.alert(str, ' ').then(action => {
+            this.$router.push({ path:"/baochuan_d/docInfo"});
+            });
+          }), (failure) => {
+            Indicator.close();
+            console.log(failure);
+          };
+        }
+      }
+
+    }
   }
 </script>
 

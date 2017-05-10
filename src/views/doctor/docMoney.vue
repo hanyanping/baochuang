@@ -43,14 +43,13 @@
 
 </template>
 <script>
-  import { Toast,Field } from 'mint-ui';
-  import axios from 'axios'
+  import {Toast, Field, Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'docMoney',
     data () {
       return {
-        authentication: '3437d5824a079a48da95ef2d5ab419b3',
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
         moneyInfo: {},
         moneyList: {},
         showRed: ''
@@ -63,18 +62,20 @@
       this.getDocInfo();
     },
     methods: {
-      // 获取个人信息
+      // 获取我的钱包信息
       getDocInfo() {
-       axios.post('/api/wx/baochuan_d/wallet', {
-         authentication: this.authentication
-       }).then((result) => {
-            this.moneyInfo = result.data.content;
-            console.log(this.moneyInfo)
-       }).catch((error) => {
-            console.log(error);
-       })
-
+        Indicator.open();
+        let that = this;
+        var params = {
+          authentication: that.authentication
+        };
+        netWrokUtils.post('/wx/baochuan_d/wallet', params, (success) => {
+          console.log(success);
+        }), (failure) => {
+          console.log(failure);
+        };
       }
+
     },
   }
 </script>

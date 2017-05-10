@@ -87,11 +87,11 @@
     },
 
     destroyed () {
-      eventBus.$emit('value', this.consult_status);
+//      eventBus.$emit('value', this.consult_status);
+      eventBus.$emit('values', this.subscribe_status);
     },
 
     methods: {
-
       // 获取个人信息
       getDocInfo () {
         Indicator.open();
