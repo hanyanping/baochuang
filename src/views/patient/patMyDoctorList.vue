@@ -227,11 +227,11 @@
           Toast(error_result.data.msg);
         })
       },
-      loadTop()
-      {
+      loadTop(){
       },
-      loadBottom()
-      {
+
+      loadBottom(){
+
       },
       goDoctorInfo(doctorId){
           this.$router.push('doctorInfo/'+doctorId);
