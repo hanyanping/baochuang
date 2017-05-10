@@ -78,6 +78,7 @@
     display:inline-block;
     line-height:55px;
     text-align:center;
+    text-decoration: none;
   }
 
 .title-badge{
@@ -105,8 +106,8 @@
     <div class="device-height bg-grey">
       <div class="doctorIcon pos-relate">
         <img :src="doctorInfo.doctor_img" alt="">
-        <span v-if="doctorInfo.relation == 2" class="logo-signed pos-absolute color-white fs14">签约医生</span>
-        <span v-else="doctorInfo.relation == 1" class="logo-signed pos-absolute color-white fs14">关注医生</span>
+        <span @click="goChangeDoctor" v-if="doctorInfo.relation == 2" class="logo-signed pos-absolute color-white fs14">签约医生</span>
+        <span @click="goChangeDoctor" v-else="doctorInfo.relation == 1" class="logo-signed pos-absolute color-white fs14">关注医生</span>
         <p class="doctor-profession">
           <span class="color-white fs17">{{doctorInfo.name}}</span>
           <span class="color-white fs17 paddingL10">{{doctorInfo.grade}}</span>
@@ -172,7 +173,7 @@
       data(){
           return {
               params: {
-                authentication: 'e5edd65e69e6a1b3f25782357908284c',
+                authentication: auth,
                 doctorId: this.$route.params.id
               },
             doctorInfo: '',
@@ -202,6 +203,9 @@
         openOrClose(){
             this.isActive = !this.isActive;
             this.showAll = !this.showAll;
+        },
+        goChangeDoctor(){
+            this.$router.push('/baochuan_p/changeMainDoctor');
         }
       }
     }

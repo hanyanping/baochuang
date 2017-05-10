@@ -107,7 +107,7 @@
             <i class="iconfont icon-wenhao1 color-grey fs20 paddingL10"></i>
             <span class="color-grey fs16">什么是主管医生</span>
           </div>
-          <div class="list-item pos-relate parent-width parent-margin circular-bead box-shade"
+          <div @click="goDoctorInfo(item.id)" class="list-item pos-relate parent-width parent-margin circular-bead box-shade"
                v-for="item in myDoctorList" :style="{backgroundImage: 'url(' + item.doctor_img + ')'}">
             <!--<div class="list-item pos-relate parent-width parent-margin circular-bead box-shade"-->
             <!--v-for="item in myDoctorList" :style="{backgroundImage: 'url('+aa+')'}">-->
@@ -233,6 +233,9 @@
       loadBottom()
       {
       },
+      goDoctorInfo(doctorId){
+          this.$router.push('doctorInfo/'+doctorId);
+      }
 
     }
   }

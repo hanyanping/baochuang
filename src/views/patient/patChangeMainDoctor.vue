@@ -112,7 +112,7 @@
         return {
           isActive: -1,
           doctorList: [],
-          authentication: 'd265ee3c594c3364cad5b89c7c8e8b80',
+          authentication: auth,
           mainDoctor: '',
           requestJson: {
             id: '',
@@ -149,11 +149,7 @@
                     Toast('请选择医生');
                     return false;
                   }else{
-                    WeixinJSBridge.invoke('closeWindow',{},function(res){
-
-                      //alert(res.err_msg);
-
-                    });
+                    wx.closeWindow();
 //                    axios.post('/wx/baochuan_p/changedoctor',{
 //                      authentication: this.authentication,
 //                      doctorId: this.requestJson.id
