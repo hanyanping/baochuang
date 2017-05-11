@@ -34,8 +34,33 @@
   import {Indicator} from 'mint-ui';
   import netWrokUtils from '../../components/NetWrokUtils'
   import moment from 'moment/moment.js';
+  import comConstant from '../../components/comConstant.js';
 
+  var _idCard;
   export default {
+    beforeRouteEnter (to, from, next) {
+      // 调用接口 返回是否直接查询检查报告
+      var params = {
+        authentication: auth
+      }
+      netWrokUtils.post('/wx/baochuan_p/getuseridcard', params, (result) => {
+        var idCard = result.data.content.idCard;
+        _idCard = idCard;
+        var is_show_his = result.data.content.isShowHis;
+        // is_show_his == 1 是可以直接查询
+        if (is_show_his == 1) {
+          next(true);
+        } else {
+          next(vm=> {
+            vm.$router.push({path: 'testReportIdentityCard'}) //跳转填写身份证页面
+            return false;
+          });
+//          next('/baochuan_p/testReportIdentityCard');
+        }
+      }, (error_result) => {
+        Toast(error_result.data.msg);
+      })
+    },
     data () {
       return {
         reportList: [],
@@ -49,6 +74,7 @@
     created(){
     },
     destroyed () {
+      eventBus.$emit('page_flag', comConstant.flag_testReportIdentityCard);
       eventBus.$emit('report_item', this.item);
     },
     methods: {

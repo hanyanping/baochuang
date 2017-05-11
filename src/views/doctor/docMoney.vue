@@ -15,25 +15,30 @@
           <div class="detailList" v-for="item in moneyList">
             <div class="tixianBox">
               <div class="tixinaMoney">
-                <div class="tixianWenzi">{{item.name}} <span class="patientName">患者：<span>王小二</span></span></div>
+                <div class="tixianWenzi">{{item.name}}
+                  <span class="patientName" v-show="item.name!='提现'">
+                    患者：
+                    <span>{{item.patientName}}</span>
+                  </span>
+                </div>
                 <div :class="{'xiaofeiJine':showRed,'tixianJine':!showRed}">{{item.money}} 元</div>
               </div>
               <div class="tixianTime">{{item.time}}</div>
             </div>
-            <div class="yuyueBox tixianBox">
-              <div class="tixinaMoney">
-                <div class="tixianWenzi">咨询服务费 </div>
-                <div class=""  :class="{'xiaofeiJine':showRed,'tixianJine':!showRed}">+10.00元</div>
-              </div>
-              <div class="tixianTime">2017-03-23  <span>12:45:23</span></div>
-            </div>
+            <!--<div class="yuyueBox tixianBox">-->
+              <!--<div class="tixinaMoney">-->
+                <!--<div class="tixianWenzi">咨询服务费 </div>-->
+                <!--<div class=""  :class="{'xiaofeiJine':showRed,'tixianJine':!showRed}">+10.00元</div>-->
+              <!--</div>-->
+              <!--<div class="tixianTime">2017-03-23  <span>12:45:23</span></div>-->
+            <!--</div>-->
             <!--<div class="yuyueBox"></div>-->
             <!--<div class="zixunBox"></div>-->
           </div>
         </div>
         <b></b>
         <b></b>
-        <i></i>
+        <!--<i></i>-->
       </div>
       <div v-else class="nodata">
         <img src="../../assets/img/nodatatips.png"/>
@@ -51,7 +56,7 @@
       return {
         authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
         moneyInfo: {},
-        moneyList: {},
+        moneyList: [],
         showRed: ''
       }
     },
@@ -71,6 +76,8 @@
         };
         netWrokUtils.post('/wx/baochuan_d/wallet', params, (success) => {
           console.log(success);
+          that.moneyInfo = success.data.content;
+          that.moneyList = success.data.content.list;
         }), (failure) => {
           console.log(failure);
         };
@@ -128,7 +135,7 @@
     margin:-66px 16px;
     background:#fff;
     border-radius:5px;
-    box-shadow: 0 6px 25px -5px #529D98;
+    box-shadow: 0 6px 25px -5px #9cb8b5;
   }
   .docMoneyBox .moneyContainer b:nth-of-type(1){
     left: -1px;
@@ -144,7 +151,7 @@
     position: absolute;
     width: 7px;
     height: 14px;
-    top: 38px;
+    top: 40px;
     border: 1px solid #f1f1f1;
     z-index: 33;
     background:#529D98;
@@ -167,10 +174,14 @@
   .docMoneyBox .moneyContainer .mingxinDetail .detailName{
     padding:15px 0;
   }
+  .moneyContainer .mingxinDetail .detailList {
+    border-top: 1px dashed #86B8B8;
+  }
+
   .docMoneyBox .moneyContainer .detailList .tixinaMoney{
-       display:flex;
-       justify-content: space-between;
-     }
+    display:flex;
+    justify-content: space-between;
+  }
   .docMoneyBox .moneyContainer .detailList .tixianBox{
     border-bottom:1px dashed #dfdfdf;
     padding:15px 0;

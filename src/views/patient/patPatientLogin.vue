@@ -205,13 +205,14 @@
           tempPhone: ''
         },
         button_name: '登  录',
+        page_flag: ''
       }
     },
     created(){
       eventBus.$on('page_flag', (thing) => {
-        console.log('comConstant.flag_testReportIdentityCard==' + comConstant.flag_testReportIdentityCard);
-        if (comConstant.flag_testReportIdentityCard == thing) {
-          // 从检查报告输入身份证页来的
+        this.page_flag = thing;
+        if (comConstant.flag_testReportIdentityCard == thing || comConstant.flag_clinicRecord == thing) {
+          // 从检查报告,从就诊记录  到输入身份证页来的
           this.button_name = '身份核实';
           this.requestJson.isCompile = false;
         }
@@ -326,7 +327,11 @@
           vercode: that.requestJson.code
         }
         netWrokUtils.post('/wx/baochuan_p/checkhismobile', params, (result) => {
-          this.$router.push({path: 'selectTestReport'}) //跳转填写手机验证码页面
+          if (this.page_flag == comConstant.flag_testReportIdentityCard) {
+            this.$router.push({path: 'selectTestReport'}) //跳转检查报告页面
+          } else if (this.page_flag == comConstant.flag_clinicRecord) {
+            this.$router.push({path: 'clinicRecord'}) //跳转就诊记录页面
+          }
           Toast(result.data.msg);
         }, (error_result) => {
           Toast(error_result.data.msg);
