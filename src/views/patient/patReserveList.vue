@@ -1,5 +1,5 @@
 <!--预约订单列表-->
-<style scoped>
+<style scoped lang="scss">
   .order-reserve-item {
     width: 92%;
     margin: 4% 4% 0;
@@ -50,6 +50,24 @@
     line-height: 20px;
   }
 
+  .reservelist-listitem-empty-box {
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+
+  .reservelist-listitem-empty-img {
+    padding-top: 30vh;
+    width: 70px;
+    height: 70px;
+  }
+
+  .reservelist-listitem-empty-text {
+    display: inline-block;
+    font-size: 16px;
+    color: #d7d7d7;
+  }
+
+  }
 </style>
 
 <template>
@@ -78,6 +96,7 @@
             <span class="item-tips border-top" v-if="item.status == 4">建议您在{{item.suggest_time}}到达医院就诊</span>
           </dd>
         </dl>
+
         <!--<div slot="top" class="mint-loadmore-top">-->
         <!--<span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>-->
         <!--<mt-spinner type="snake"></mt-spinner>-->
@@ -89,6 +108,11 @@
         <!--<span v-show="bottomStatus === 'loading'">正在加载</span>-->
         <!--</div>-->
       </mt-loadmore>
+      <div class="reservelist-listitem-empty-box" v-show="message.length <= 0">
+        <img src="../../assets/img/recode_icon.png" class="reservelist-listitem-empty-img">
+        <br/>
+        <span class="reservelist-listitem-empty-text">暂无预约订单记录</span>
+      </div>
     </div>
   </div>
 </template>

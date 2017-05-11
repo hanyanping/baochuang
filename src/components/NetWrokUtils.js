@@ -7,11 +7,16 @@ import {Toast} from 'mint-ui';
 import {Indicator} from 'mint-ui';
 
 
-// post 请求
+/**
+ * post 请求, 带 Indicator
+ * @param url
+ * @param params
+ * @param success
+ * @param error
+ */
 function post(url, params, success, error) {
   if (url[0] == '/')
     url = process.env.API_HOST + url;
-  // console.log('---',url);
 
   Indicator.open();
   axios.post(url, params).then(function (result) {
@@ -35,13 +40,19 @@ function post(url, params, success, error) {
     Toast('网络不给力 ! 请稍后再试!' + network_error);
   })
 };
+
+/**
+ * 去除Indicator post
+ * @param url
+ * @param params
+ * @param success
+ * @param error
+ */
 function postConsult(url, params, success, error) {
   if (url[0] == '/')
     url = process.env.API_HOST + url;
-  // console.log('---',url);
 
   axios.post(url, params).then(function (result) {
-    // console.log(result)
     if (result.data.code == 0) {
       success(result);
     }
@@ -60,7 +71,41 @@ function postConsult(url, params, success, error) {
     Toast('网络不给力 ! 请稍后再试!' + network_error);
   })
 };
+
+/**
+ * post 请求  直接返回数据是 html页面
+ * @param url
+ * @param params
+ * @param success
+ * @param error
+ */
+function postHtml(url, params, success, error) {
+  if (url[0] == '/')
+    url = process.env.API_HOST + url;
+
+  Indicator.open();
+  axios.post(url, params).then(function (result) {
+    Indicator.close();
+    console.log(result)
+    success(result);
+  }).catch(function (network_error) {
+    Indicator.close();
+    console.log(network_error);
+    Toast('网络不给力 ! 请稍后再试!' + network_error);
+  })
+};
+
+/**
+ * get 请求 带Indicator
+ * @param url
+ * @param params
+ * @param success
+ * @param error
+ */
 function get(url, params, success, error) {
+  if (url[0] == '/')
+    url = process.env.API_HOST + url;
+
   Indicator.open();
   axios.get(url, params).then(function (result) {
     Indicator.close();
@@ -80,6 +125,9 @@ function get(url, params, success, error) {
   })
 }
 
+/**
+ * 设置auth
+ */
 function setAuthForNull() {
   var path = window.location.href;
   if (path.indexOf('baochuan_p') != -1) {
@@ -93,7 +141,8 @@ function setAuthForNull() {
 export default {
   post,
   get,
-  postConsult
+  postConsult,
+  postHtml
 }
 
 
