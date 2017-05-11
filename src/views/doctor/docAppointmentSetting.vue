@@ -8,7 +8,7 @@
             <span>预约功能</span>
           </div>
           <div>
-            <mt-switch v-model="value"></mt-switch>
+            <mt-switch v-model="value" @change="change(value)"></mt-switch>
           </div>
         </div>
 
@@ -23,14 +23,14 @@
           </div>
           <div v-show="value === true" class="doc-appoint-two-select-box">
             <div class="doc-appoint-two-select-smallbox">
-              <select class="doc-appoint-two-select">
+              <select v-model="costContent" class="doc-appoint-two-select" >
                 <option value="0">0元/次</option>
-                <option>5元/次</option>
-                <option>10元/次</option>
-                <option>15元/次</option>
-                <option>20元/次</option>
-                <option>25元/次</option>
-                <option>30元/次</option>
+                <option value="1">5元/次</option>
+                <option value="2">10元/次</option>
+                <option value="3">15元/次</option>
+                <option value="4">20元/次</option>
+                <option value="5">25元/次</option>
+                <option value="6">30元/次</option>
               </select>
             </div>
             <div class="iconfont icon-jiantou doc-appoint-two-jiantou">
@@ -45,7 +45,7 @@
             <span>每次就诊可约的患者人数</span>
           </div>
           <div class="weui-cell__ft">
-            <input class="weui-input" type="tel" placeholder="0">
+            <input class="weui-input" v-model="inputText" type="tel" placeholder="0">
             <span style="font-size:15px;color:#232323;">人</span>
           </div>
           <b class="header-three-nth header-three-nth-of-type-one"></b>
@@ -58,79 +58,365 @@
           <i class="iconfont  icon-jilu"></i>
           <span class="text-time">可预约时间</span>
         </div>
-        <div class="weui-grids reserve-grids ">
+
+        <div class="weui-grids reserve-grids" v-for="item in clinic_list">
+
           <div class="weui-grid">
-            <p class="weui-grid__label" style="color:#232323;">星期一</p>
+            <p class="weui-grid__label" style="color:#232323;">{{item.day_name}}</p>
           </div>
-          <a href="javascript:;" @click="reserveToggleSubTime()" class="weui-grid" :class="{'reserve-selected-grid':isSelect}">
-            <p class="weui-grid__label" :class="{'weui-grid__select-label':isSelect}" >上午</p>
+          <a href="javascript:;" @click="amClick($event, item.day_name, item.am)" :class="{'reserve-selected-grid':item.am == 1}"  class="weui-grid">
+            <p class="weui-grid__label" :class="{'weui-grid__select-label':item.am == 1}">上午</p>
           </a>
-          <a href="javascript:;" @click="reserveToggleSubTime()" class="weui-grid reserve-selected-grid">
-            <p class="weui-grid__label">下午</p>
+          <a href="javascript:;" @click="pmClick($event, item.day_name, item.pm)" :class="{'reserve-selected-grid':item.pm == 1}" class="weui-grid">
+            <p class="weui-grid__label" :class="{'weui-grid__select-label':item.pm == 1}">下午</p>
           </a>
-          <div class="weui-grid">
-            <p class="weui-grid__label" style="color:#232323;">星期二</p>
-          </div>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">上午</p>
-          </a>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid reserve-selected-grid">
-            <p class="weui-grid__label">下午</p>
-          </a>
-          <div class="weui-grid">
-            <p class="weui-grid__label" style="color:#232323;">星期三</p>
-          </div>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">上午</p>
-          </a>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">下午</p>
-          </a>
-          <div class="weui-grid">
-            <p class="weui-grid__label" style="color:#232323;">星期四</p>
-          </div>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">上午</p>
-          </a>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">下午</p>
-          </a>
-          <div class="weui-grid">
-            <p class="weui-grid__label" style="color:#232323;">星期五</p>
-          </div>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid reserve-selected-grid">
-            <p class="weui-grid__label">上午</p>
-          </a>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">下午</p>
-          </a>
-          <div class="weui-grid">
-            <p class="weui-grid__label" style="color:#232323;">星期六</p>
-          </div>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">上午</p>
-          </a>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid reserve-selected-grid">
-            <p class="weui-grid__label">下午</p>
-          </a>
-          <div class="weui-grid">
-            <p class="weui-grid__label" style="color:#232323;">星期日</p>
-          </div>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid visit">
-            <p class="weui-grid__label">上午</p>
-          </a>
-          <a href="javascript:;" @click="reserveToggleSubTime();" class="weui-grid">
-            <p class="weui-grid__label">下午</p>
-          </a>
+
         </div>
+
       </div>
 
-      <button v-show="value === true" class="doc-appoint-bottom-button">保存</button>
+      <button v-show="value === true" class="doc-appoint-bottom-button" @click="commitSetting">保存</button>
     </div>
   </div>
 
 
 </template>
+
+<script>
+  import {Indicator, MessageBox, Toast} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils';
+
+  export default {
+    name: 'docAppointmentSetting',
+    data () {
+      return {
+        value: '',
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
+        content: {},
+        inputText: '',
+        costContent: 0,
+        clinic_list: [],
+        selectCost: '',
+      }
+    },
+
+    mounted () {
+      // 获取预约设置信息
+      this.getAppointmentSett();
+    },
+
+    created () {
+      document.getElementsByTagName('title')[0].innerHTML = '预约设置';
+      // 获取上个页面传递过来的值,是否开启了预约设置
+//      eventBus.$on('values', (thing) => {
+//        console.log(thing);
+//        if (thing == 1) {
+//          this.value = true;
+//        } else {
+//          this.value = false;
+//        }
+//      });
+    },
+
+    beforeDestroy () {
+//      eventBus.$off('values');
+    },
+
+    methods: {
+      // 获取预约设置信息
+      getAppointmentSett () {
+        Indicator.open();
+        let that = this;
+        var params = {
+          authentication: that.authentication
+        };
+        netWrokUtils.post('/wx/baochuan_d/getappointmentsettinginfo', params, (success) => {
+          Indicator.close();
+          that.content = success.data.content;
+          that.clinic_list = success.data.content.clinic_list;
+
+          if (that.content.open_subscribe == 1) { // 预约开
+            that.value = true;
+          } else { // 预约关
+            that.value = false;
+          }
+          that.inputText = that.content.subscribe_limit;
+          switch (that.content.subscribe_cost) {
+            case 0:
+              that.costContent = 0;
+              break;
+            case 5:
+              that.costContent = 1;
+              break;
+            case 10:
+              that.costContent = 2;
+              break;
+            case 15:
+              that.costContent = 3;
+              break;
+            case 20:
+              that.costContent = 4;
+              break;
+            case 25:
+              that.costContent = 5;
+              break;
+            case 30:
+              that.costContent = 6;
+              break;
+            default:
+              break;
+          }
+        }), (failure) => {
+          Indicator.close();
+        };
+      },
+
+      change (value) {
+        if (value == false) { // 预约关
+          Indicator.open();
+          let that = this;
+          var params;
+          params = {
+            authentication: that.authentication,
+            open_subscribe: 0,
+          };
+          netWrokUtils.post('/wx/baochuan_d/setappointment', params, (success) => {
+            Indicator.close();
+            var str = '<div style="text-align: center">预约设置成功!</div>'
+            MessageBox.alert(str, ' ').then(action => {
+              this.$router.push({ path:"/baochuan_d/docInfo"});
+            });
+          }), (failure) => {
+            Indicator.close();
+            console.log(failure);
+          };
+        } else { // 如果switch滑动到开的状态,从后台拉取数据模板,为v-for循环创建(因为时间表是根据clinic_list数据结构循环创建出来的),如果不拉取模板则创建不出来.
+          Indicator.open();
+          let that = this;
+          var params = {
+            authentication: that.authentication
+          };
+          netWrokUtils.post('/wx/baochuan_d/getappointmentsettinginfo', params, (success) => {
+            Indicator.close();
+            that.content = success.data.content;
+            that.clinic_list = success.data.content.clinic_list;
+            that.inputText = that.content.subscribe_limit;
+            switch (that.content.subscribe_cost) {
+              case 0:
+                that.costContent = 0;
+                break;
+              case 5:
+                that.costContent = 1;
+                break;
+              case 10:
+                that.costContent = 2;
+                break;
+              case 15:
+                that.costContent = 3;
+                break;
+              case 20:
+                that.costContent = 4;
+                break;
+              case 25:
+                that.costContent = 5;
+                break;
+              case 30:
+                that.costContent = 6;
+                break;
+              default:
+                break;
+            }
+          }), (failure) => {
+            Indicator.close();
+          };
+        }
+      },
+
+      amClick (el, day, am) {
+        var cln = el.currentTarget.className.indexOf('reserve-selected-grid');
+        if (cln > 0) {
+          el.currentTarget.className = 'weui-grid';
+        } else {
+          el.currentTarget.className = 'weui-grid reserve-selected-grid';
+        }
+
+        switch (day) {
+          case '周一':
+            if (am == 0) {
+              this.clinic_list[0].am = 1;
+            } else {
+              this.clinic_list[0].am = 0;
+            }
+            break;
+
+          case '周二':
+            if (am == 0) {
+              this.clinic_list[1].am = 1;
+            } else {
+              this.clinic_list[1].am = 0;
+            }
+            break;
+
+          case '周三':
+            if (am == 0) {
+              this.clinic_list[2].am = 1;
+            } else {
+              this.clinic_list[2].am = 0;
+            }
+            break;
+
+          case '周四':
+            if (am == 0) {
+              this.clinic_list[3].am = 1;
+            } else {
+              this.clinic_list[3].am = 0;
+            }
+            break;
+
+          case '周五':
+            if (am == 0) {
+              this.clinic_list[4].am = 1;
+            } else {
+              this.clinic_list[4].am = 0;
+            }
+            break;
+
+          case '周六':
+            if (am == 0) {
+              this.clinic_list[5].am = 1;
+            } else {
+              this.clinic_list[5].am = 0;
+            }
+            break;
+
+          case '周日':
+            if (am == 0) {
+              this.clinic_list[6].am = 1;
+            } else {
+              this.clinic_list[6].am = 0;
+            }
+            break;
+        };
+      },
+
+      pmClick (el, day, pm) {
+        var cln = el.currentTarget.className.indexOf('reserve-selected-grid');
+        if (cln > 0) {
+          el.currentTarget.className = 'weui-grid';
+        } else {
+          el.currentTarget.className = 'weui-grid reserve-selected-grid';
+        }
+
+        switch (day) {
+          case '周一':
+            if (pm == 0) {
+              this.clinic_list[0].pm = 1;
+            } else {
+              this.clinic_list[0].pm = 0;
+            }
+            break;
+
+          case '周二':
+            if (pm == 0) {
+              this.clinic_list[1].pm = 1;
+            } else {
+              this.clinic_list[1].pm = 0;
+            }
+            break;
+
+          case '周三':
+            if (pm == 0) {
+              this.clinic_list[2].pm = 1;
+            } else {
+              this.clinic_list[2].pm = 0;
+            }
+            break;
+
+          case '周四':
+            if (pm == 0) {
+              this.clinic_list[3].pm = 1;
+            } else {
+              this.clinic_list[3].pm = 0;
+            }
+            break;
+
+          case '周五':
+            if (pm == 0) {
+              this.clinic_list[4].pm = 1;
+            } else {
+              this.clinic_list[4].pm = 0;
+            }
+            break;
+
+          case '周六':
+            if (pm == 0) {
+              this.clinic_list[5].pm = 1;
+            } else {
+              this.clinic_list[5].pm = 0;
+            }
+            break;
+
+          case '周日':
+            if (pm == 0) {
+              this.clinic_list[6].pm = 1;
+            } else {
+              this.clinic_list[6].pm = 0;
+            }
+            break;
+        };
+      },
+
+      // 保存设置
+      commitSetting () {
+        Indicator.open();
+        let that = this;
+        console.log(that.costContent);
+        console.log(typeof that.costContent);
+
+        if (that.costContent == 0) {
+          that.selectCost = 0;
+        } else if (that.costContent == 1) {
+          that.selectCost = 5;
+        } else if (that.costContent == 2) {
+          that.selectCost = 10;
+        } else if (that.costContent == 3) {
+          that.selectCost = 15;
+        } else if (that.costContent == 4) {
+          that.selectCost = 20;
+        } else if (that.costContent == 5) {
+          that.selectCost = 25;
+        } else if (that.costContent == 6) {
+          that.selectCost = 30;
+        }
+
+        var params = {
+          authentication: that.authentication,
+          open_subscribe: 1,
+          subscribe_cost: that.selectCost,
+          subscribe_limit: that.inputText,
+          z1: that.clinic_list[0].am + ',' + that.clinic_list[0].pm + ',' + that.clinic_list[0].night,
+          z2: that.clinic_list[1].am + ',' + that.clinic_list[1].pm + ',' + that.clinic_list[1].night,
+          z3: that.clinic_list[2].am + ',' + that.clinic_list[2].pm + ',' + that.clinic_list[2].night,
+          z4: that.clinic_list[3].am + ',' + that.clinic_list[3].pm + ',' + that.clinic_list[3].night,
+          z5: that.clinic_list[4].am + ',' + that.clinic_list[4].pm + ',' + that.clinic_list[4].night,
+          z6: that.clinic_list[5].am + ',' + that.clinic_list[5].pm + ',' + that.clinic_list[5].night,
+          z7: that.clinic_list[6].am + ',' + that.clinic_list[6].pm + ',' + that.clinic_list[6].night,
+        };
+        console.log(params);
+        netWrokUtils.post('/wx/baochuan_d/setappointment', params, (success) => {
+          Indicator.close();
+          console.log(success);
+          MessageBox.alert('预约设置成功!', ' ').then(action => {
+            this.$router.push({ path:"/baochuan_d/docInfo"});
+          });
+        }), (failure) => {
+          Indicator.close();
+          console.log(failure);
+        };
+      }
+    }
+  }
+</script>
 
 <style lang="scss">
   .doc-appoint-container-box {
@@ -146,6 +432,7 @@
           position: relative;
           float: left;
           width: 33.33333333%;
+          text-decoration: none;
           box-sizing: border-box;
           .weui-grid__label{
             text-align: center;
@@ -370,21 +657,3 @@
     }
   }
 </style>
-
-<script>
-  export default {
-    name: 'docAppointmentSetting',
-    data () {
-      return {
-        value: true,
-        isSelect: true
-      }
-    },
-    methods: {
-      reserveToggleSubTime () {
-        this.isSelect = !this.isSelect;
-        console.log(this.isSelect)
-      }
-    }
-  }
-</script>
