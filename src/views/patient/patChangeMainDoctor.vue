@@ -122,6 +122,7 @@
         }
       },
       mounted() {
+        alert(auth);
         this.getDoctorList()
       },
       methods: {
@@ -132,7 +133,6 @@
           this.requestJson.change_money = money;
         },
         getDoctorList(){
-            alert(auth);
           axios.post('/wx/baochuan_p/doctorlist', {
             authentication: this.authentication
           }).then((resp) => {
@@ -143,10 +143,12 @@
           })
         },
         changeDoctor(){
+          alert(auth);
           MessageBox.confirm('更换后，您只能接收'+this.requestJson.name+'医生的检查报告解读和复诊提醒服务；更换签约医生是付费服务，需要支付'+this.requestJson.change_money+'元（'+this.requestJson.change_money*100+'积分）。').then(
              //确定操作
               action => {
-                  if(this.requestJson.id == '' || this.requestJson.id == null || this.requestJson.id ==undefined){
+                alert(auth);
+                if(this.requestJson.id == '' || this.requestJson.id == null || this.requestJson.id ==undefined){
                     Toast('请选择医生');
                     return false;
                   }else{

@@ -7,7 +7,7 @@
     right:0;
     top:40px;
   }
-  .check-label{
+  .clinic-check-label{
     width:36px;
     height:18px;
     border-radius: 18px;
@@ -19,16 +19,16 @@
     display:inline-block;
     color: #60a39c;
   }
-  .list-box{
+  .clinic-list-box{
     /*width: 88%;*/
     padding:15px 6%;
-    .item-list{
+    .clinic-item-list{
       width:100%;
       border-left:2px solid #60a39c;
       height:55px;
       line-height: 55px;
       .list-style{
-        margin-left:-6px;
+        margin-left:-8px;
       }
     }
   }
@@ -39,29 +39,29 @@
       <div class="parent-width parent-margin box-shade circular-bead pos-relate bg-white">
         <span class="half-circle-left pos-absolute bg-grey circle-left"></span>
         <span class="half-circle-right pos-absolute bg-grey circle-right"></span>
-        <ul class="list-box fs16 color-black">
-          <li class="item-list">
+        <ul class="clinic-list-box fs16 color-black">
+          <li class="clinic-item-list">
             <span class="circle-shaft bg-cure list-style"></span>
             <span>03-15 门诊</span>
             <span class="fr">
-              <em class="check-label">检查</em>
-              <em class="check-label">处方</em>
+              <em class="clinic-check-label">检查</em>
+              <em class="clinic-check-label">处方</em>
             </span>
           </li>
-          <li class="item-list">
+          <li class="clinic-item-list">
             <span class="circle-shaft bg-cure list-style"></span>
             <span>03-16 住院</span>
             <span class="fr">
-              <em class="check-label fs14">检查</em>
-              <em class="check-label fs14">处方</em>
+              <em class="clinic-check-label fs14">检查</em>
+              <em class="clinic-check-label fs14">处方</em>
             </span>
           </li>
-          <li class="item-list">
+          <li class="clinic-item-list">
             <span class="circle-shaft bg-cure list-style"></span>
             <span>03-17 住院</span>
             <span class="fr">
-              <em class="check-label">检查</em>
-              <em class="check-label">处方</em>
+              <em class="clinic-check-label">检查</em>
+              <em class="clinic-check-label">处方</em>
             </span>
           </li>
         </ul>
