@@ -22,7 +22,7 @@ rootRouter.beforeEach(function (to, from, next) {
   var path = window.location.href;
   // 从localStorage中获取不同平台的auth
   var auth = getAuthFromLS(path);
-  // var auth = '4d89652b270cc60c30365868b229ca15'; // 测试使用
+  var auth = '4d89652b270cc60c30365868b229ca15'; // 测试使用
   global.auth = auth;
   // localStorage.clear();
   // alert('auth==='+auth);
@@ -35,7 +35,7 @@ rootRouter.beforeEach(function (to, from, next) {
       toLine(path); // 跳转url
     } else {
       console.log('已经授权!');
-      setAuthForLS(path,auth);
+      setAuthForLS(path, auth);
       next();
     }
   } else {
@@ -63,7 +63,7 @@ function getAuthFromLS(path) {
 }
 
 // 不同平台设置不同的auth值
-function setAuthForLS(path,auth) {
+function setAuthForLS(path, auth) {
   if (path.indexOf('baochuan_p') != -1) {
     localStorage.setItem('baochuan_p_auth', auth);
   } else if (path.indexOf('baochuan_d') != -1) {

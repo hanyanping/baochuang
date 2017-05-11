@@ -17,9 +17,9 @@
       <div class="selectTestReportCheck-listcontent-box" v-for="item in reportList" @click="toReportDetail(item)"
            v-show="reportList.length > 0">
         <i class="iconfont selectTestReportCheck-listcontent-yuan icon-yuan fl"></i>
-        <span class="selectTestReportCheck-listitem-left-text fl fs14">HCV基因分型</span>
+        <span class="selectTestReportCheck-listitem-left-text fl fs14">{{item.reportTitle}}</span>
         <div class="selectTestReportCheck-listitem-right-box fr">
-          <span class="selectTestReportCheck-listitem-right-text fs14">{{visitTime}}</span>
+          <span class="selectTestReportCheck-listitem-right-text fs14">{{item.reportDate}}</span>
           <i class="iconfont selectTestReportCheck-listitem-right-icon icon-jiantou"></i>
         </div>
       </div>
@@ -36,6 +36,12 @@
 </template>
 
 <script>
+
+  import axios from 'axios';
+  import {Toast} from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
+  import moment from 'moment/moment.js';
+
   export default {
     data () {
       return {
@@ -45,52 +51,35 @@
       }
     },
     created(){
-      eventBus.$on('idCard', (thing) => {
-        this.idCard = thing;
-      })
+//      eventBus.$on('idCard', (thing) => {
+//        this.idCard = thing;
+//      })
     },
     mounted() {
       this.getReportList();
     },
     methods: {
-      data () {
-        return {
-          reportList: [],
-          allLoaded: false,
-          item: ''
+      getReportList(){
+        let that = this;
+        var params = {
+          authentication: auth
         }
+        netWrokUtils.post('/wx/baochuan_p/reportlist', params, (result) => {
+          that.reportList = result.data.content;
+        }, (error_result) => {
+          Toast(error_result.data.msg);
+        })
       },
-      mounted() {
-        this.getReportList();
+      toReportDetail(item){
+        this.item = item;
+        this.$router.push({path: 'patSelectTestReportDetail'}) //跳转预约列表
       },
-      created(){
+      loadTop()
+      {
       },
-      destroyed () {
-        eventBus.$emit('report_item', this.item);
+      loadBottom()
+      {
       },
-      methods: {
-        getReportList(){
-          let that = this;
-          var params = {
-            authentication: auth
-          }
-          netWrokUtils.post('/wx/baochuan_p/reportlist', params, (result) => {
-            that.reportList = result.data.content;
-          }, (error_result) => {
-            Toast(error_result.data.msg);
-          })
-        },
-        toReportDetail(item){
-          this.item = item;
-          this.$router.push({path: 'patSelectTestReportDetail'}) //跳转预约列表
-        },
-        loadTop()
-        {
-        },
-        loadBottom()
-        {
-        },
-      }
     }
   }
 </script>
