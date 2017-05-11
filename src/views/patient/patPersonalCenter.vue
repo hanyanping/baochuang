@@ -24,12 +24,22 @@
       <span class="bg-grey half-circle-right circleright pos-absolute"></span>
 
       <div class="personalCentre-menu-line-box border-bot-dash" @click="clickTo(1)">
-        <span class="personalCentre-menu-text">预约记录</span>
+        <span class="personalCentre-menu-text">咨询记录</span>
         <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
       </div>
 
       <div class="personalCentre-menu-line-box border-bot-dash" @click="clickTo(2)">
+        <span class="personalCentre-menu-text">预约记录</span>
+        <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
+      </div>
+
+      <div class="personalCentre-menu-line-box border-bot-dash" @click="clickTo(3)">
         <span class="personalCentre-menu-text">就诊记录</span>
+        <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
+      </div>
+
+      <div class="personalCentre-menu-line-box border-bot-dash" @click="clickTo(4)">
+        <span class="personalCentre-menu-text">帮助中心</span>
         <i class="iconfont icon-jiantou personalCentre-menu-icon"></i>
       </div>
     </div>
@@ -55,12 +65,16 @@
         diseaseName: '',
         diseaseList: [],
         idcard: '',
-        isPerfectInfo: '0'
+        isPerfectInfo: '0',
+        isShowHis: ''
       }
     },
     mounted() {
       this.getPatientInfo();
     },
+//    destroyed () {
+//      eventBus.$emit('isShowHis', this.isShowHis);
+//    },
     methods: {
       getPatientInfo(){
         let that = this;
@@ -75,17 +89,22 @@
           that.diseaseName = result.data.content.diseaseName;
           that.idcard = result.data.content.idcard;
           that.isPerfectInfo = result.data.content.isPerfectInfo;
+          that.isShowHis = result.data.content.isShowHis;
         }, (error_result) => {
           Toast(error_result.data.msg);
         })
       },
       clickTo(id){
         if (id == 0) {
-          this.$router.push({path: 'visitRecord'})
+          this.$router.push({path: 'visitRecord'}) // 复诊
         } else if (id == 1) {
-          this.$router.push({path: 'reserveList'})
+          this.$router.push({path: 'patConsultOrderList'}) // 咨询
         } else if (id == 2) {
-          this.$router.push({path: 'clinicRecord'})
+          this.$router.push({path: 'reserveList'}) // 预约
+        } else if (id == 3) {
+          this.$router.push({path: 'clinicRecord'}) // 就诊
+        } else if (id == 4) {
+          this.$router.push({path: 'clinicRecord'}) // 帮助中心
         }
       }
 

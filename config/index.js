@@ -32,7 +32,7 @@ module.exports = {
         // target: 'http://lipengwei.furui.com',      // 个人服务器
         // target: 'http://liangxing.furui.com',      // 个人服务器
         // target: 'http://luhongguang.furui.com',
-        target:  'http://testaiganneo.aiganyisheng.com',
+        target: 'http://testaiganneo.aiganyisheng.com',
         changeOrigin: true,
         // pathRewrite: {
         //   '^/wx': '/wx'

@@ -1,4 +1,4 @@
-<!--预约订单列表-->
+<!--咨询订单列表-->
 <style scoped lang="scss">
   .order-reserve-item {
     width: 92%;
@@ -50,18 +50,18 @@
     line-height: 20px;
   }
 
-  .reservelist-listitem-empty-box {
+  .consultorderlist-listitem-empty-box {
     width: 100%;
     text-align: center;
     line-height: 40px;
 
-  .reservelist-listitem-empty-img {
+  .consultorderlist-listitem-empty-img {
     padding-top: 30vh;
     width: 70px;
     height: 70px;
   }
 
-  .reservelist-listitem-empty-text {
+  .consultorderlist-listitem-empty-text {
     display: inline-block;
     font-size: 16px;
     color: #d7d7d7;
@@ -78,10 +78,9 @@
         :bottom-method="loadBottom"
         :bottom-all-loaded="allLoaded"
         :autoFill="false">
-        <dl class="order-reserve-item box-shade bg-white fs16" v-for="item in message">
+        <dl class="order-reserve-item box-shade bg-white fs16" v-for="item in consultOrderList">
           <dt class="item-header border-bot">
             <span class="fl">就诊时间：{{item.appointment_date}} {{item.week}} {{item.am_or_pm}}</span>
-            <span class="fr" style="color: #ff0000;" v-if="item.status == 1">{{item.status_value}}</span>
             <span class="fr" style="color: #ff0000;" v-if="item.status == 3">{{item.status_value}}</span>
             <span class="fr" style="color: #04b809;" v-if="item.status == 4">{{item.status_value}}</span>
             <span class="fr" style="color: #232323;" v-if="item.status == 5">{{item.status_value}}</span>
@@ -95,25 +94,14 @@
               </span>
             </span>
             <span class="item-tips border-top" v-if="item.status == 4">建议您在{{item.suggest_time}}到达医院就诊</span>
-            <div v-if="item.status == 1"></div>
+            <div></div>
           </dd>
         </dl>
-
-        <!--<div slot="top" class="mint-loadmore-top">-->
-        <!--<span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>-->
-        <!--<mt-spinner type="snake"></mt-spinner>-->
-        <!--<span v-show="topStatus === 'loading'">正在刷新</span>-->
-        <!--</div>-->
-        <!--<div slot="bottom" class="mint-loadmore-bottom">-->
-        <!--<span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'pull' }">加载更多</span>-->
-        <!--<mt-spinner type="snake"></mt-spinner>-->
-        <!--<span v-show="bottomStatus === 'loading'">正在加载</span>-->
-        <!--</div>-->
       </mt-loadmore>
-      <div class="reservelist-listitem-empty-box" v-show="message.length <= 0">
-        <img src="../../assets/img/recode_icon.png" class="reservelist-listitem-empty-img">
+      <div class="consultorderlist-listitem-empty-box" v-show="consultOrderList.length <= 0">
+        <img src="../../assets/img/recode_icon.png" class="consultorderlist-listitem-empty-img">
         <br/>
-        <span class="reservelist-listitem-empty-text">暂无预约订单记录</span>
+        <span class="consultorderlist-listitem-empty-text">暂无咨询订单记录</span>
       </div>
     </div>
   </div>
@@ -133,20 +121,20 @@
       return {
         allLoaded: false,
         nowPage: 1,
-        message: [],
+        consultOrderList: [],
       }
     },
     mounted() {
-      this.getReserveList();
+      this.getConsultOrderList();
     },
     methods: {
-      getReserveList() {
+      getConsultOrderList() {
         let that = this;
         var params = {
           authentication: auth
         }
         netWrokUtils.post('/wx/baochuan_p/getappointmentrecord', params, (result) => {
-          that.message = result.data.content;
+          that.consultOrderList = result.data.content;
         }, (error_result) => {
           Toast(error_result.data.msg);
         })
@@ -158,29 +146,7 @@
       loadBottom()
       {
       }
-//      loadTop() {
-//        console.log(2);
-//        this.getReserveList();
-//      },
-//      loadBottom() {
-//        console.log(1);
-//        let _this = this;
-//        _this.nowPage++;
-//        _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) + '&page=' + _this.nowPage)
-//          .then((resp) => {
-//            console.log(resp);
-//            if (_this.nowPage * _this.postData.rows >= resp.data.total) {
-//              _this.allLoaded = true;
-//            } else {
-//              _this.message = _this.message.concat(resp.data.data.rows);
-//            }
-//            _this.$refs.loadmore.onBottomLoaded();
-//          }).catch((error) => {
-//          console.log(error);
-//        });
-//      }
     }
-
   }
 </script>
 
