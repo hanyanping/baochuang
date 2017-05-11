@@ -17,7 +17,7 @@
     border: 1px solid #60ac9c;
     line-height: 18px;
     text-align: center;
-    margin-left: 10px;
+    margin-left: 2px;
     padding: 0 4px;
     display: inline-block;
     color: #60a39c;
@@ -46,32 +46,18 @@
     <div class="parent-width parent-margin box-shade circular-bead pos-relate bg-white">
       <span class="half-circle-left pos-absolute bg-grey circle-left"></span>
       <span class="half-circle-right pos-absolute bg-grey circle-right"></span>
-      <ul class="clinic-list-box fs16 color-black" v-for="item in treatmentRecordList">
-        <li class="clinic-item-list">
+      <ul class="clinic-list-box fs16 color-black">
+        <li class="clinic-item-list" v-for="item in treatmentRecordList">
           <span class="circle-shaft bg-cure list-style"></span>
-          <span>03-15 门诊</span>
+          <span>{{item.createDate}}</span>
           <span class="fr">
-              <em class="clinic-check-label">检查</em>
-              <em class="clinic-check-label">处方</em>
-            </span>
-        </li>
-        <li class="clinic-item-list">
-          <span class="circle-shaft bg-cure list-style"></span>
-          <span>03-16 住院</span>
-          <span class="fr">
-              <em class="clinic-check-label fs14">检查</em>
-              <em class="clinic-check-label fs14">处方</em>
-            </span>
-        </li>
-        <li class="clinic-item-list">
-          <span class="circle-shaft bg-cure list-style"></span>
-          <span>03-17 住院</span>
-          <span class="fr">
-              <em class="clinic-check-label">检查</em>
-              <em class="clinic-check-label">处方</em>
+              <em class="clinic-check-label" v-if="item.jianyan == true">门诊</em>
+              <em class="clinic-check-label" v-if="item.jiancha == true">检查</em>
+              <em class="clinic-check-label" v-if="item.chufang == true">处方</em>
             </span>
         </li>
       </ul>
+      <!-- 空白页面 -->
     </div>
   </div>
 </template>

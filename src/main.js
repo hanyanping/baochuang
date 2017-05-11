@@ -23,7 +23,7 @@ rootRouter.beforeEach(function (to, from, next) {
   // 从localStorage中获取不同平台的auth
   var auth = getAuthFromLS(path);
   // var auth = '4d89652b270cc60c30365868b229ca15'; // 测试使用
-  var auth = '33d08dceca0f5fe821b644a0d909a09e'; // 测试使用
+  var auth = 'd265ee3c594c3364cad5b89c7c8e8b80'; // 测试使用
   global.auth = auth;
   // localStorage.clear();
   // alert('auth==='+auth);
