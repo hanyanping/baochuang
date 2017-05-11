@@ -199,7 +199,7 @@
         this.payType = this.$route.params.type;
         console.log(this.$route.params.type);
         this.params.authentication = auth;
-        this.params.doctorId = window.location.search.slice(10);
+        this.params.doctorId = this.$route.query.doctorId;
         if (this.payType == 1) {
           NetWorkUtils.post('/wx/baochuan_p/getchangeorder', this.params, (resp)=> {
             this.payInfo = resp.data.content;
