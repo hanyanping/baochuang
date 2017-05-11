@@ -132,6 +132,7 @@
           this.requestJson.change_money = money;
         },
         getDoctorList(){
+            alert(auth);
           axios.post('/wx/baochuan_p/doctorlist', {
             authentication: this.authentication
           }).then((resp) => {

@@ -20,7 +20,7 @@
     color: #60a39c;
   }
   .list-box{
-    width: 88%;
+    /*width: 88%;*/
     padding:15px 6%;
     .item-list{
       width:100%;
@@ -28,7 +28,7 @@
       height:55px;
       line-height: 55px;
       .list-style{
-        margin-left:-8px;
+        margin-left:-6px;
       }
     }
   }
@@ -52,8 +52,8 @@
             <span class="circle-shaft bg-cure list-style"></span>
             <span>03-16 住院</span>
             <span class="fr">
-              <em class="check-label">检查</em>
-              <em class="check-label">处方</em>
+              <em class="check-label fs14">检查</em>
+              <em class="check-label fs14">处方</em>
             </span>
           </li>
           <li class="item-list">

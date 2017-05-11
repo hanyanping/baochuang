@@ -203,6 +203,7 @@
       },
       getMyDoctorList(){
         let that = this;
+        alert(auth);
         var params = {
           authentication: that.authentication
         }

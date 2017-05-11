@@ -226,6 +226,7 @@
         }
       },
       getValue(val){
+          alert(auth);
         this.isChecked = !this.isChecked;
         if (!this.isChecked) {
           this.shouldPay = this.payInfo.change_money;
