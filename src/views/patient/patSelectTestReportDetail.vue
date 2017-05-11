@@ -40,10 +40,18 @@
           reportTitle: this.report_item.reportTitle,
           reportDate: this.report_item.reportDate
         }
-        netWrokUtils.post('/wx/baochuan_p/reportinfo', params, (result) => {
+        Indicator.open();
+        axios.post('/wx/baochuan_p/reportinfo', params).then(function (result) {
+          Indicator.close();
+          console.log(result)
           that.detailHtml = result.data;
-        }, (error_result) => {
+        }).catch(function (network_error) {
+          Indicator.close();
+          console.log(network_error);
+          Toast('网络不给力 ! 请稍后再试!' + network_error);
         })
+
+
       }
     }
   }

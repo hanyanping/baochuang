@@ -9,23 +9,23 @@
       <span class="bg-grey half-circle-left circleleft pos-absolute"></span>
       <span class="bg-grey half-circle-right circleright pos-absolute"></span>
 
-      <mt-loadmore
-        :top-method="loadTop" ref="loadmore"
-        :bottom-method="loadBottom"
-        :bottom-all-loaded="allLoaded"
-        :autoFill="false">
-        <div class="selectTestReportCheck-listcontent-box" v-for="item in reportList" @click="toReportDetail(item)"
-             v-show="reportList.length > 0">
-          <i class="iconfont selectTestReportCheck-listcontent-yuan icon-yuan fl"></i>
-          <span class="selectTestReportCheck-listitem-left-text fl fs14">HCV基因分型</span>
-          <div class="selectTestReportCheck-listitem-right-box fr">
-            <span class="selectTestReportCheck-listitem-right-text fs14">{{visitTime}}</span>
-            <i class="iconfont selectTestReportCheck-listitem-right-icon icon-jiantou"></i>
-          </div>
+      <!--<mt-loadmore-->
+      <!--:top-method="loadTop" ref="loadmore"-->
+      <!--:bottom-method="loadBottom"-->
+      <!--:bottom-all-loaded="allLoaded"-->
+      <!--:autoFill="false">-->
+      <div class="selectTestReportCheck-listcontent-box" v-for="item in reportList" @click="toReportDetail(item)"
+           v-show="reportList.length > 0">
+        <i class="iconfont selectTestReportCheck-listcontent-yuan icon-yuan fl"></i>
+        <span class="selectTestReportCheck-listitem-left-text fl fs14">HCV基因分型</span>
+        <div class="selectTestReportCheck-listitem-right-box fr">
+          <span class="selectTestReportCheck-listitem-right-text fs14">{{visitTime}}</span>
+          <i class="iconfont selectTestReportCheck-listitem-right-icon icon-jiantou"></i>
         </div>
-      </mt-loadmore>
+      </div>
+      <!--</mt-loadmore>-->
 
-      <div class="selectTestReportCheck-listitem-empty-box" v-show="content.length <= 0">
+      <div class="selectTestReportCheck-listitem-empty-box" v-show="reportList.length <= 0">
         <img src="../../assets/img/integralAccount_empty_icon.png" class="selectTestReportCheck-listitem-empty-img">
         <br/>
         <span class="selectTestReportCheck-listitem-empty-text">暂无预约</span>
@@ -39,16 +39,9 @@
   export default {
     data () {
       return {
+        reportList: [],
         allLoaded: false,
-        nowPage: 1,
-        content: [],
-        isShow: false,
-        postData: {
-          authentication: 'f9780de6803b8077534534f44fe0535d',
-          rows: 10,
-          page: 1
-        },
-        idCard: ''
+        item: ''
       }
     },
     created(){
@@ -57,7 +50,7 @@
       })
     },
     mounted() {
-      //this.getIntegralList();
+      this.getReportList();
     },
     methods: {
       data () {
