@@ -64,7 +64,8 @@
         })
       },
       toReportDetail(item){
-//        this.$router.push({path: 'subscribeList'}) //跳转预约列表
+        this.item = item;
+        this.$router.push({path: 'patSelectTestReportDetail'}) //跳转预约列表
       },
       loadTop()
       {

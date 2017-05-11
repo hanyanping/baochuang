@@ -15,26 +15,27 @@ import payCommon from '../components/payCommon.vue'
 
 // 患者端页面
 import patientMenu from '../views/patient/patPatientMenu';
-import userSignDeal from '../views/patient/patUserSignDeal';
+import userSignDeal from '../views/patient/patUserSignDeal'; // 用户签约协议
 import myDoctorList from '../views/patient/patMyDoctorList';  //我的医生列表
-import testReportIdentityCard from '../views/patient/patTestReportIdentityCard';
+import testReportIdentityCard from '../views/patient/patTestReportIdentityCard'; // 检查报告输入身份证页面
 import settingVisitTime from '../views/patient/patSettingVisitTime'; // 设置复诊时间页面
-import reserveList from  '../views/patient/patReserveList';  //
-import completeInfo from '../views/patient/patCompleteInfo';
+import reserveList from  '../views/patient/patReserveList';  //预约订单列表
+import completeInfo from '../views/patient/patCompleteInfo'; // 完善信息页面
 import visitRecord from '../views/patient/patVisitRecord';  // 复诊记录页面
 import personalCenter from '../views/patient/patPersonalCenter';  // 个人中心页面
 import selectTestReport from '../views/patient/patSelectTestReport'; // 检查化验单列表页
 import integralAccount from '../views/patient/patIntegralAccount'; // 积分账户
 import subscribeList from '../views/patient/patSubscribeList';  // 预约列表页面
-import hospitalInfo from '../views/patient/patHospitalInfo';
-import doctorInfo from '../views/patient/patDoctorInfo';
-import selectTestReportCheck from '../views/patient/patSelectTestReportCheck';
-import checkRecord from '../views/patient/patCheckRecord';
-import clinicRecord from '../views/patient/patClinicRecord';
-import changeMainDoctor from '../views/patient/patChangeMainDoctor';
-import payConfirm from '../views/patient/patPayConfirm';
+import hospitalInfo from '../views/patient/patHospitalInfo'; // 医院信息页面
+import doctorInfo from '../views/patient/patDoctorInfo'; // 医生主页
+import selectTestReportCheck from '../views/patient/patSelectTestReportCheck'; // 检查报告选择页面
+import checkRecord from '../views/patient/patCheckRecord'; // 就诊详情
+import clinicRecord from '../views/patient/patClinicRecord'; // 就诊记录页面
+import changeMainDoctor from '../views/patient/patChangeMainDoctor'; // 更好主管医生页面
+import payConfirm from '../views/patient/patPayConfirm'; // 订单确认页面
 import patientLogin from '../views/patient/patPatientLogin';  //登录页, 检查报告验证码页
 import patEmptyForMenu from '../views/patient/patEmptyForMenu';
+import patSelectTestReportDetail from '../views/patient/patSelectTestReportDetail'; // 检查报告详情页
 
 
 // 医生端页面
@@ -101,7 +102,8 @@ export default new Router({
         {path: 'changeMainDoctor', component: changeMainDoctor},
         {path: 'payConfirm/:type', component: payConfirm},
         {path: 'patientLogin', component: patientLogin},
-        {path: 'patEmptyForMenu', component: patEmptyForMenu}
+        {path: 'patEmptyForMenu', component: patEmptyForMenu},
+        {path: 'patSelectTestReportDetail', component: patSelectTestReportDetail}
       ],
     },
     {

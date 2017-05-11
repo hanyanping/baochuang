@@ -25,48 +25,42 @@
   import moment from 'moment/moment.js';
   import comConstant from '../../components/comConstant.js';
 
+
+  var _idCard;
   export default {
-//    beforeRouteEnter (to, from, next) {
-//
-//      // 调用接口 返回是否首次查询检查报告
-//      var params = {
-//        authentication: auth
-//      }
-//      netWrokUtils.post('/wx/baochuan_p/getuseridcard', params, (result) => {
-//        var idCard = result.data.content.idCard;
-//        console.log('temp====', temp);
-//        var is_show_his = result.data.content.isShowHis;
-//        if (is_show_his == 1) {
-////          this.$router.push({path: 'testReportIdentityCard'}) //跳转检查报告身份证页面
+    beforeRouteEnter (to, from, next) {
+      // 调用接口 返回是否首次查询检查报告
+      var params = {
+        authentication: auth
+      }
+      netWrokUtils.post('/wx/baochuan_p/getuseridcard', params, (result) => {
+        var idCard = result.data.content.idCard;
+        _idCard = idCard;
+        var is_show_his = result.data.content.isShowHis;
+        if (is_show_his == 0) {
+          next(true);
+        } else {
+//          this.$router.push({path: 'selectTestReportCheck'}) //跳转检查报告列表页面
 //          next(vm=> {
-//            console.log('vm====', vm);
-//            temp = idCard;
-//            vm.$router.push({path: 'selectTestReportCheck'}) //跳转检查报告列表页面
-//            return true;
-//          });
-//        } else {
-////          this.$router.push({path: 'selectTestReportCheck'}) //跳转检查报告列表页面
-//          next(vm=> {
-//
 //            vm.$router.push({path: 'selectTestReportCheck'}) //跳转检查报告列表页面
 //            return false;
 //          });
-//        }
-//      }, (error_result) => {
-//        Toast(error_result.data.msg);
-//      })
-//
-//
-////      let isLocation = false;
-////      console.log('----', auth)
-////      if (isLocation)
-////        next(vm=> {
-////          vm.$router.push('/');
-////          return false;
-////        });
-////      else
-////        next(true);
-//    },
+          next('/baochuan_p/selectTestReport')
+        }
+      }, (error_result) => {
+        Toast(error_result.data.msg);
+      })
+
+//      let isLocation = false;
+//      console.log('----', auth)
+//      if (isLocation)
+//        next(vm=> {
+//          vm.$router.push('/');
+//          return false;
+//        });
+//      else
+//        next(true);
+    },
     data () {
       return {
         myDoctorList: [],
@@ -79,15 +73,15 @@
         authentication: auth,
         doctor_id: '',
         isFirstSelect: false,
-        idCard: '',
+        idCard: _idCard,
         isClick: false,
         mobile: ''
       }
     },
     created(){
-      eventBus.$on('idCard', (thing) => {
-        this.idCard = thing;
-      })
+//      eventBus.$on('idCard', (thing) => {
+//        this.idCard = thing;
+//      })
     },
     mounted() {
     },

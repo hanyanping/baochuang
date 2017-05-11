@@ -1,8 +1,6 @@
 <!-- 查化验单页 -->
 <template>
-  <div class="selectTestReportDetail">
-
-  </div>
+  <div v-html="detailHtml"></div>
 </template>
 
 <script>
@@ -16,7 +14,10 @@
   export default {
     data () {
       return {
-        report_item: ''
+        report_item: '',
+//        detailHtml: '<div><header><div><h4><p>检查项目：浓缩集菌抗酸菌检测（液基夹层杯法）</p></h4>' +
+//        '<h4><p>检查时间：2016-03-21</p></h4></div></header></div>'
+        detailHtml: ''
       }
     },
     mounted() {
@@ -25,6 +26,7 @@
     created(){
       eventBus.$on('report_item', (thing) => {
         this.report_item = thing;
+        console.log('this.report_item==', this.report_item);
       })
     },
     destroyed () {
@@ -34,37 +36,19 @@
         let that = this;
         var params = {
           authentication: auth,
-          keyno: this.report_item.keyno,
+          keyNo: this.report_item.keyno,
           reportTitle: this.report_item.reportTitle,
           reportDate: this.report_item.reportDate
         }
         netWrokUtils.post('/wx/baochuan_p/reportinfo', params, (result) => {
-//          that.reportList = result.data.content;
-          console.log('result===', result)
+          that.detailHtml = result.data;
         }, (error_result) => {
-//          Toast(error_result.data.msg);
         })
-      },
-      toReportDetail(item){
-        this.$router.push({path: 'subscribeList'}) //跳转预约列表
-      },
-      loadTop()
-      {
-      },
-      loadBottom()
-      {
-      },
+      }
     }
   }
 </script>
 
 <style lang="scss">
-
-  .selectTestReportDetail {
-    height: 100vh;
-    width: 100%;
-    background: #f4f4f4;
-
-  }
 
 </style>
