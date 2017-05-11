@@ -111,15 +111,14 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import netWorkUtils from '../../components/NetWrokUtils';
   import {Toast} from 'mint-ui';
-  import util from '../../components/util'
     export default {
         data(){
             return{
               isActive: false,
               currentView: 'child1',
-              authentication: '4d89652b270cc60c30365868b229ca15',
+              authentication: auth,
               requestJson: {
                   name: '',
                   sex: 1,
@@ -149,21 +148,21 @@
         },
         methods: {
           getDiseaseLabel(){
-            axios.post('/wx/baochuan_p/getpatientmaindisease',{
+            netWorkUtils.post('/wx/baochuan_p/getpatientmaindisease',{
                   authentication: this.authentication
-            }).then((result)=>{
-               this.diseaseList = result.data.content;
-            }).catch((error) => {
-                console.log(error);
+            }, (resp)=>{
+              this.diseaseList = resp.data.content;
+            }, (error)=>{
+              console.log(error);
             })
           },
           getUserInfo(){
-            axios.post('/wx/baochuan_p/myinformation',{
+            netWorkUtils.post('/wx/baochuan_p/myinformation',{
                   authentication: this.authentication
-            }).then((resp) => {
-                console.log(resp);
-            }).catch((error) => {
-                console.log(error)
+            }, (resp)=> {
+              console.log(resp);
+            }, (error)=> {
+              console.log(error)
             })
           },
             //改变性别选中状态
@@ -188,18 +187,18 @@
               Toast('请选择疾病类型');
               return false;
             } else{
-                axios.post('/wx/baochuan_p/saveinfo', {
+                netWorkUtils.post('/wx/baochuan_p/saveinfo', {
                       authentication: this.authentication,
                       name: this.requestJson.name,
                       sex: this.requestJson.sex,
                       birthday: this.requestJson.birthYear,
                       disease_id: this.requestJson.disease,
-                }).then((resp) => {
-                    console.log(resp);
-                    Toast('保存成功!');
-                    window.location.href='http://testaiganneo.aiganyisheng.com/baochuan_p/index/redirect';
-                }).catch((error) => {
-                  Toast('网路不给力哦');
+                }, (resp)=> {
+                  console.log(resp);
+                  Toast('保存成功!');
+                  window.location.href='http://testaiganneo.aiganyisheng.com/baochuan_p/index/redirect';
+                }, (error)=> {
+                    console.log(error);
                 })
             }
           },

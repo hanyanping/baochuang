@@ -28,6 +28,7 @@
     height: 203px;
     background-position: center center;
     background-size: cover;
+    z-index:200;
 
   .bg-doctor-logo {
     width: 40px;
@@ -63,6 +64,7 @@
     width: 40%;
     display: inline-block;
     border-radius: 20px;
+    z-index:5000;
   }
 
   .btn-consult {
@@ -107,7 +109,7 @@
             <i class="iconfont icon-wenhao1 color-grey fs20 paddingL10"></i>
             <span class="color-grey fs16">什么是主管医生</span>
           </div>
-          <div @click="goDoctorInfo(item.id)" class="list-item pos-relate parent-width parent-margin circular-bead box-shade"
+          <div @click.stop="goDoctorInfo(item.id)" class="list-item pos-relate parent-width parent-margin circular-bead box-shade"
                v-for="item in myDoctorList" :style="{backgroundImage: 'url(' + item.doctor_img + ')'}">
             <!--<div class="list-item pos-relate parent-width parent-margin circular-bead box-shade"-->
             <!--v-for="item in myDoctorList" :style="{backgroundImage: 'url('+aa+')'}">-->
@@ -203,7 +205,6 @@
       },
       getMyDoctorList(){
         let that = this;
-        alert(auth);
         var params = {
           authentication: that.authentication
         }

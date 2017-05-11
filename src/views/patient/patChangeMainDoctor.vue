@@ -104,7 +104,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import netWorkUtils from '../../components/NetWrokUtils';
   import {MessageBox} from 'mint-ui';
   import {Toast} from 'mint-ui';
     export default{
@@ -122,7 +122,6 @@
         }
       },
       mounted() {
-        alert(auth);
         this.getDoctorList()
       },
       methods: {
@@ -133,35 +132,31 @@
           this.requestJson.change_money = money;
         },
         getDoctorList(){
-          axios.post('/wx/baochuan_p/doctorlist', {
+          netWorkUtils.post('/wx/baochuan_p/doctorlist', {
             authentication: this.authentication
-          }).then((resp) => {
+          }, (resp)=> {
             this.mainDoctor = resp.data.content;
             this.doctorList = resp.data.content.list;
-          }).catch((error) => {
-            console.log(error);
-          })
+          }, (error)=> {})
         },
         changeDoctor(){
-          alert(auth);
           MessageBox.confirm('更换后，您只能接收'+this.requestJson.name+'医生的检查报告解读和复诊提醒服务；更换签约医生是付费服务，需要支付'+this.requestJson.change_money+'元（'+this.requestJson.change_money*100+'积分）。').then(
              //确定操作
               action => {
-                alert(auth);
                 if(this.requestJson.id == '' || this.requestJson.id == null || this.requestJson.id ==undefined){
                     Toast('请选择医生');
                     return false;
                   }else{
-                    axios.post('/wx/baochuan_p/changedoctor',{
+                    netWorkUtils.post('/wx/baochuan_p/changedoctor',{
                       authentication: this.authentication,
                       doctorId: this.requestJson.id
-                    }).then((resp) => {
+                    }, (resp)=> {
                       if(resp.data.content.paymentStatus ==1){
                         this.$router.push('payConfirm/1?doctorId='+this.requestJson.id);
                       }else{
                       }
-                    }).catch((error) => {
-                      console.log(error);
+                    }, (error)=> {
+
                     })
                   }
               },

@@ -1,4 +1,97 @@
 <!-- 预约列表页 -->
+<style lang="scss" scoped>
+
+  .subscribeList {
+    height: 100vh;
+    width: 100%;
+    background: #fcfcfc;
+    overflow: hidden;
+    text-align: center;
+
+  .subscribeList-box {
+    width: 92%;
+    margin: 15px 4%;
+    background: white;
+    border-radius: 5px;
+
+  .subscribeList-header-box {
+    padding: 10px;
+    overflow: hidden;
+
+  .subscribeList-title-img {
+    border-radius: 50%;
+  }
+
+  .doctor-icon-info {
+    margin-left: 5px;
+    margin-top: 6px;
+
+  .doctor-profession {
+    margin-bottom: 4px;
+  }
+
+  }
+  }
+  }
+
+  .subscribeList-list-box {
+    width: 92%;
+    margin: 10px 4%;
+    background: white;
+
+  .subscribeList-listitem-box {
+    -webkit-box-shadow: 0 0 50px #dbe5e4;
+    -moz-box-shadow: 0 0 50px #dbe5e4;
+    box-shadow: 0 0 50px #dbe5e4;
+    margin-bottom: 2vh;
+    height: 60px;
+
+  .subscribeList-listitem-line {
+    width: 10px;
+    height: 100%;
+    float: left;
+    background: #06b80a;
+  }
+
+  .subscribeList-listitem-row {
+    padding: 5px 10px;
+    width: 70%;
+    float: left;
+  }
+
+  .subscribeList-listitem-icon {
+    float: right;
+    margin-top: -8px;
+    margin-right: 10px;
+  }
+
+  }
+  }
+
+  .subscribeList-listitem-empty-box {
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+
+  .subscribeList-listitem-empty-img {
+    padding-top: 20vh;
+    width: 70px;
+    height: 70px;
+  }
+
+  .subscribeList-listitem-empty-text {
+    display: inline-block;
+    font-size: 16px;
+    color: #d7d7d7;
+  }
+
+  }
+
+  }
+
+</style>
+
+
 <template>
   <div class="subscribeList bg-grey">
     <div class="subscribeList-box">
@@ -133,94 +226,3 @@
   }
 </script>
 
-<style lang="scss">
-
-  .subscribeList {
-    height: 100vh;
-    width: 100%;
-    background: #fcfcfc;
-    overflow: hidden;
-    text-align: center;
-
-  .subscribeList-box {
-    width: 92%;
-    margin: 15px 4%;
-    background: white;
-    border-radius: 5px;
-
-  .subscribeList-header-box {
-    padding: 10px;
-    overflow: hidden;
-
-  .subscribeList-title-img {
-    border-radius: 50%;
-  }
-
-  .doctor-icon-info {
-    margin-left: 5px;
-    margin-top: 6px;
-
-  .doctor-profession {
-    margin-bottom: 4px;
-  }
-
-  }
-  }
-  }
-
-  .subscribeList-list-box {
-    width: 92%;
-    margin: 10px 4%;
-    background: white;
-
-  .subscribeList-listitem-box {
-    -webkit-box-shadow: 0 0 50px #dbe5e4;
-    -moz-box-shadow: 0 0 50px #dbe5e4;
-    box-shadow: 0 0 50px #dbe5e4;
-    margin-bottom: 2vh;
-    height: 60px;
-
-  .subscribeList-listitem-line {
-    width: 10px;
-    height: 100%;
-    float: left;
-    background: #06b80a;
-  }
-
-  .subscribeList-listitem-row {
-    padding: 5px 10px;
-    width: 70%;
-    float: left;
-  }
-
-  .subscribeList-listitem-icon {
-    float: right;
-    margin-top: -8px;
-    margin-right: 10px;
-  }
-
-  }
-  }
-
-  .subscribeList-listitem-empty-box {
-    width: 100%;
-    text-align: center;
-    line-height: 40px;
-
-  .subscribeList-listitem-empty-img {
-    padding-top: 20vh;
-    width: 70px;
-    height: 70px;
-  }
-
-  .subscribeList-listitem-empty-text {
-    display: inline-block;
-    font-size: 16px;
-    color: #d7d7d7;
-  }
-
-  }
-
-  }
-
-</style>
