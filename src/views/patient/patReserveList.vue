@@ -94,6 +94,7 @@
               </span>
             </span>
             <span class="item-tips border-top" v-if="item.status == 4">建议您在{{item.suggest_time}}到达医院就诊</span>
+            <div ></div>
           </dd>
         </dl>
 
