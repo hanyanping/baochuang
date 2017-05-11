@@ -20,6 +20,8 @@
 
   .subscribeList-title-img {
     border-radius: 50%;
+    width:60px;
+    height:60px;
   }
 
   .doctor-icon-info {
@@ -50,7 +52,7 @@
     width: 10px;
     height: 100%;
     float: left;
-    background: #06b80a;
+    background: #7fb5af;
   }
 
   .subscribeList-listitem-row {
@@ -95,7 +97,7 @@
 <template>
   <div class="subscribeList bg-grey">
     <div class="subscribeList-box">
-      <div class="subscribeList-header-box">
+      <div class="subscribeList-header-box circular-bead box-shade">
         <img :src="doctor_img" class="subscribeList-title-img fl">
         <div class="doctor-icon-info fl">
           <div class="doctor-profession">
@@ -111,11 +113,6 @@
     </div>
 
     <div class="subscribeList-list-box" v-show="subscribeList.length > 0">
-      <mt-loadmore
-        :top-method="loadTop" ref="loadmore"
-        :bottom-method="loadBottom"
-        :bottom-all-loaded="allLoaded"
-        :autoFill="false">
         <div class="subscribeList-listitem-box" v-for="item in subscribeList" @click="toDetail()">
           <div class="subscribeList-listitem-line"></div>
           <div class="subscribeList-listitem-row">
@@ -128,7 +125,6 @@
           </div>
           <i class="iconfont icon-jiantou subscribeList-listitem-icon"></i>
         </div>
-      </mt-loadmore>
     </div>
 
     <div class="subscribeList-listitem-empty-box" v-show="subscribeList.length <= 0">
@@ -175,8 +171,8 @@
         let that = this;
         var params = {
           authentication: that.authentication,
-          doctorId: that.doctor_id
-        }
+          doctorId: 27
+        };
         netWrokUtils.post('/wx/baochuan_p/doctorappointmentlist', params, (result) => {
           that.subscribeList = result.data.content.make_appointment_list;
           that.doctor_id = result.data.content.doctor_id;
@@ -193,35 +189,7 @@
       toDetail(){
         this.$router.push({path: 'payConfirm/3'}) //跳转预约下单页
       },
-      loadTop()
-      {
-      }
-      ,
-      loadBottom()
-      {
-      }
 
-//      loadTop() {
-//        console.log(2);
-//        this.getReserveList();
-//      },
-//      loadBottom() {
-//        console.log(1);
-//        let _this = this;
-//        _this.nowPage++;
-//        _this.util.request.post('/product/app/getBuyProductServiceByPatientIdPage.htm?' + _this.util.formatPara(_this.postData) + '&page=' + _this.nowPage)
-//          .then((resp) => {
-//            console.log(resp);
-//            if (_this.nowPage * _this.postData.rows >= resp.data.total) {
-//              _this.allLoaded = true;
-//            } else {
-//              _this.message = _this.message.concat(resp.data.data.rows);
-//            }
-//            _this.$refs.loadmore.onBottomLoaded();
-//          }).catch((error) => {
-//          console.log(error);
-//        });
-//      }
     }
   }
 </script>

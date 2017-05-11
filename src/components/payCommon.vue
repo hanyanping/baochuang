@@ -72,6 +72,7 @@
             authentication: this.params.authentication
           }, (resp)=>{
               console.log(resp);
+              window.location.href=resp.data.content;
           }, (error)=> {})
         }
       }

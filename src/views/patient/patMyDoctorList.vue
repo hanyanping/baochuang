@@ -124,11 +124,11 @@
               <span class="color-grey">医院：{{item.name}}</span>
             </div>
             <div class="btn-menu">
-              <a @click="toSendMsg()"
+              <a @click.stop="toSendMsg()"
                  :class="{'btn-consult':consult_active, 'btn-consult_disable':!consult_active} "
                  class="color-white">发消息
               </a>
-              <a @click="toSubscribe(item.id)"
+              <a @click.stop="toSubscribe(item.id)"
                  :class="{'btn-reserve':subscribe_active, 'btn-reserve_disable':!subscribe_active} "
                  class="color-white">预约
               </a>
@@ -196,7 +196,6 @@
       },
       toSubscribe(doctor_id){ //预约
         if (this.isPerfect) {
-          console.log('doctor_id====' + doctor_id);
           this.doctor_id = doctor_id;
           this.$router.push({path: 'subscribeList'}) //跳转预约列表
         } else {

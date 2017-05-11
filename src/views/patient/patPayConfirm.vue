@@ -16,7 +16,6 @@
     padding-left: 6px;
     line-height: 22px;
   }
-
   }
   .parent-info {
     min-height: 50px;
