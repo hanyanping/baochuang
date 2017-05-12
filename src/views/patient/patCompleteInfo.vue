@@ -88,7 +88,7 @@
         <label for="birth">出生年份</label>
         <select id="birth" v-model="requestJson.birthYear">
           <option value="">请选择出生年份</option>
-          <option :value="requestJson.birthYear"  v-for="item in yearArray">{{item}}</option>
+          <option v-for="item in yearArray" :value="item">{{item}}</option>
         </select>
       </div>
       <div class="item-mes paddingT10">
@@ -167,11 +167,10 @@
         netWorkUtils.post('/wx/baochuan_p/myinformation',{
           authentication: this.authentication
         }, (resp)=> {
-          console.log("fff==",resp);
         this.requestJson.name = resp.data.content.name;
         this.radio.value = resp.data.content.sex;
         this.isActive = resp.data.content.sex;
-        this.requestJson.birthYear = resp.data.content.birthday;
+        this.requestJson.birthYear = resp.data.content.birthday.substring(0,4);
         this.selectContent = resp.data.content.diseaseId;
         this.requestJson.diseaseId = resp.data.content.diseaseId;
         this.requestJson.idcard = resp.data.content.idcard;
@@ -203,17 +202,18 @@
           return false;
         } else{
           console.log('this.requestJson.idcard save ==',this.requestJson.idcard)
+          console.log('this.requestJson.birthYear save ==',this.requestJson.birthYear)
           netWorkUtils.post('/wx/baochuan_p/saveinfo', {
             authentication: this.authentication,
             name: this.requestJson.name,
             sex: this.requestJson.sex,
             birthday: this.requestJson.birthYear,
-            disease_id: this.requestJson.diseaseId,
+            diseaseId: this.requestJson.diseaseId,
             idcard : this.requestJson.idcard
           }, (resp)=> {
             console.log(resp);
           Toast('保存成功!');
-          window.location.href='http://testaiganneo.aiganyisheng.com/baochuan_p/index/redirect';
+//          window.location.href='http://testaiganneo.aiganyisheng.com/baochuan_p/index/redirect';
         }, (error)=> {
             console.log(error);
           })
