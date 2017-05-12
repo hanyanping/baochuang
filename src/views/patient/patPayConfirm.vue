@@ -173,7 +173,7 @@
         payType: '',
         params: {
           doctorId: '',
-          authentication: ''
+          authentication: auth
         },
         payInfo: '',
         point: null,
@@ -181,7 +181,7 @@
         shouldPay: null,
         costScore: null,
         requestJson: {
-          authentication: '',
+          authentication: auth,
           orderid: '',
           cost: null
         }
@@ -242,7 +242,7 @@
       },
       goToPay(){
         let param = {
-          authentication: this.params.authentication,
+          authentication: auth,
           doctorId: this.params.doctorId,
           account: this.payInfo.change_money,
           score: this.costScore,
@@ -254,8 +254,10 @@
               MessageBox.alert('支付成功!');
               wx.closeWindow();
             } else {
-              this.requestJson.orderid = resp.data.content.order_id;
               this.requestJson.cost = this.shouldPay;
+              this.requestJson.orderid = resp.data.content.order_id;
+              localStorage.setItem('pat_cost',this.requestJson.cost);
+              localStorage.setItem('orderId',this.requestJson.orderid);
               this.requestJson.authentication = this.params.authentication;
               this.$router.push('/common_p/payMent');
             }
@@ -266,12 +268,7 @@
       openMessage(){
         MessageBox.alert('1、积分如何获得？在医院就诊时，与门诊医生签约慢病管理服务即可获得相应积分。<br/>2、积分如何使用？积分可代替现金（兑换比例100:1），购买咨询、预约等医生服务。<br/>3、积分有效期积分不可提现，用户获得但未使用的积分，将在下一个自然月过期。', '关于积分');
       },
-      judgeMent: function () {
 
-      }
     },
-    destroyed(){
-      eventBus.$emit('requestJson', this.requestJson);
-    }
   }
 </script>
