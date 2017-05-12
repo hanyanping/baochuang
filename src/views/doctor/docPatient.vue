@@ -1,5 +1,5 @@
 <template>
-  <div class="docBox">
+  <div class="docBox" v-if="allPatientCount != 0">
     <div class="myPatientBox">
       <mt-search  v-model="sousuoContent">
       </mt-search>
@@ -7,7 +7,7 @@
     <div class="myPatientContent">
       <div class="sousuo-patient" :class="{'noPatientList': !listActive}">
         <div class="patient-box">
-          <div class="patient-list" v-for="item in soumessage"  @click="goConsult(item.patient_id)">
+          <div class="patient-list" v-for="item in souPatientList"  @click="goConsult(item.patient_id,item.name)">
             <div class="patient-info-box">
               <div class="patient-img">
                 <img :src="item.logo" >
@@ -77,7 +77,7 @@
           </div>
 
           <div class="patient-box">
-            <div class="patient-list" v-for="item in message"   @click="goConsult(item.patient_id)">
+            <div class="patient-list" v-for="item in message"   @click="goConsult(item.patient_id, item.name)">
               <div class="patient-info-box">
                 <div class="patient-img">
                   <img :src="item.logo" >
@@ -127,6 +127,10 @@
       <div class="fa-tongzhi" @click="fasongTongzhi">发送<br/> 通知</div>
     </div>
   </div>
+  <div v-else id="nodataList">
+    <img src="../../assets/img/nodatatips.png"/>
+    <p class="nodataText">暂无患者</p>
+  </div>
 </template>
 <script>
   import axios from 'axios'
@@ -138,8 +142,8 @@
       return {
         authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
         status:2,
-        name:'',
         page:'',
+        patientName:'',
         pages:{
           qianyuePage:1,
           guanzhuPage:1,
@@ -156,45 +160,41 @@
         selected:'qianyue-patient',
         dataContent:[],
         message:[],
-        soumessage:[],
+        souPatientList:[],
         allPatientCount:'',
         attentionPatientCount:'',
         managePatientCount:''
       }
     },
     watch: {
-        'sousuoContent'() {
-          this.listActive = true;
-          if(this.sousuoContent == ''){
-            this.listActive = false;
+      'sousuoContent'() {
+          var that = this
+        this.listActive = true;
+        if(this.sousuoContent == ''){
+          this.listActive = false;
+        }
+        this.sousuoContent = this.sousuoContent.replace(/(^\s+)|(\s+$)/g,"");//去掉前后空格
+        var params = {
+          authentication: this.authentication,
+          name: this.sousuoContent
+        }
+        netWrokUtils.post('/wx/baochuan_d/choosepatientlist', params,  function(result) {
+          that.souPatientList = result.data.content.allPatientList
+          if(result.data.content.allPatientCount == 0){
+            Toast('未找到患者');
           }
-          this.sousuoContent = this.sousuoContent.replace(/(^\s+)|(\s+$)/g,"");//去掉前后空格
-          var params = {
-            authentication: this.authentication,
-            name: this.sousuoContent,
-            status:0
-          }
-
-          netWrokUtils.post('/wx/baochuan_d/patientlist', params, (result) => {
-            this.soumessage = '';
-            if(result.data.content.list == ''){
-              Toast('未找到患者')
-            }else{
-                this.soumessage = result.data.content.list
-            }
-          }, (error_result)=>  {
+        }, function(error_result) {
 //          Indicator.close();
-            Toast(error_result);
-          })
-
-      }
+          Toast(error_result);
+        })
+      },
     },
     created() {
-        console.log(this.a)
       document.getElementsByTagName('title')[0].innerHTML = '我的患者'
     },
     destroyed () {
-      eventBus.$emit('patientId', this.patientId);
+      window.localStorage.setItem('patientName', this.patientName)
+      eventBus.$emit('some', this.patientId);
     },
     mounted(){
         this.getPatientList(this.authentication, this.status, this.name, this.pages.qianyuePage)
@@ -264,8 +264,11 @@
 //        this.allLoaded = true;
         this.$refs.loadmore.onBottomLoaded();
       },
-      goConsult (id) {
+      goConsult (id, name) {
         this.patientId = id;
+        this.patientName = name;
+        window.localStorage.setItem('patientId', this.patientId)
+        window.localStorage.setItem('patientName', this.patientName)
         this.$router.push({ path:"/baochuan_d/docConsult"});
       },
       fasongTongzhi() {

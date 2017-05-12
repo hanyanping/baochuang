@@ -62,7 +62,7 @@ import docReportDetail from '../views/doctor/docReportDetail'//化验单详情
 import docWorkHome from '../views/doctor/docWorkHome'//工作室
 import docAppointmentSetting from '../views/doctor/docAppointmentSetting'//预约设置
 import docVisitInfo from '../views/doctor/docVisitInfo'//复诊信息
-import docVisitDetail from '../views/doctor/docVisitDetail'//就诊信息
+import docVisitDetail from '../views/doctor/docVisitDetail'//就诊详情
 import docErweima from '../views/doctor/docErweima'//医生二维码
 
 

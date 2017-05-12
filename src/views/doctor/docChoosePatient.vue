@@ -1,147 +1,152 @@
 <template>
-  <div class="docChoose-ptient">
+  <div v-if="list.allPatientList.length != 0" class="docChoose-ptient">
     <div class="myPatientBox">
-      <mt-search v-model="content">
+      <mt-search  v-model="sousuoContent">
       </mt-search>
     </div>
-    <!--<div class="sousuo-content">-->
-
-    <!--</div>-->
-    <div class="choose-content">
+    <div class="sousuo-content" :class="{'noPatientList': !listActive}">
+      <div class="patient-list guanzhu-list"  >
+        <div class="patient-box" v-for="(item, index) in souPatientList" @click="chooseSousuoItem($event)">
+          <span class="iconfont icon-yuan1" ref="patientSpanSou" @click="chooseSousuoItem($event)" :data-name="item.name" :data-id="item.patient_id" ></span>
+          <img :src="item.logo" >
+          <span class="patientName">{{item.name}}</span>
+          <span class="patientSex">{{item.age}}岁</span>
+          <span class="patientJibing">{{item.diseaseName}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="choose-content" :class="{'noPatientList': listActive}">
       <div class="input-box">
         <span class="iconfont icon-2" :class="{'icon-yuan1':unshow1}" @click="chooseAll"></span>
         <input type="checkbox" value="全部患者" />
-        <span class="paddingLeft">全部患者</span>
+        <span class="paddingLeft">全部患者 ({{count.allPatientCount}})</span>
       </div>
       <div class="input-box float-box">
         <span class="iconfont icon-2" :class="{'icon-yuan1':unshow2}" @click="chooseQian"></span>
         <input type="checkbox" value="签约患者" />
-        <span class="paddingLeft">签约患者</span>
+        <span class="paddingLeft">签约患者 ({{count.managePatientCount}})</span>
         <div class="iconfont  fr" :class="{'icon-zhankai':activeQian,'icon-zhankai-copy':unactiveQian}" @click="openQianYue"></div>
       </div>
       <div class="patient-list" :class="{'closeQian':closeShow}">
-        <div class="patient-box" v-for="(item, index) in lists">
-          <span class="iconfont icon-yuan1" @click="chooseQianItem($event, index)" :data-id="item.id" ref="patientSpan"></span>
-          <img src="../../assets/img/docinfo.png"/>
-          <span class="patientName">{{item.name}}</span>
+        <div class="patient-box" v-for="(item, index) in list.managePatientList">
+          <span class="iconfont icon-yuan1" ref="patientSpan" @click="chooseQianItem($event, index)" :data-name="item.name" :data-id="item.patient_id"></span>
+          <img :src="item.logo" >
+          <span class="patientName" ref="bbb">{{item.name}}</span>
           <span class="patientAge">{{item.age}}岁</span>
-          <span class="patientJibing">{{item.bing}}</span>
+          <span class="patientJibing">{{item.diseaseName}}</span>
         </div>
       </div>
       <div class="closeHeight" :class="{'showHeight':closeHeight}"></div>
       <div class="input-box float-box" :class="{'guanzhu-list':closeActive}">
-        <span class="iconfont icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan"></span>
+        <span class="iconfont  icon-2" :class="{'icon-yuan1':unshow3}" @click="chooseGuan"></span>
         <input  type="checkbox" value="关注患者"/>
-        <span class="paddingLeft">关注患者</span>
+        <span class="paddingLeft">关注患者 ({{count.attentionPatientCount}})</span>
         <div class="iconfont  fr" :class="{'icon-zhankai':activeGuan,'icon-zhankai-copy':unactiveGuan}" @click="openGuanZhu"></div>
       </div>
-      <div class="patient-list guanzhu-list" :class="{'closeGuan':closeActive}" >
-        <div class="patient-box" v-for="(item, index) in list">
-          <span class="iconfont icon-yuan1" @click="chooseGuanItem($event,index)" :data-id="item.id" ref="patientSpanGuan"></span>
-          <!--<img src="../../assets/img/docinfo.png"/>-->
-          <span class="patientName">{{item.name}}</span>
-          <span class="patientSex">{{item.age}}岁</span>
-          <span class="patientJibing">{{item.bing}}</span>
+       <div class="patient-list guanzhu-list" :class="{'closeGuan':closeActive}">
+          <div class="patient-box" v-for="(item, index) in list.attentionPatientList" >
+            <span ref="patientSpanGuan" class="iconfont icon-yuan1" @click="chooseGuanItem($event,item.patient_id)" :data-id="item.patient_id" :data-name="item.name" ></span>
+            <img :src="item.logo" >
+            <span class="patientName">{{item.name}}</span>
+            <span class="patientSex">{{item.age}}岁</span>
+            <span class="patientJibing">{{item.diseaseName}}</span>
+          </div>
         </div>
-      </div>
     </div>
     <div class="footer">
-      <button v-if="active" class="button-box">完成</button>
-      <button v-else class="button-box" @click="wancheng" disabled>完成</button>
+      <button v-if="active"  @click="wancheng" class="button-box">完成</button>
+      <button v-else class="nobutton-box"  disabled>完成</button>
     </div>
+  </div>
+  <div v-else id="nodataList">
+    <img src="../../assets/img/nodatatips.png"/>
+    <p class="nodataText">暂无患者</p>
   </div>
 </template>
 <script>
+  import axios from 'axios'
+  import { Toast, MessageBox, Indicator, DatetimePicker } from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'docChoosePatient',
     data () {
       return {
+        authentication: '9abada2c209a05e2ebd462f7bf68c5cf',
+        status: 0,
+        sousuoContent: '',
+        count: {
+          allPatientCount: '',
+          managePatientCount: '',
+          attentionPatientCount: '',
+        },
+        localStoragePatientId: '',
+        listActive: false,
 //          完成按钮显示状态
-        active : false,
+        active: false,
 //        全部患者未选中
-        unshow1 : true,
+        unshow1: true,
 //        签约患者未选中
-        unshow2 : true,
+        unshow2: true,
 //        关注患者未选中
-        unshow3 : true,
+        unshow3: true,
 //        签约收起
         activeQian: false,
-        unactiveQian:true,
+        unactiveQian: true,
 //        关注收起
-        activeGuan:false,
-        unactiveGuan:true,
-        closeShow:true,
+        activeGuan: false,
+        unactiveGuan: true,
+        closeShow: true,
 //        关注患者关闭，签约患者较多时
-        closeActive:true,
-        closeHeight:false,
+        closeActive: true,
+        closeHeight: false,
         obj: {
           z1: false,
           z2: false
         },
-        content:'',
-        list:[
-          {
-            name: '韩22',
-            id: 12,
-            age: 28,
-            url: '',
-            bing: '乙肝'
-          },
-          {
-            name: '琛2',
-            id: 13,
-            age: 24,
-            url: '',
-            bing: '没毛病'
-          },
-          {
-            name: '韩2',
-            id: 14,
-            age: 30,
-            url: '',
-            bing: '狂犬'
-          }
-        ],
-        lists: [
-          {
-            name: '狗韩',
-            id: 1,
-            age: 28,
-            url: '',
-            bing: '乙肝'
-          },
-          {
-            name: '琛',
-            id: 2,
-            age: 24,
-            url: '',
-            bing: '没毛病'
-          },
-          {
-            name: '韩',
-            id: 3,
-            age: 30,
-            url: '',
-            bing: '狂犬'
-          }
-        ],
-        patientId: []
+        content: '',
+        soumessage: [],
+        list: {
+          allPatientList: [],
+          attentionPatientList: [],
+          managePatientList: []
+        },
+        souPatientList: [],
+        patientId: [],
+        patientName: []
       }
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '选择发送患者';
-
     },
     watch: {
-      'content'() {
-          console.log(this.content)
+      'sousuoContent'() {
+        this.listActive = true;
+        if(this.sousuoContent == ''){
+          this.listActive = false;
+        }
+        this.sousuoContent = this.sousuoContent.replace(/(^\s+)|(\s+$)/g,"");//去掉前后空格
+        var params = {
+          authentication: this.authentication,
+          name: this.sousuoContent
+        }
+        netWrokUtils.post('/wx/baochuan_d/choosepatientlist', params,  (result)=> {
+          this.souPatientList = result.data.content.allPatientList
+          console.log(result.data.content.allPatientCount)
+          if(result.data.content.allPatientCount == 0){
+            Toast('未找到患者');
+            return;
+          }
+        }, (error_result)=> {
+//          Indicator.close();
+          Toast(error_result);
+        })
       },
-      chooseGuan(){
-        if (!this.unshow3){
+       chooseGuan(){
+        if (this.unshow3){
             this.active = true;
         }
       },
-      'obj.z1' (a) {
+      'obj.z1' () {
           if(this.obj.z1 || this.obj.z2){
             this.active = true
           }else{
@@ -154,9 +159,100 @@
         }else{
           this.active = false
         }
+      },
+      'unshow2'() {
+        if(!this.unshow2){
+              this.active = true;
+        }
+          if((this.unshow2 == false) && (this.unshow3 == false)){
+              this.unshow1 = false
+          }else{
+            this.unshow1 = true
+          }
+      },
+      'unshow3'() {
+        if(!this.unshow3){
+          this.active = true;
+        }
+        if((this.unshow2 == false) && (this.unshow3 == false)){
+          this.unshow1 = false
+        }else{
+          this.unshow1 = true
+        }
       }
     },
+    mounted(){
+      this.getPatientList(this.authentication)
+    },
     methods: {
+      getChoosePatient() {
+          this.$nextTick(() => {
+            this.localStoragePatientId = window.localStorage.getItem('patientId');
+            if(this.localStoragePatientId){
+              var cheSpans = this.$refs.patientSpan,
+                  cheSpanG = this.$refs.patientSpanGuan;
+              var arr = []
+              for (let i in cheSpans) {
+                arr.push(cheSpans[i]);
+              }
+              for (let i in cheSpanG) {
+                arr.push(cheSpanG[i]);
+              }
+              var patientIdArr = this.localStoragePatientId.split(",");
+                for(let i in arr){
+                  for(let j in patientIdArr){
+                      if((arr[i].attributes.getNamedItem('data-id').nodeValue) == patientIdArr[j]){
+                        arr[i].classList.value = 'iconfont icon-2'
+                      }
+                  }
+                }
+                   var aaa = 0,
+                      bbb = 0
+
+                  for(let i in this.$refs.patientSpanGuan) {
+                    if (this.$refs.patientSpanGuan[i].className == 'iconfont icon-2') {
+                      aaa++
+                    }
+                  }
+                  for(let i in this.$refs.patientSpan) {
+                    if (this.$refs.patientSpan[i].className == 'iconfont icon-2') {
+                      bbb++
+                    }
+                  }
+                  if(aaa > 0){
+                    this.obj.z2 = true
+                  }
+                  if(bbb > 0){
+                    this.obj.z1 = true
+                  }
+                  if (bbb == this.$refs.patientSpan.length) {
+                    this.unshow2 = false
+                  }
+                  if (aaa == this.$refs.patientSpanGuan.length) {
+                    this.unshow3 = false
+                  }
+            }
+          })
+      },
+      getPatientList(auth,name) {
+        var that = this;
+        var params = {
+          authentication: auth,
+          name: name
+        }
+        netWrokUtils.post('/wx/baochuan_d/choosepatientlist', params, function (result) {
+          that.list.allPatientList = result.data.content.allPatientList
+          that.list.attentionPatientList = result.data.content.attentionPatientList
+          that.list.managePatientList = result.data.content.managePatientList
+          that.count.allPatientCount = result.data.content.allPatientCount
+          that.count.attentionPatientCount = result.data.content.attentionPatientCount
+          that.count.managePatientCount = result.data.content.managePatientCount
+          that.getChoosePatient()
+        }, function (error_result) {
+//          Indicator.close();
+          Toast(error_result);
+        })
+      },
       openQianYue() {
         this.activeQian = !this.activeQian;
         this.unactiveQian = !this.unactiveQian;
@@ -169,6 +265,33 @@
       },
       chooseAll () {
         this.unshow1 = !this.unshow1;
+        this.unshow3 = !this.unshow3;
+        this.unshow2 = !this.unshow2;
+        if(!this.unshow3){
+          this.obj.z1 = true;
+        }else{
+          this.obj.z1 = false;
+        }
+        var Spans = this.$refs.patientSpan
+        var spanGuan = this.$refs.patientSpanGuan
+        if (!this.unshow3 ) {
+          // 全选
+          for (let i in Spans) {
+            Spans[i].classList.value = 'iconfont icon-2'
+            console.log( Spans[i].classList)
+          }
+          for (let i in spanGuan) {
+            spanGuan[i].classList.value = 'iconfont icon-2'
+          }
+        } else {
+          for (let i in Spans) {
+
+            Spans[i].classList.value = 'iconfont icon-yuan1'
+          }
+          for (let i in spanGuan) {
+            spanGuan[i].classList.value = 'iconfont icon-yuan1'
+          }
+        }
       },
       chooseGuan() {
         this.unshow3 = !this.unshow3;
@@ -252,17 +375,46 @@
           }
         }
       },
+      chooseSousuoItem(ele) {
+          console.log(123)
+        if (ele.target.className.indexOf('icon-yuan1') > 0) {
+          ele.target.className = 'iconfont icon-2'
+        } else {
+          ele.target.className = 'iconfont icon-yuan1'
+        }
+        var aa = this.$refs.patientSpanSou
+        var num = 0
+        for (let i in aa) {
+          if (aa[i].classList.value.indexOf('icon-2') > 0) {
+            this.obj.z1 = true
+            num++
+          }
+          if (num == 0) {
+            this.obj.z1 = false
+          }
+//          if (num == aa.length) {
+//            this.unshow2 = false
+//          }
+        }
+      },
       wancheng () {
-        this.patientId = []
+        this.patientId = [];
+        this.patientName = [];
         var cheSpans = this.$refs.patientSpan,
             cheSpanG = this.$refs.patientSpanGuan,
             arr = cheSpans.concat(cheSpanG);
         for (let i in arr) {
             if (arr[i].classList.value.indexOf('icon-2') > 0) {
               this.patientId.push(arr[i].attributes.getNamedItem('data-id').nodeValue)
+              this.patientName.push(arr[i].attributes.getNamedItem('data-name').nodeValue)
             }
         }
-        console.log(this.patientId.join(','))
+        window.localStorage.setItem('patientId',this.patientId.join(','));
+        window.localStorage.setItem('patientName',this.patientName.join(','));
+        if(this.patientId.join(',') != ''){
+          this.$router.push({ path:"/baochuan_d/docFaTongzhi"});
+        }
+
       }
     }
   }
@@ -272,12 +424,15 @@
   .docChoose-ptient{
     min-height:100vh;
     background:#FCFCFC;
-  select {
-    direction: rtl;
-  }
-  select option {
-    direction: ltr;
-  }
+    .noPatientList{
+      display:none;
+    }
+    select {
+      direction: rtl;
+    }
+    select option {
+      direction: ltr;
+    }
     .choose-content,.sousuo-content {
       .closeHeight{
         height:0;
@@ -363,14 +518,13 @@
     .myPatientBox {
       height: 60px;
       .mint-searchbar{
-        background:#FCFCFC !important;
+        background:#fff !important;
+        padding:15px 10px;
         .mint-searchbar-inner{
           background:#ECECEC !important;
+          border-radius:30px;
           .mintui-search{
             text-align: center;
-          }
-          .mint-searchbar-cancel{
-            color:#bbb!important;
           }
           .mint-searchbar-core{
             background:#ECECEC;
@@ -382,26 +536,18 @@
           input{
             color:#232323;
           }
+         }
+        .mint-searchbar-cancel{
+          color:#bbb;
+          font-size:16px;
         }
-        }
+      }
     }
     .footer{
       position:fixed;
       bottom:0;
       width:100%;
       margin:auto;
-      .button-box{
-        display: block;
-        width: 95%;
-        height:45px;
-        margin:15px auto;
-        background:#86B8B8;
-        color: #ffffff;
-        border:1px solid #86B8B8;
-        border-radius:22px;
-        outline:none;
-        font-size:18px;
-      }
     }
   }
 </style>

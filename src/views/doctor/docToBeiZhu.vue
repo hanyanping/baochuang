@@ -28,10 +28,7 @@
     },
     created() {
       var that = this;
-      eventBus.$on('some', (thing) => {
-        that.patientId = thing;
-     })
-      document.getElementsByTagName('title')[0].innerHTML = this.patientName;
+      this.patientId = window.localStorage.getItem('patientId')
     },
     watch: {
       'textNumber' () {

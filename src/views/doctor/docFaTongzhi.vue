@@ -2,47 +2,77 @@
   <div class="docFaTongzhi">
     <div class="xuanze-patient float-box" >
       发送至：
-      <span class="patient-name">晚晴，金口难开，</span>
-      <span class="patient-num">10人</span>
+      <span class="patient-name" v-for="item in patientName">{{item}} ,</span>
+      <span class="patient-num">({{patientNumber}}) 人</span>
       <span class="to-xuanze fr  iconfont icon-jiahao"  @click="toChoose"></span>
     </div>
     <div class="beizhu-box">
-      <textarea name="" v-model="textNumber" id="disease-status" @onkeyup="countLength()" maxlength="150" class="zhengzhuang" placeholder="请输入备注信息">
+      <textarea name="" v-model="notify" id="disease-status" @onkeyup="countLength()" maxlength="150" class="zhengzhuang" placeholder="请输入备注信息">
       </textarea>
       <div class="beizhu-num" >
         <span class='two'><span id="textNum" >0</span>/500</span>
       </div>
-      <button class="button-box" :class="{isButton: active}" >发送</button>
     </div>
+      <button v-if="active" class="button-box" @click="sendMessage">完成</button>
+      <button v-else  class="nobutton-box" >发送</button>
   </div>
 </template>
 <script>
+  import axios from 'axios'
+  import { Toast, MessageBox, Indicator, DatetimePicker } from 'mint-ui';
+  import netWrokUtils from '../../components/NetWrokUtils'
   export default {
     name: 'docFaTongzhi',
     data () {
       return {
-        textNumber:'',
-        active:false
+        authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
+        notify: '',
+        active: false,
+        patientNumber: '',
+        patientName: [],
+        patientIdList:[]
       }
     },
     created() {
       document.getElementsByTagName('title')[0].innerHTML = '发送通知'
+      this.patientName = window.localStorage.getItem('patientName').split(',');
+      this.patientIdList = window.localStorage.getItem('patientId').split(',');
+      for (let i in this.patientName) {
+        if (this.patientName[i].length > 8) {
+          this.patientName[i] = this.patientName[i].substring(0, 8) + '...'
+        }
+      }
+      this.patientNumber = this.patientName.length;
     },
     watch: {
-      'textNumber' () {
-        var a=this.textNumber.length;
-        document.getElementById('textNum').innerHTML = a;
-        if(this.textNumber){
+      'notify' () {
+        this.notify = this.notify.replace(/(^\s+)|(\s+$)/g, "")
+        var numberLength = this.notify.length;
+        document.getElementById('textNum').innerHTML = numberLength;
+        if (this.notify) {
           this.active = true
-        }else{
+        } else {
           this.active = false
         }
       }
     },
     methods: {
       toChoose() {
-          console.log(123)
-        this.$router.push({path:'/baochuan_d/docChoosePatient'})
+        this.$router.push({path: '/baochuan_d/docChoosePatient'})
+      },
+      sendMessage() {
+        var that = this;
+        var params = {
+          authentication: this.authentication,
+          patientIdList: this.patientIdList,
+          notify: this.notify
+        }
+        netWrokUtils.post('/wx/baochuan_d/sendnotice', params, (result) => {
+          localStorage.removeItem('patientName');
+          localStorage.removeItem('patientId');
+      }, (error_result) => {
+          Toast(error_result.data.msg);
+        })
       }
     }
   }
@@ -101,27 +131,6 @@
       left:75%;
       color:#bbb;
       font-size:15px;
-    }
-    .button-box{
-      position:fixed;
-      bottom:25px;
-      display: block;
-      width: 90%;
-      height:45px;
-      margin:auto;
-      background:#86B8B8;
-      color: #ffffff;
-      border:1px solid #86B8B8;
-      border-radius:22px;
-      outline:none;
-      font-size:18px;
-    }
-    .button-box.isButton {
-      background:#529D98;
-      border:1px solid #f4f4f4;
-      -webkit-box-shadow:0 0 10px #f4f4f4;
-      -moz-box-shadow:0 0 10px #f4f4f4;
-      box-shadow:0 0 10px #f4f4f4;
     }
   }
 }

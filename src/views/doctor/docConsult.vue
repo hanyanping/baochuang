@@ -46,8 +46,8 @@
               <div>备注信息</div>
               <div class="iconfont icon-jiantou"></div>
             </a>
-            <div class="beizhu-info">
-              <a  v-if = "perInfo.remark == ''" @click="toBeizhu"  href="" style="color:#82AAA1;">点击添加备注信息 </a>
+            <div class="beizhu-info" @click="toBeizhu">
+              <a  v-if = "perInfo.remark == ''" style="color:#82AAA1;text-decoration: none;">点击添加备注信息 </a>
               <span  @click="toBeizhu" v-else>{{perInfo.remark}}</span>
             </div>
             <b></b>
@@ -98,7 +98,7 @@
                   </div>
                 </div>
               </div>
-              <div class="visit-box">
+              <div class="visit-box" @click="goVisitDetail">
                 <div class="visit-detail">
                   <div class="visit-core">
                   </div>
@@ -238,7 +238,7 @@
     data () {
       return {
         authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
-        patientId:2,
+        patientId:'',
         postId:0,
         maxId:'',
         minId:'',
@@ -279,12 +279,14 @@
         }
     },
     created() {
-        eventBus.$on('some', (thing) => {
-          this.patientId = thing;
-          console.log(this.patientId)
-        })
+      this.patientName = window.localStorage.getItem('patientName')
+      this.patientId = window.localStorage.getItem('patientId')
+      document.getElementsByTagName('title')[0].innerHTML = this.patientName
     },
-    mounted(){
+    destroyed () {
+      eventBus.$emit('some', this.patientId);
+    },
+   mounted(){
       this.consultList(this.postId,-5);
       this.personalInfo()
 //      setInterval(() => {
@@ -292,9 +294,6 @@
 //      },3000)
     },
     updated() {
-    },
-    destroyed () {
-      eventBus.$emit('some',this.patientId);
     },
     methods: {
   //        聊天窗口
@@ -406,7 +405,7 @@ console.log(this.baseImg)
       fuzhenDialog() {
         var params = {
             authentication: this.authentication,
-            patientId:2
+            patientId:this.patientId
         }
         var that = this;
         netWrokUtils.postConsult('/wx/baochuan_d/revisitremind', params, function (result) {
@@ -536,7 +535,7 @@ console.log(this.baseImg)
         var that = this
         var params = {
           authentication: this.authentication,
-          patientId: 2,
+          patientId: this.patientId,
         }
         netWrokUtils.postConsult('/wx/baochuan_d/patientcase', params, (result) => {
           that.perInfo = result.data.content
@@ -556,21 +555,19 @@ console.log(this.baseImg)
         this.$refs.picker.open();
       },
       handleChange(value) {
-          console.log(value)
-        console.log('value===' + moment(value).format('YYYY-MM-DD'));
         this.settingVisitTime(moment(value).format('YYYY-MM-DD'));
       },
       settingVisitTime(timeValue){
         let that = this;
         var params = {
           authentication: that.authentication,
-          patientId: 2,
+          patientId: that.patientId,
           revisitTime: timeValue
         }
         netWrokUtils.postConsult('/wx/baochuan_d/setrevisit', params, (result) => {
           this.$refs.picker.close();
           Toast(result.data.msg);
-          that.revisit_time = timeValue;
+          that.personalInfo()
         }, (error_result) => {
           this.$refs.picker.close();
           Toast(error_result.data.msg);
@@ -582,8 +579,14 @@ console.log(this.baseImg)
       perShouqi() {
         this.More = !this.More;
       },
+//      备注信息
       toBeizhu () {
+        window.localStorage.setItem('patientId', this.patientId)
         this.$router.push({ path:"/baochuan_d/docToBeiZhu"});
+      },
+//      就诊信息
+      goVisitDetail() {
+        this.$router.push({ path:"/baochuan_d/docVisitDetail"});
       }
     }
   }
