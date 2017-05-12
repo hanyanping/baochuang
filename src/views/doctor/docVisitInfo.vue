@@ -90,7 +90,9 @@
           console.log(success);
           that.content = success.data.content;
           that.time_list = success.data.content.time_list;
-          that.now = new Date(success.data.content.now);
+          var temp = success.data.content.now.substring(0,10);
+          that.now = new Date(temp);
+          console.log(temp);
         }), (failure) => {
           console.log(failure);
         };

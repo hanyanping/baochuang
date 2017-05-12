@@ -5,11 +5,11 @@
         <div class="balance">余额 (元)</div>
         <div class="moneyTail">
           <div class="moneyNum">{{moneyInfo.balance}}</div>
-          <div class="goTixian">提现</div>
+          <div class="goTixian" @click="applyForCash">提现</div>
         </div>
         <div class="moneyAvailable">可提现金额 : {{moneyInfo.getmoney}}</div>
       </div>
-      <div v-if="moneyInfo.length!='0'"  class="moneyContainer">
+      <div v-if="moneyList.length!='0'"  class="moneyContainer">
         <div class="mingxinDetail">
           <div class="detailName">明细</div>
           <div class="detailList" v-for="item in moneyList">
@@ -41,7 +41,7 @@
         <!--<i></i>-->
       </div>
       <div v-else class="nodata">
-        <img src="../../assets/img/nodatatips.png"/>
+        <img class="nodataImg" src="../../assets/img/nodatatips.png"/>
       </div>
     </div>
   </div>
@@ -81,6 +81,10 @@
         }), (failure) => {
           console.log(failure);
         };
+      },
+
+      applyForCash () {
+        this.$router.push({ path:"/baochuan_d/docAddBankCard"});
       }
 
     },
