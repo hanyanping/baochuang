@@ -185,7 +185,7 @@
           orderid: '',
           cost: null
         },
-        requestUrl: 'http://localhost:8080/baochuan_p/payMent',
+        requestUrl: 'http://'+process.env.H5_HOST+'/baochuan_p/payCommon',
       }
     },
     created(){
@@ -255,7 +255,6 @@
               MessageBox.alert('支付成功!');
               wx.closeWindow();
             } else {
-              alert(1);
               this.requestJson.cost = this.shouldPay;
               this.requestJson.orderid = resp.data.content.order_id;
               localStorage.setItem('pat_cost',this.requestJson.cost);
@@ -265,13 +264,11 @@
                 orderid: this.requestJson.orderid,
                 cost: this.requestJson.cost
               }, (resp) => {
-                alert(2);
                 this.paymentId = resp.data.content.paymentid;
                 NetWorkUtils.post(
                   '/wx/common_p/payment?paymentid=' + this.paymentId + '&authentication=' + this.requestJson.authentication, {
                     source: encodeURI(this.requestUrl)
                   }, (resp) => {
-                      alert(3);
                       console.log(resp);
                       console.log(resp.data.content);
                      window.location.href = resp.data.content;

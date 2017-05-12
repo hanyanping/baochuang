@@ -1,187 +1,102 @@
 <!-- 预约列表页 -->
 <style lang="scss" scoped>
-
-  .subscribeList {
-    height: 100vh;
-    width: 100%;
-    background: #fcfcfc;
+  .doctor-info-box {
+    display: flex;
+    align-items: center;
+    min-height:90px;
+    margin:15px 4%;
+  .doctor-icon{
+    width:70px;
+    height:70px;
+  }
+  .hospital-office span{
+    display:inline-block;
+  }
+  .doctor-hospital{
+    max-width:130px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
-    text-align: center;
-
-  .subscribeList-box {
-    width: 92%;
-    margin: 15px 4%;
-    background: white;
-    border-radius: 5px;
-
-  .subscribeList-header-box {
-    padding: 10px;
+  }
+  .doctor-office{
+    max-width:70px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
 
-  .subscribeList-title-img {
-    border-radius: 50%;
-    width:60px;
-    height:60px;
-  }
-
-  .doctor-icon-info {
-    margin-left: 5px;
-    margin-top: 6px;
-
-  .doctor-profession {
-    margin-bottom: 4px;
-  }
-
   }
   }
+  .reserve-item{
+    display:flex;
+    align-items:center;
   }
 
-  .subscribeList-list-box {
-    width: 92%;
-    margin: 10px 4%;
-    background: white;
-
-  .subscribeList-listitem-box {
-    -webkit-box-shadow: 0 0 50px #dbe5e4;
-    -moz-box-shadow: 0 0 50px #dbe5e4;
-    box-shadow: 0 0 50px #dbe5e4;
-    margin-bottom: 2vh;
-    height: 60px;
-
-  .subscribeList-listitem-line {
-    width: 10px;
-    height: 100%;
-    float: left;
-    background: #7fb5af;
-  }
-
-  .subscribeList-listitem-row {
-    padding: 5px 10px;
-    width: 70%;
-    float: left;
-  }
-
-  .subscribeList-listitem-icon {
-    float: right;
-    margin-top: -8px;
-    margin-right: 10px;
-  }
-
-  }
-  }
-
-  .subscribeList-listitem-empty-box {
-    width: 100%;
-    text-align: center;
-    line-height: 40px;
-
-  .subscribeList-listitem-empty-img {
-    padding-top: 20vh;
-    width: 70px;
-    height: 70px;
-  }
-
-  .subscribeList-listitem-empty-text {
-    display: inline-block;
-    font-size: 16px;
-    color: #d7d7d7;
-  }
-
-  }
-
-  }
-
+  .active-bg-item{background:#fcfcfc;}
+  .bg-item{background:#f4f9f8;}
 </style>
 
 
 <template>
-  <div class="subscribeList bg-grey">
-    <div class="subscribeList-box">
-      <div class="subscribeList-header-box circular-bead box-shade">
-        <img :src="doctor_img" class="subscribeList-title-img fl">
-        <div class="doctor-icon-info fl">
-          <div class="doctor-profession">
-            <span class="fs15" style="color: #232323">{{doctor_name}}</span>
-            <span class="fs14" style="color: #5b5b5b">{{grade}}</span>
-          </div>
-          <p>
-            <span class="fs14" style="color: #5b5b5b">{{hospital}}</span>
-            <span class="fs14" style="color: #5b5b5b">{{department}}</span>
+  <div class="device-height bg-grey">
+    <div class="over-hidden">
+      <div class="doctor-info-box bg-shallow-white circular-bead box-shade">
+        <img src="../../assets/img/second.png" class="marginL15 head-logo doctor-icon fl" alt="">
+        <div class="fl doctor-instruct">
+          <p class="paddingT10"><span class="fs18">王鲲鹏</span> <span class="color-profession"></span>主任医师</p>
+          <p class="hospital-office marginT10">
+            <span class="doctor-hospital fs16 color-profession">保定市传染病医院</span>
+            <span class="doctor-office fs16 color-profession">传染科</span>
           </p>
         </div>
       </div>
-    </div>
-
-    <div class="subscribeList-list-box" v-show="subscribeList.length > 0">
-        <div class="subscribeList-listitem-box" v-for="item in subscribeList" @click="toDetail()">
-          <div class="subscribeList-listitem-line"></div>
-          <div class="subscribeList-listitem-row">
-            <i class="iconfont icon-shijian" style="color: #545454"></i>
-            <span class="fs14" style="color: #545454">{{item.date}}</span>
-          </div>
-          <div class="subscribeList-listitem-row">
-            <span class="fs14" style="color: #545454">{{item.week}} {{item.am_or_pm}}</span>
-            <span class="fs14" style="color: #545454">余号{{item.count}}人</span>
-          </div>
-          <i class="iconfont icon-jiantou subscribeList-listitem-icon"></i>
+      <div class="reserve-item parent-margin parent-width" :class="{}">
+        <span class="left-logo"></span>
+        <div class="">
+          <p>
+            <i class="iconfont icon-shijian fs30"></i>
+            <span>2017-02-24</span>
+          </p>
+          <p>星期一 下午 余号6人</p>
         </div>
+        <i class="fr iconfont icon-jiantou"></i>
+      </div>
     </div>
 
-    <div class="subscribeList-listitem-empty-box" v-show="subscribeList.length <= 0">
-      <img src="../../assets/img/recode_icon.png" class="subscribeList-listitem-empty-img">
-      <br/>
-      <span class="subscribeList-listitem-empty-text">暂无预约</span>
-    </div>
+
+    <!--<div class="subscribeList-listitem-empty-box" v-show="subscribeList.length <= 0">-->
+      <!--<img src="../../assets/img/recode_icon.png" class="subscribeList-listitem-empty-img">-->
+      <!--<br/>-->
+      <!--<span class="subscribeList-listitem-empty-text">暂无预约</span>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
-
-  import {Toast} from 'mint-ui';
-  import {Indicator} from 'mint-ui';
-  import netWrokUtils from '../../components/NetWrokUtils'
-  import moment from 'moment/moment.js';
+  import netWorkUtils from '../../components/NetWrokUtils'
 
   export default {
     data () {
       return {
-        subscribeList: [],
         authentication: auth,
-        isShow: false,
         doctor_id: '',
-        doctor_img: '',
-        doctor_name: '',
-        hospital: '',
-        department: '',
-        grade: '',
-        subscribe_cost: 0,
-        allLoaded: false
       }
     },
     created(){
-      eventBus.$on('doctor_id', (thing) => {
-        this.doctor_id = thing;
+      eventBus.$on('doctor_id', (id) => {
+        this.doctor_id = id;
       })
     },
     mounted() {
-      this.getSubscribeList();
+//      this.getSubscribeList();
     },
     methods: {
       getSubscribeList() {
         let that = this;
         var params = {
           authentication: that.authentication,
-          doctorId: 27
+          doctorId: this.doctor_id
         };
         netWrokUtils.post('/wx/baochuan_p/doctorappointmentlist', params, (result) => {
-          that.subscribeList = result.data.content.make_appointment_list;
-          that.doctor_id = result.data.content.doctor_id;
-          that.doctor_img = result.data.content.doctor_img;
-          that.doctor_name = result.data.content.hospital;
-          that.hospital = result.data.content.hospital;
-          that.department = result.data.content.department;
-          that.grade = result.data.content.grade;
-          that.subscribe_cost = result.data.content.subscribe_cost;
         }, (error_result) => {
           Toast(error_result.data.msg);
         })

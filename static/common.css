@@ -1,10 +1,11 @@
 .fl{float:left}
 .fr{float:right;}
 .float-box:after{
-  display:block;
   content: '';
   clear:both;
   height: 0;
+  overflow: hidden;
+  display:block;
 }
 .pos-absolute{position:absolute;}
 .pos-relate{position:relative;}
@@ -45,6 +46,7 @@
 .bg-cure{background:#60a39c;}
 .bg-selected{background:#daf4fa;}
 .bg-button{background:#5fa39b;}
+.bg-shallow-white{background:#fafafa;}
 
 .color-warn{color:#d80200}
 .color-disable{color:#676767}

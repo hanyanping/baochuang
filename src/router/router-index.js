@@ -102,7 +102,7 @@ export default new Router({
         {path: 'patEmptyForMenu', component: patEmptyForMenu},
         {path: 'patSelectTestReportDetail', component: patSelectTestReportDetail},
         {path: 'patConsultOrderList', component: patConsultOrderList},
-        {path: 'payment', component: payCommon}
+        {path: 'payCommon', component: payCommon}
       ],
     },
     {
