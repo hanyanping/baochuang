@@ -36,7 +36,7 @@ import payConfirm from '../views/patient/patPayConfirm'; // 订单确认页面
 import patientLogin from '../views/patient/patPatientLogin';  //登录页, 检查报告验证码页
 import patEmptyForMenu from '../views/patient/patEmptyForMenu';
 import patSelectTestReportDetail from '../views/patient/patSelectTestReportDetail'; // 检查报告详情页
-import patConsultOrderList from '../views/patient/patConsultOrderList'; // 检查报告详情页
+import patConsultOrderList from '../views/patient/patConsultOrderList'; // 咨询订单页
 
 
 // 医生端页面
