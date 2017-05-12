@@ -22,6 +22,19 @@
 .fs30{font-size:30px;}
 
 /*----无数据---------------------*/
+#nodataList{
+  text-align: center;
+  margin-top:25vh;
+}
+#nodataList img{
+  width:150px;
+  height:180px;
+  }
+#nodataList .nodataText{
+  color:#bbb;
+  font-size:15px;
+  margin-top:15px;
+}
 .nodata{
   text-align: center;
   margin-top:30px;
@@ -94,4 +107,35 @@
 .paddingT15{padding-top:15px;}
 .paddingB15{padding-bottom:15px;}
 
-
+/*.mint-msgbox-message{*/
+  /*text-align:left!important;*/
+/*}*/
+.button-box{
+  position:fixed;
+  bottom:25px;
+  display: block;
+  width: 90%;
+  left:5%;
+  height:45px;
+  margin:15px auto;
+  background:#529D98;
+  color: #ffffff;
+  border:1px solid #86B8B8;
+  border-radius:22px;
+  outline:none;
+  font-size:18px;
+}
+.nobutton-box{
+  position:fixed;
+  bottom:25px;
+  width: 90%;
+  left:5%;
+  height:45px;
+  margin:15px auto;
+  background:#86B8B8;
+  color: #ffffff;
+  border:1px solid #86B8B8;
+  border-radius:22px;
+  outline:none;
+  font-size:18px;
+}
