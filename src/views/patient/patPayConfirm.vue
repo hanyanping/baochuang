@@ -259,7 +259,7 @@
               localStorage.setItem('pat_cost',this.requestJson.cost);
               localStorage.setItem('orderId',this.requestJson.orderid);
               this.requestJson.authentication = this.params.authentication;
-              this.$router.push('/common_p/payMent');
+              this.$router.push('/baochuan_p/payment');
             }
           }
         }, (error)=> {

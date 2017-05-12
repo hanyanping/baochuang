@@ -76,10 +76,6 @@ export default new Router({
       component: router_index,
     },
     {
-      path: '/common_p/payment',
-      component: payCommon,
-    },
-    {
       path: '/baochuan_p',
       component: baochuan_p_rootRouter,
       children: [
@@ -105,7 +101,8 @@ export default new Router({
         {path: 'patientLogin', component: patientLogin},
         {path: 'patEmptyForMenu', component: patEmptyForMenu},
         {path: 'patSelectTestReportDetail', component: patSelectTestReportDetail},
-        {path: 'patConsultOrderList', component: patConsultOrderList}
+        {path: 'patConsultOrderList', component: patConsultOrderList},
+        {path: 'payment', component: payCommon}
       ],
     },
     {
