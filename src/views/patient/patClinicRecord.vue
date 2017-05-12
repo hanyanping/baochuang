@@ -54,7 +54,7 @@
               <em class="clinic-check-label" v-if="item.jianyan == true">门诊</em>
               <em class="clinic-check-label" v-if="item.jiancha == true">检查</em>
               <em class="clinic-check-label" v-if="item.chufang == true">处方</em>
-            </span>
+          </span>
         </li>
       </ul>
       <!-- 空白页面 -->

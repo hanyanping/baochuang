@@ -294,15 +294,16 @@
           return false
         } else {
           let _this = this;
-          axios.post('/api/wx/baochuan_d/checkmobilecode', {
-            params: {
-              mobile: _this.requestJson.phone,
-              code: _this.requestJson.code
-            }
-          }).then((result) => {
-            console.log(result);
-          }).catch((error) => {
-            console.log(error);
+          var params = {
+            authentication: auth,
+            mobile: _this.requestJson.phone,
+            code: _this.requestJson.code
+          }
+          netWrokUtils.post('/wx/baochuan_p/checkmobilecode', params, (result) => {
+            Toast(result.data.msg);
+            this.$router.push({path: 'completeInfo'}) //跳转完善信息页面
+          }, (error_result) => {
+            Toast(error_result.data.msg);
           })
         }
       },
