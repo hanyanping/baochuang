@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import NewWorkUtils from '../components/NetWrokUtils';
 export default {
   data() {
     return {
@@ -62,25 +61,10 @@ export default {
   methods: {
     getPayInfo() {
       this.cost_temp = localStorage.getItem('pat_cost');
-      this.orderid = localStorage.getItem('orderId');
-      NewWorkUtils.post('/wx/baochuan_p/paymentorder', {
-        authentication:　this.authentication,
-        orderid: this.orderid,
-        cost: this.cost_temp
-      }, (resp) => {
-        this.paymentId = resp.data.content.paymentid;
-        console.log(resp.data.content.paymentid);
-      }, (error) => { })
     },
     pay() {
+      console.log('payWx',this.$route.query.payWx);
       if(this.$route.query.payWx == undefined || this.$route.query.payWx == ""){
-        NewWorkUtils.post(
-          '/wx/common_p/payment?paymentid=' + this.paymentId + '&authentication=' + this.authentication, {
-            source: encodeURI(location.href)
-          }, (resp) => {
-            console.log(resp);
-            window.location.href = resp.data.content;
-          }, (error) => { })
       }else{
         this.payRequest = JSON.parse(decodeURI(this.$route.query.payWx));
         console.log(this.payRequest);
@@ -94,14 +78,14 @@ export default {
         }else{
           WeixinJSBridge.invoke(
             'getBrandWCPayRequest',{
-              "appId" : this.payRequest.appId,     //公众号名称，由商户传入
-              "timeStamp": this.payRequest.timeStamp,         //时间戳，自1970年以来的秒数
-              "nonceStr": this.payRequest.nonceStr, //随机串
-              "package" : this.payRequest.package,     //统一订单号
-              "signType": this.payRequest.signType,         //微信签名方式：
-              "paySign": this.payRequest.paySign //支付签名
-            }
-          )
+            "appId" : this.payRequest.appId,     //公众号名称，由商户传入
+            "timeStamp": this.payRequest.timeStamp,         //时间戳，自1970年以来的秒数
+            "nonceStr": this.payRequest.nonceStr, //随机串
+            "package" : this.payRequest.package,     //统一订单号
+            "signType": this.payRequest.signType,         //微信签名方式：
+            "paySign": this.payRequest.paySign //支付签名
+          }
+        )
         }
 //        wx.config({
 ////          debug: false,
