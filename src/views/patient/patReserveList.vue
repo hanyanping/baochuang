@@ -11,6 +11,11 @@
     padding: 15px 0;
     margin: 0 4%;
     overflow: hidden;
+
+  .item-countdown-text {
+
+  }
+
   }
 
   .item-content {
@@ -95,7 +100,10 @@
               </span>
             </span>
             <span class="item-tips border-top" v-if="item.status == 4">建议您在{{item.suggest_time}}到达医院就诊</span>
-            <div v-if="item.status == 1"></div>
+            <div v-if="item.status == 1">
+              <span class="doc-hospital color-disable fs14">请在</span><span class="item-countdown-text">倒计时</span>
+              <span class="doc-hospital color-disable fs14">内支付</span>
+            </div>
           </dd>
         </dl>
 

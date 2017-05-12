@@ -2,7 +2,7 @@
 <template>
   <div class="personalCentre">
     <div class="personalCentre-box">
-      <div class="personalCentre-header-box">
+      <div class="personalCentre-header-box" @click="toCompleteInfo()">
         <div style="display:inline-block;height:100%;line-height: 50px;">
           <img class="personalCentre-header-bg fl" src="../../assets/img/second.png">
           <span class="personalCentre-header-text fl">{{name}}</span>
@@ -106,6 +106,9 @@
         } else if (id == 4) {
           this.$router.push({path: 'clinicRecord'}) // 帮助中心
         }
+      },
+      toCompleteInfo(){
+
       }
 
     }
