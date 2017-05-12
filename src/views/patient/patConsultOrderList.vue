@@ -81,6 +81,7 @@
         <dl class="order-reserve-item box-shade bg-white fs16" v-for="item in consultOrderList">
           <dt class="item-header border-bot">
             <span class="fl">就诊时间：{{item.appointment_date}} {{item.week}} {{item.am_or_pm}}</span>
+            <span class="fr" style="color: #ff0000;" v-if="item.status == 1">{{item.status_value}}</span>
             <span class="fr" style="color: #ff0000;" v-if="item.status == 3">{{item.status_value}}</span>
             <span class="fr" style="color: #04b809;" v-if="item.status == 4">{{item.status_value}}</span>
             <span class="fr" style="color: #232323;" v-if="item.status == 5">{{item.status_value}}</span>

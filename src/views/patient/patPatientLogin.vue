@@ -289,15 +289,16 @@
 
       //  验证登录
       login() {
-        if (this.requestJson.code == '' || this.requestJson.code.length != 6) {
+        let _this = this;
+        console.log('_this.requestJson.code==', _this.requestJson.code);
+        if (_this.requestJson.code == '' || _this.requestJson.code.length != 6) {
           Toast('请输入正确验证码！');
           return false
         } else {
-          let _this = this;
           var params = {
             authentication: auth,
             mobile: _this.requestJson.phone,
-            code: _this.requestJson.code
+            vericode: _this.requestJson.code
           }
           netWrokUtils.post('/wx/baochuan_p/checkmobilecode', params, (result) => {
             Toast(result.data.msg);
