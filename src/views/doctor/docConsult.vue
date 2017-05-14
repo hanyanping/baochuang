@@ -44,11 +44,11 @@
           <div v-if="perInfo.status == 2" class="remark-info" >
             <a class="personal-info-flex">
               <div>备注信息</div>
-              <div class="iconfont icon-jiantou"></div>
+              <div class="iconfont icon-jiantou" style="color:#bbb;"></div>
             </a>
             <div class="beizhu-info" @click="toBeizhu">
-              <a  v-if = "perInfo.remark == ''" style="color:#82AAA1;text-decoration: none;">点击添加备注信息 </a>
-              <span  @click="toBeizhu" v-else>{{perInfo.remark}}</span>
+              <a  v-if = "perInfo.remark == ''" style="color:#82AAA1;text-decoration: none;" >点击添加备注信息 </a>
+              <span  v-else>{{perInfo.remark}}</span>
             </div>
             <b></b>
             <b></b>
@@ -56,7 +56,7 @@
           <div v-if="perInfo.status == 2" class="futher-info">
             <a class="personal-info-flex" @click="toFuzhen">
               <div>复诊信息</div>
-              <div class="iconfont icon-jiantou"></div>
+              <div class="iconfont icon-jiantou" style="color:#bbb;"></div>
             </a>
             <div class="beizhu-info" @click="openPicker">
               <a v-if="perInfo.revisit_time == ''" style="color:#82AAA1;">点击设置复诊时间 </a>
@@ -78,7 +78,7 @@
           <div class="visit-info">
             <a class="personal-info-flex">
               <div>就诊记录</div>
-              <div class="iconfont icon-jiantou"></div>
+              <div class="iconfont icon-jiantou" style="color:#bbb;"></div>
             </a>
             <div class="visit-box-info">
               <div v-if="" class="no-visit">暂无就诊记录</div>
@@ -158,7 +158,7 @@
             </div>
             <div class="reply" ref="reply">
               <div class="input-box">
-                <input type="text" v-model="form.content" @focus="shouqi"/>
+                <input type="text" v-model="form.content" @focus="shouqi" @click="jianpanClick($event)"/>
                 <span v-if="fasong" @click="messages(form.content)" >发送</span>
                 <span v-else @click="tangchu($event)" ref="messageSpan" class="iconfont icon-jiahao"></span>
               </div>
@@ -271,6 +271,7 @@
     },
     watch: {
         'form.content' () {
+          this.form.content = this.form.content.replace(/(^\s+)|(\s+$)/g,"");//去掉前后空格
             if (this.form.content) {
                 this.fasong = true
             } else {
@@ -289,11 +290,9 @@
    mounted(){
       this.consultList(this.postId,-5);
       this.personalInfo()
-//      setInterval(() => {
-//        this.consultList(this.maxId,10)
-//      },3000)
-    },
-    updated() {
+      setInterval(() => {
+        this.consultList(this.maxId,10)
+      },3000)
     },
     methods: {
   //        聊天窗口
@@ -440,7 +439,7 @@ console.log(this.baseImg)
                   img:'',
                 }
                 netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
-                  that.consultList(that.maxId,2)
+//                  that.consultList(that.maxId,2)
                   that.shouqi()
                 }, (error_result) => {
                   Toast(error_result.data.msg);
@@ -495,7 +494,7 @@ console.log(this.baseImg)
                   img:'',
                 }
                 netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
-                  that.consultList(that.maxId,2)
+//                  that.consultList(that.maxId,2)
                   that.shouqi()
                 }, (error_result) => {
                   Toast(error_result.data.msg);
@@ -513,9 +512,16 @@ console.log(this.baseImg)
       shouqi() {
         this.$refs.reply.className = 'reply'
       },
+//      弹出键盘
+      jianpanClick(el) {
+          setTimeout(function(){
+            el.scrollIntoView(true);
+          },100)
+      },
       //  回复消息
       messages(content) {
           var that = this;
+        content = content.replace(/(^\s+)|(\s+$)/g,"");//去掉前后空格
         var params = {
           authentication:this.authentication,
           patientId: this.patientId,
@@ -524,12 +530,26 @@ console.log(this.baseImg)
         }
         netWrokUtils.postConsult('/wx/baochuan_d/sendconsultpost', params, (result) => {
           that.form.content = ''
-          that.consultList(that.maxId,2)
+//          that.getScrollTop()
+
         }, (error_result) => {
           Toast(error_result.data.msg);
         })
       },
-
+//      获取滚动条高度
+      getScrollTop() {
+        var scrollTop=0;
+        if(document.documentElement&&document.documentElement.scrollTop)
+        {
+          scrollTop=document.documentElement.scrollTop;
+        }
+        else if(document.body)
+        {
+          scrollTop=document.body.scrollTop;
+        }
+        console.log(scrollTop)
+        return scrollTop;
+      },
 //      个人资料start
       personalInfo() {
         var that = this
@@ -541,7 +561,7 @@ console.log(this.baseImg)
           that.perInfo = result.data.content
           that.patientName = result.data.content.name
           that.perStatus = result.data.content.status
-          that.now = new Date(result.data.content.now);
+          that.now = new Date(result.data.content.now.substring(0,10));
           that.revisit_time = result.data.content.revisit_time
         }, (error_result) => {
           Toast(error_result.data.msg);
@@ -590,7 +610,6 @@ console.log(this.baseImg)
       }
     }
   }
-
 </script>
 
 <style lang="scss">
@@ -624,7 +643,7 @@ console.log(this.baseImg)
         min-height:90vh;
         .box{
           flex:1;
-          margin-bottom:100px;
+          margin-bottom:110px;
           .record {
             margin-top: 25px;
             .talkTime{
@@ -782,7 +801,7 @@ console.log(this.baseImg)
           }
           .foot-box{
             background: #f4f4f4;
-            padding:10px;
+            padding:12px;
             display:flex;
             justify-content:space-around;
             .file {

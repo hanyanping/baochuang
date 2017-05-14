@@ -124,7 +124,7 @@
           </div>
         </div>
       </mt-loadmore>
-      <div class="fa-tongzhi" @click="fasongTongzhi">发送<br/> 通知</div>
+      <div class="fa-tongzhi" @click="fasongTongzhi" :class="{'noPatientList': fasongActive}">发送<br/> 通知</div>
     </div>
   </div>
   <div v-else id="nodataList">
@@ -152,6 +152,7 @@
         sousuoContent:'',
         patientId:'',
         listActive:false,
+        fasongActive : false,
         allLoaded:false,
         active: true,
         unActive: false,
@@ -182,6 +183,7 @@
           that.souPatientList = result.data.content.allPatientList
           if(result.data.content.allPatientCount == 0){
             Toast('未找到患者');
+            that.fasongActive = true
           }
         }, function(error_result) {
 //          Indicator.close();

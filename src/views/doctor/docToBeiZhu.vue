@@ -7,8 +7,10 @@
       <div class="beizhu-num" >
         <span class='two'><span id="textNum" >0</span>/150</span>
       </div>
-      <button v-if="active == false" class="button-box " disabled>确定</button>
-      <button v-else  class="button-box isButton" @click="sureBeizhu">确定</button>
+      <button v-if="active" class="button-box" @click="sureBeizhu" >确定</button>
+      <button v-else  class="nobutton-box" disabled>确定</button>
+      <!--<button v-if="active == false" class="button-box " disabled>确定</button>-->
+      <!--<button v-else  class="button-box isButton" @click="sureBeizhu">确定</button>-->
     </div>
   </div>
 </template>
@@ -87,26 +89,6 @@
       color:#bbb;
       font-size:15px;
     }
-    .button-box{
-      display: block;
-      width: 100%;
-      height:45px;
-      margin:45px auto;
-      background:#86B8B8;
-      color: #ffffff;
-      border:1px solid #86B8B8;
-      border-radius:22px;
-      outline:none;
-      font-size:18px;
-    }
-    .button-box.isButton {
-      background:#529D98;
-      border:1px solid #f4f4f4;
-      -webkit-box-shadow:0 0 10px #f4f4f4;
-      -moz-box-shadow:0 0 10px #f4f4f4;
-      box-shadow:0 0 10px #f4f4f4;
-    }
   }
-
 }
 </style>

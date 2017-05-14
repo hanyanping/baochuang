@@ -13,8 +13,8 @@
         <span class='two'><span id="textNum" >0</span>/500</span>
       </div>
     </div>
-      <button v-if="active" class="button-box" @click="sendMessage">完成</button>
-      <button v-else  class="nobutton-box" >发送</button>
+      <button v-if="active" class="button-box" @click="sendMessage">发送</button>
+      <button v-else  class="nobutton-box" disabled>发送</button>
   </div>
 </template>
 <script>
@@ -28,7 +28,7 @@
         authentication:'9abada2c209a05e2ebd462f7bf68c5cf',
         notify: '',
         active: false,
-        patientNumber: '',
+        patientNumber: '0',
         patientName: [],
         patientIdList:[]
       }
